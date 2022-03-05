@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.springframework.samples</groupId>
-    <artifactId>spring-petclinic</artifactId>
+    <artifactId>ISPP-G6</artifactId>
     <version>2.2.0.BUILD-SNAPSHOT</version>
 
     <parent>
@@ -12,7 +12,9 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.4.RELEASE</version>
     </parent>
-    <name>petclinic</name>
+
+    <name>Localizer</name>
+
 
     <properties>
 
@@ -31,7 +33,6 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
-
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
@@ -93,17 +94,6 @@
             <artifactId>tomcat-embed-jasper</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!-- OpenAPI -->
-        <dependency>
-			<groupId>org.springdoc</groupId> 
-			<artifactId>springdoc-openapi-core</artifactId>			
-			<version>1.1.44</version>
-		</dependency>
-        <dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.1.44</version>
-		</dependency>
         <!-- WebJars -->
         <dependency>
             <groupId>org.webjars</groupId>
@@ -147,10 +137,10 @@
             <groupId>junit</groupId>
         </dependency>
         <!-- Development tools -->
-        <!--  dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency-->
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -265,7 +255,4 @@
             <url>https://www.apache.org/licenses/LICENSE-2.0</url>
         </license>
     </licenses>
-
-
-
 </project>
