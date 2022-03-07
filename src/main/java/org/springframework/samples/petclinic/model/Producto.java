@@ -1,11 +1,13 @@
 package org.springframework.samples.petclinic.model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Positive;
 
@@ -15,8 +17,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "products")
-public class Product extends BaseEntity{
+@Table(name = "productos")
+public class Producto extends BaseEntity{
 	
 	private String nombre;
 	
@@ -31,16 +33,17 @@ public class Product extends BaseEntity{
 	
 	private String imagen;
 	
-	private Intolerancias intolerancia;
+	private List<Intolerancias> intolerancia;
 	
 	private Preferencias preferencia;
 	
-	//@OneToMany(cascade = CascadeType.ALL, mappedBy = "product", fetch = FetchType.EAGER)
-	//private Set<Tienda> tiendas;
+	@ManyToOne
+	@JoinColumn(name="tienda_id")
+	private Tienda tienda;
 
 	@Override
 	public String toString() {
-		return "Product [nombre=" + nombre + ", precio=" + precio + ", marca=" + marca + ", descripcion=" + descripcion
+		return "Producto [nombre=" + nombre + ", precio=" + precio + ", marca=" + marca + ", descripcion=" + descripcion
 				+ ", verificado=" + verificado + ", imagen=" + imagen + ", intolerancia=" + intolerancia
 				+ ", preferencia=" + preferencia + "]";
 	}
