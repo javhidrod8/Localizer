@@ -1,7 +1,6 @@
 package org.springframework.samples.petclinic.model;
 
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -35,12 +34,12 @@ public class Producto extends BaseEntity{
 	private Preferencias preferencia;
 	
 	@ManyToOne
-	@JoinColumn(name = "tienda_id")
+	@JoinColumn(name="tienda_id")
 	private Tienda tienda;
 
 	@Override
 	public String toString() {
-		return "Product [nombre=" + nombre + ", precio=" + precio + ", marca=" + marca + ", descripcion=" + descripcion
+		return "Producto [nombre=" + nombre + ", precio=" + precio + ", marca=" + marca + ", descripcion=" + descripcion
 				+ ", verificado=" + verificado + ", imagen=" + imagen + ", intolerancia=" + intolerancia
 				+ ", preferencia=" + preferencia + "]";
 	}
