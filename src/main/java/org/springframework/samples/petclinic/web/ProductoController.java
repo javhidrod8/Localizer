@@ -25,7 +25,7 @@ public class ProductoController {
 	}
 	
 	@GetMapping("/producto/{productoId}")
-	public ModelAndView showProduct(@PathVariable("productoId") int productoId) {
+  public ModelAndView showProduct(@PathVariable("productoId") int productoId) {
 		ModelAndView mav = new ModelAndView("productos/productoDetails");
 		mav.addObject(this.productoService.findProductoById(productoId));
 		return mav;
