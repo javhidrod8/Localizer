@@ -1,11 +1,17 @@
 package org.springframework.samples.petclinic.model;
 
-import java.util.List;
+import java.util.Set;
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Positive;
+
+import org.hibernate.annotations.Cascade;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +35,13 @@ public class Producto extends BaseEntity{
 	
 	private String imagen;
 	
-	private List<Intolerancias> intolerancia;
+	@ManyToMany(cascade = javax.persistence.CascadeType.ALL)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    @JoinTable(name = "producto_intolerancias", 
+    joinColumns = @JoinColumn(name = "producto_id"),
+    inverseJoinColumns = @JoinColumn(name = "intolerancias_id"))
+    @ElementCollection(targetClass = Intolerancias.class)
+	private Set<Intolerancias> intolerancia;
 	
 	private Preferencias preferencia;
 	

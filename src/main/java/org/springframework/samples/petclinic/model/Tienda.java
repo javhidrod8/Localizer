@@ -43,7 +43,7 @@ public class Tienda extends BaseEntity{
 	@NotEmpty
 	private Integer telefono;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tienda", fetch = FetchType.EAGER)
 	private Set<Producto> productos;
 
 	@Override
