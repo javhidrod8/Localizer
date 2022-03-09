@@ -63,3 +63,28 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
 INSERT INTO bill(id,total,concept,owner_id) VALUES (1, 50, 'Collar de perro',1);
+
+INSERT INTO intolerancias(nombre) VALUES ('GLUTEN');
+INSERT INTO intolerancias(nombre) VALUES ('LACTEOS');
+INSERT INTO intolerancias(nombre) VALUES ('FRUCTOSA');
+INSERT INTO intolerancias(nombre) VALUES ('SACAROSA');
+INSERT INTO intolerancias(nombre) VALUES ('SULFITOS');
+INSERT INTO intolerancias(nombre) VALUES ('HUEVOS');
+INSERT INTO intolerancias(nombre) VALUES ('PESCADO');
+INSERT INTO intolerancias(nombre) VALUES ('CRUSTACEO');
+INSERT INTO intolerancias(nombre) VALUES ('MIEL');
+INSERT INTO intolerancias(nombre) VALUES ('SOJA');
+INSERT INTO intolerancias(nombre) VALUES ('CASCARA');
+INSERT INTO intolerancias(nombre) VALUES ('APIO');
+INSERT INTO intolerancias(nombre) VALUES ('MOSTAZA');
+INSERT INTO intolerancias(nombre) VALUES ('SESAMO');
+INSERT INTO intolerancias(nombre) VALUES ('ALTRAMUCES');
+INSERT INTO intolerancias(nombre) VALUES ('MOLUSCOS');
+
+-- Cracion de tienda y producto
+
+INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono) VALUES ('calle',123,'descripcion','nombre','provincia',123456789);
+INSERT INTO productos(descripcion,imagen,marca,nombre,preferencia,verificado,tienda_id) VALUES ('descripcion','imagen','marca','nombre',1,true,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,3);
