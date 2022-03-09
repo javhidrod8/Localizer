@@ -19,6 +19,5 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer>{
   @Query("select p from Producto p")
   	public List<Producto> findAllProductos();
   
-  @Query("select p from Producto p where p.nombre like ?1")
-  	Collection<Producto> findByNombre(String nombre);
+  Collection<Producto> findByNombreIgnoreCaseContaining(String nombre);
 }

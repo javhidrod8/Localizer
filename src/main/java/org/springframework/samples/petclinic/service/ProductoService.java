@@ -31,7 +31,7 @@ public class ProductoService {
 	
 	@Transactional(readOnly = true)
 	public Collection<Producto> findByNombre(String nombre) throws DataAccessException{
-		return productoRepository.findByNombre(nombre);
+		return productoRepository.findByNombreIgnoreCaseContaining(nombre);
 	}
 	
 	@Transactional(readOnly = true)
