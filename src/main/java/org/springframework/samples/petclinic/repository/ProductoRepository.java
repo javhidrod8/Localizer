@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.repository;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +15,10 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer>{
 	
   @Query("select p from Producto p where p.tienda.id like ?1")
 	Collection<Producto> findProductoByTiendaLike(Integer id);
+  
+  @Query("select p from Producto p")
+  	public List<Producto> findAllProductos();
+  
+  @Query("select p from Producto p where p.nombre like ?1")
+  	Collection<Producto> findByNombre(String nombre);
 }
