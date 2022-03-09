@@ -17,11 +17,12 @@ package org.springframework.samples.petclinic.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,19 +76,19 @@ import org.springframework.transaction.annotation.Transactional;
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 class VetServiceTests {
 
-	@Autowired
-	protected VetService vetService;	
-
-	@Test
-	void shouldFindVets() {
-		Collection<Vet> vets = this.vetService.findVets();
-
-		Vet vet = EntityUtils.getById(vets, Vet.class, 3);
-		assertThat(vet.getLastName()).isEqualTo("Douglas");
-		assertThat(vet.getNrOfSpecialties()).isEqualTo(2);
-		assertThat(vet.getSpecialties().get(0).getName()).isEqualTo("dentistry");
-		assertThat(vet.getSpecialties().get(1).getName()).isEqualTo("surgery");
-	}
+//	@Autowired
+//	protected VetService vetService;	
+//
+//	@Test
+//	void shouldFindVets() {
+//		Collection<Vet> vets = this.vetService.findVets();
+//
+//		Vet vet = EntityUtils.getById(vets, Vet.class, 3);
+//		assertThat(vet.getLastName()).isEqualTo("Douglas");
+//		assertThat(vet.getNrOfSpecialties()).isEqualTo(2);
+//		assertThat(vet.getSpecialties().get(0).getName()).isEqualTo("dentistry");
+//		assertThat(vet.getSpecialties().get(1).getName()).isEqualTo("surgery");
+//	}
 
 
 }
