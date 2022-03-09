@@ -2,6 +2,8 @@ package org.springframework.samples.petclinic.service;
 
 
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Tienda;
@@ -24,4 +26,8 @@ public class TiendaService {
 		return tiendaRepository.findTiendaById(id);
 	}
 
+	@Transactional(readOnly = true)
+	public Collection<Tienda> findByCodigoPostal(Integer codigo_postal) throws DataAccessException {
+		return tiendaRepository.findByCodigoPostal(codigo_postal);
+	}
 }
