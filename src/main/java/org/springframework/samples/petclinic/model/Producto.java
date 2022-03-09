@@ -17,8 +17,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "productos")
 public class Producto extends BaseEntity{
 	
@@ -31,6 +29,78 @@ public class Producto extends BaseEntity{
 	
 	private String descripcion;
 	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public Double getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(Double precio) {
+		this.precio = precio;
+	}
+
+	public String getMarca() {
+		return marca;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public Boolean getVerificado() {
+		return verificado;
+	}
+
+	public void setVerificado(Boolean verificado) {
+		this.verificado = verificado;
+	}
+
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+
+	public Set<Intolerancias> getIntolerancia() {
+		return intolerancia;
+	}
+
+	public void setIntolerancia(Set<Intolerancias> intolerancia) {
+		this.intolerancia = intolerancia;
+	}
+
+	public Preferencias getPreferencia() {
+		return preferencia;
+	}
+
+	public void setPreferencia(Preferencias preferencia) {
+		this.preferencia = preferencia;
+	}
+
+	public Tienda getTienda() {
+		return tienda;
+	}
+
+	public void setTienda(Tienda tienda) {
+		this.tienda = tienda;
+	}
+
 	private Boolean verificado;
 	
 	private String imagen;
