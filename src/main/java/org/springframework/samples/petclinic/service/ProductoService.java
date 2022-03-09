@@ -28,4 +28,14 @@ public class ProductoService {
 	public Collection<Producto> findProductoTiendaByLike(Integer id) throws DataAccessException{
 		return productoRepository.findProductoByTiendaLike(id);
 	}
+	
+	@Transactional(readOnly = true)
+	public Collection<Producto> findByNombre(String nombre) throws DataAccessException{
+		return productoRepository.findByNombreIgnoreCaseContaining(nombre);
+	}
+	
+	@Transactional(readOnly = true)
+	public Collection<Producto> findAllProductos() throws DataAccessException{
+		return productoRepository.findAllProductos();
+	}
 }
