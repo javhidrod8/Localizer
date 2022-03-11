@@ -1,5 +1,5 @@
 <%@ tag trimDirectiveWhitespaces="true" %>
-<%@ taglib prefix="localizer" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ attribute name="pageName" required="true" %>
@@ -7,10 +7,10 @@
 
 <!doctype html>
 <html>
-<localizer:htmlHeader/>
+<petclinic:htmlHeader/>
 
 <body>
-<localizer:bodyHeader menuName="${pageName}"/>
+<petclinic:bodyHeader menuName="${pageName}"/>
 
 <div class="container-fluid">
     <div class="container xd-container">
@@ -25,10 +25,10 @@
 
         <jsp:doBody/>
 
-        <localizer:pivotal/>
+        <petclinic:pivotal/>
     </div>
 </div>
-<localizer:footer/>
+<petclinic:footer/>
 <jsp:invoke fragment="customScript" />
 
 </body>

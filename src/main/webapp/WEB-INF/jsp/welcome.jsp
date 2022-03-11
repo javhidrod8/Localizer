@@ -1,10 +1,10 @@
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="localizer" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <!-- %@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %-->  
 
-<localizer:layout pageName="home">
+<petclinic:layout pageName="home">
     <h2><fmt:message key="welcome"/></h2>
     <div class="row">
         <div class="col-md-12">
@@ -12,4 +12,4 @@
             <img class="img-responsive" src="${petsImage}"/>
         </div>
     </div>
-</localizer:layout>
+</petclinic:layout>

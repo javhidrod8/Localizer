@@ -35,7 +35,7 @@ import org.springframework.util.StopWatch;
  * @author Michael Isvy
  * @since 2.5
  */
-@ManagedResource("localizer:type=CallMonitor")
+@ManagedResource("petclinic:type=CallMonitor")
 @Aspect
 public class CallMonitoringAspect {
 
