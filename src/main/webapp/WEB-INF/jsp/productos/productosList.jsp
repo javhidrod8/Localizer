@@ -4,47 +4,37 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <petclinic:layout pageName="productosList">
- <h2>Productos</h2>
 
-    <table id="productosTable" class="table table-striped">
-        <thead>
-        <tr>
-            <th style="width: 100px;">Nombre</th>
-            <th style="width: 150px;">Imagen</th>
-            <th style="width: 100px;">Precio (en euros)</th>
-            <th style="width: 50px">Marca</th>
-            <th style="width: 200px">Descripción</th>
-        </tr>
-        </thead>
-        <tbody>
+<h2>Productos</h2>
+	<div class = "row">
         <c:forEach items="${productos}" var="producto">
-            <tr>
-                <td>
+        	<div class = "col-md-3">
+        		<br><br>
+        		<spring:url value="/productos/{productoId}" var="productoUrl">
+        			<spring:param name="productoId" value="${producto.id}"/>
+        		</spring:url>
+        		<a href="${fn:escapeXml(productoUrl)}">
+        			<img height="200px" width="auto" src="<c:out value="${producto.imagen}"/>" style="margin:0px 50px"/>
+        		</a>
+        		<br><br>
                 <font size="+1">
                     <spring:url value="/productos/{productoId}" var="productoUrl">
                         <spring:param name="productoId" value="${producto.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(productoUrl)}"><c:out value="${producto.nombre}"/></a>
+                    <a href="${fn:escapeXml(productoUrl)}">
+                    	<c:out value="${producto.nombre}"/>
+					</a>
                 </font>
-                </td>
-                <td>
-                    <img height="200px" width="auto" src="<c:out value="${producto.imagen}"/>"/>
-                </td>
-                <td>
+                <br>
                 <font size="+1">
                     <c:out value="${producto.precio}"/>
+                    &#8364, marca 
                 </font>
-                </td>
-                <td>
                 <font size="+1">
                     <c:out value="${producto.marca}"/>
                 </font>
-                </td>
-                <td>
-                    <c:out value="${producto.descripcion}"/>
-                </td>
-            </tr>
+			</div>
         </c:forEach>
-        </tbody>
-    </table>
+	</div>
+	
 </petclinic:layout>
