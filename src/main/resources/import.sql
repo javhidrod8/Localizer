@@ -29,12 +29,9 @@ INSERT INTO intolerancias(nombre) VALUES ('MOLUSCOS');
 -- Cracion de tienda y producto
 
 INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono) VALUES ('calle', '123', 'decripcion', 'nombre', 'provincia', '123456789');
-INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('descripcion', 'https://gourmedia.es/wp-content/uploads/2017/01/1613870_1413802075585274_8922380069996054973_n.jpg', 'marca', 'nombre', 2.20, 1, true, 1);
-INSERT INTO productos(descripcion,imagen,marca,nombre,preferencia,verificado,tienda_id) VALUES ('pescadito frito nyan nyan','https://gourmedia.es/wp-content/uploads/2017/01/1613870_1413802075585274_8922380069996054973_n.jpg','marina','pescado frito', 2.20 ,1,true,1);
-INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('descripcion', 'https://gourmedia.es/wp-content/uploads/2017/01/1613870_1413802075585274_8922380069996054973_n.jpg', 'marca', 'nombre2', 2.20, 1, true, 1);
-INSERT INTO productos(descripcion,imagen,marca,nombre,preferencia,verificado,tienda_id) VALUES ('pescadito frito nyan nyan','https://gourmedia.es/wp-content/uploads/2017/01/1613870_1413802075585274_8922380069996054973_n.jpg','marina','pescado frito2', 2.20 ,1,true,1);
-INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('descripcion', 'https://gourmedia.es/wp-content/uploads/2017/01/1613870_1413802075585274_8922380069996054973_n.jpg', 'marca', 'nombre3', 2.20, 1, true, 1);
-INSERT INTO productos(descripcion,imagen,marca,nombre,preferencia,verificado,tienda_id) VALUES ('pescadito frito nyan nyan','https://gourmedia.es/wp-content/uploads/2017/01/1613870_1413802075585274_8922380069996054973_n.jpg','marina','pescado frito3', 2.20 ,1,true,1);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Pasta de tipo penne rigate, 500g', 'https://www.barilla.com//-/media/images/es_es/products/groups/ranges/classic-es/_0015_3df_3030030473_1000012623pennerig_500gintl.png', 'Barilla', 'Pasta Penne Rigate', 1.66, 1, true, 1);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Zanahoria fresca, 1kg', 'https://static.carrefour.es/hd_510x_/img_pim_food/235422_00_1.jpg', 'Carrefour', 'Zanahoria', 0.65, 1, true, 1);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Brócoli fresco, 500g', 'https://static.carrefour.es/hd_510x_/img_pim_food/078932_00_1.jpg', 'Carrefour', 'Brócoli', 1.19, 1, true, 1);
 
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,1);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,2);

@@ -9,29 +9,39 @@
     <table id="productosTable" class="table table-striped">
         <thead>
         <tr>
-            <th style="width: 150px;">Nombre</th>
+            <th style="width: 100px;">Nombre</th>
             <th style="width: 150px;">Imagen</th>
-            <th style="width: 200px;">Precio</th>
-            <th style="width: 120px">Marca</th>
+            <th style="width: 100px;">Precio (en euros)</th>
+            <th style="width: 50px">Marca</th>
+            <th style="width: 200px">Descripción</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach items="${productos}" var="producto">
             <tr>
                 <td>
+                <font size="+1">
                     <spring:url value="/productos/{productoId}" var="productoUrl">
                         <spring:param name="productoId" value="${producto.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(productoUrl)}"><c:out value="${producto.nombre}"/></a>
+                </font>
                 </td>
                 <td>
-                    <c:out value="${producto.imagen}"/>
+                    <img height="200px" width="auto" src="<c:out value="${producto.imagen}"/>"/>
                 </td>
                 <td>
+                <font size="+1">
                     <c:out value="${producto.precio}"/>
+                </font>
                 </td>
                 <td>
+                <font size="+1">
                     <c:out value="${producto.marca}"/>
+                </font>
+                </td>
+                <td>
+                    <c:out value="${producto.descripcion}"/>
                 </td>
             </tr>
         </c:forEach>
