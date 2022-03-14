@@ -72,7 +72,7 @@ public class ProductoController {
 	
 	@GetMapping(value = "/productos/{name}")
 	public String productListByName(@PathVariable("name") String name, ModelMap modelMap) {
-		String vista = "productos/productosListByName";
+		String vista = "productos/productosList";
 		Iterable<Producto> productos = this.productoService.findByNombre(name);
 			modelMap.addAttribute("productos", productos);
 			return vista;

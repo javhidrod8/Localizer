@@ -60,11 +60,6 @@
 					<span>Productos</span>
 				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'tiendas'}" url="/tiendas"
-					title="tiendas">
-					<!--  <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>-->
-					<span>Tiendas</span>
-				</petclinic:menuItem>
 	
 
 
