@@ -18,11 +18,11 @@
 	<img src="https://economipedia.com/wp-content/uploads/test-de-estr%C3%A9s.png" class="image">
 	<h1><c:out value="${tienda.nombre}"/></h1>
 	<br>
-	<p><b>Localización : </b></p>
+	<p><b>Localización: </b></p>
 	<p><c:out value="${tienda.calle}"/></p>
 	<br>
 	<br>
-	<p><b>Horarios : </b></p>
+	<p><b>Horarios: </b></p>
 	<p>Horarios</p>
 
 
@@ -31,7 +31,7 @@
     <table class="table table-striped">
     </table>
     
-    <h2>Productos :</h2>
+    <h2>Productos:</h2>
 	<div class = "row">
         <c:forEach items="${tienda.productos}" var="producto">
         	<div class = "col-md-3">
