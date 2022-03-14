@@ -10,7 +10,7 @@
         <c:forEach items="${productos}" var="producto">
         	<div class = "col-md-3">
         		<br><br>
-        		<spring:url value="/productos/{productoId}" var="productoUrl">
+        		<spring:url value="/producto/{productoId}" var="productoUrl">
         			<spring:param name="productoId" value="${producto.id}"/>
         		</spring:url>
         		<a href="${fn:escapeXml(productoUrl)}">
@@ -18,7 +18,7 @@
         		</a>
         		<br><br>
                 <font size="+1">
-                    <spring:url value="/productos/{productoId}" var="productoUrl">
+                    <spring:url value="/producto/{productoId}" var="productoUrl">
                         <spring:param name="productoId" value="${producto.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(productoUrl)}">

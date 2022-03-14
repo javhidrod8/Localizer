@@ -24,7 +24,7 @@
         </tr>
     </table>
 
-    <table class="table table-striped">
+<%--     <table class="table table-striped">
         <c:forEach var="intolerancia" items="${producto.intolerancia}">
 
             <tr>
@@ -37,6 +37,6 @@
               </tr>
 
         </c:forEach>
-    </table>
+    </table> --%>
 
 </petclinic:layout>
