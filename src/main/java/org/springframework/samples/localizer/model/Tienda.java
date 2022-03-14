@@ -41,14 +41,22 @@ public class Tienda extends BaseEntity{
 	@NotEmpty
 	private Integer telefono;
 	
+	@Column(name = "imagen")
+	@NotEmpty
+	private String imagen;
+	
+	@Column(name = "horario")
+	@NotEmpty
+	private String horario;
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tienda", fetch = FetchType.EAGER)
 	private Set<Producto> productos;
 
 	@Override
 	public String toString() {
 		return "Tienda [nombre=" + nombre + ", descripcion=" + descripcion + ", calle=" + calle + ", provincia="
-				+ provincia + ", codigoPostal=" + codigoPostal + ", telefono=" + telefono + ", productos=" + productos
-				+ "]";
+				+ provincia + ", codigoPostal=" + codigoPostal + ", telefono=" + telefono + ", imagen=" + imagen
+				+ ", horario=" + horario + ", productos=" + productos + "]";
 	}
 
 	public String getNombre() {
@@ -106,6 +114,24 @@ public class Tienda extends BaseEntity{
 	public void setProductos(Set<Producto> productos) {
 		this.productos = productos;
 	}
+
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+
+	public String getHorario() {
+		return horario;
+	}
+
+	public void setHorario(String horario) {
+		this.horario = horario;
+	}
+	
+	
 	
 	
 
