@@ -28,9 +28,14 @@ INSERT INTO intolerancias(nombre) VALUES ('MOLUSCOS');
 
 -- Cracion de tienda y producto
 
-INSERT INTO tiendas(calle,codigoPostal,descripcion,nombre,provincia,telefono) VALUES ('calle',123,'descripcion','nombre','provincia',123456789);
-INSERT INTO productos(descripcion,imagen,marca,nombre,preferencia,verificado,tienda_id) VALUES ('descripcion','imagen','marca','nombre',1,true,1);
-INSERT INTO productos(descripcion,imagen,marca,nombre,preferencia,verificado,tienda_id) VALUES ('pescadito frito nyan nyan','https://gourmedia.es/wp-content/uploads/2017/01/1613870_1413802075585274_8922380069996054973_n.jpg','marina','pescado frito',1,true,1);
+INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono) VALUES ('calle', '123', 'decripcion', 'nombre', 'provincia', '123456789');
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('descripcion', 'https://gourmedia.es/wp-content/uploads/2017/01/1613870_1413802075585274_8922380069996054973_n.jpg', 'marca', 'nombre', 2.20, 1, true, 1);
+INSERT INTO productos(descripcion,imagen,marca,nombre,preferencia,verificado,tienda_id) VALUES ('pescadito frito nyan nyan','https://gourmedia.es/wp-content/uploads/2017/01/1613870_1413802075585274_8922380069996054973_n.jpg','marina','pescado frito', 2.20 ,1,true,1);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('descripcion', 'https://gourmedia.es/wp-content/uploads/2017/01/1613870_1413802075585274_8922380069996054973_n.jpg', 'marca', 'nombre2', 2.20, 1, true, 1);
+INSERT INTO productos(descripcion,imagen,marca,nombre,preferencia,verificado,tienda_id) VALUES ('pescadito frito nyan nyan','https://gourmedia.es/wp-content/uploads/2017/01/1613870_1413802075585274_8922380069996054973_n.jpg','marina','pescado frito2', 2.20 ,1,true,1);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('descripcion', 'https://gourmedia.es/wp-content/uploads/2017/01/1613870_1413802075585274_8922380069996054973_n.jpg', 'marca', 'nombre3', 2.20, 1, true, 1);
+INSERT INTO productos(descripcion,imagen,marca,nombre,preferencia,verificado,tienda_id) VALUES ('pescadito frito nyan nyan','https://gourmedia.es/wp-content/uploads/2017/01/1613870_1413802075585274_8922380069996054973_n.jpg','marina','pescado frito3', 2.20 ,1,true,1);
+
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,1);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,2);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,3);
