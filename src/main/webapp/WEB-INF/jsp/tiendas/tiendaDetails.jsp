@@ -18,7 +18,7 @@
 	<img src="https://economipedia.com/wp-content/uploads/test-de-estr%C3%A9s.png" class="image">
 	<h1><c:out value="${tienda.nombre}"/></h1>
 	<br>
-	<p><b>Localización: </b></p>
+	<p><b>Localizaci&oacuten: </b></p>
 	<p><c:out value="${tienda.calle}"/></p>
 	<br>
 	<br>
@@ -36,7 +36,7 @@
         <c:forEach items="${tienda.productos}" var="producto">
         	<div class = "col-md-3">
         		<br><br>
-        		<spring:url value="/productos/{productoId}" var="productoUrl">
+        		<spring:url value="/producto/{productoId}" var="productoUrl">
         			<spring:param name="productoId" value="${producto.id}"/>
         		</spring:url>
         		<a href="${fn:escapeXml(productoUrl)}">
@@ -44,7 +44,7 @@
         		</a>
         		<br><br>
                 <font size="+1">
-                    <spring:url value="/productos/{productoId}" var="productoUrl">
+                    <spring:url value="/producto/{productoId}" var="productoUrl">
                         <spring:param name="productoId" value="${producto.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(productoUrl)}">
@@ -53,7 +53,7 @@
                 </font>
                 <br>
                 <font size="+1">
-                    <c:out value="${producto.precio}"/>€
+                    <c:out value="${producto.precio}"/>&#8364
                 </font>
                 <font size="+1">
                     <input type="button" value="Reservar">
