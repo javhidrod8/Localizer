@@ -62,7 +62,7 @@ public class TiendaController {
 	}
 
 	
-	@GetMapping("/tienda/{tiendaId}")
+	@GetMapping("/tiendas/{tiendaId}")
 	public ModelAndView showTienda(@PathVariable("tiendaId") int tiendaId) {
 		ModelAndView mav = new ModelAndView("tiendas/tiendaDetails");
 		mav.addObject(this.tiendaService.findTiendaById(tiendaId));

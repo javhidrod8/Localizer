@@ -33,12 +33,12 @@ public class Tienda extends BaseEntity{
 	@NotEmpty
 	private String provincia;
 	
-	@Column(name = "codigoPostal")
-	@NotEmpty
+	@Column(name = "codigo_postal")
+	
 	private Integer codigoPostal;
 	
 	@Column(name = "telefono")
-	@NotEmpty
+
 	private Integer telefono;
 	
 	@Column(name = "imagen")
@@ -51,6 +51,21 @@ public class Tienda extends BaseEntity{
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tienda", fetch = FetchType.EAGER)
 	private Set<Producto> productos;
+
+	public Tienda(Tienda tienda) {
+		this.calle=tienda.getCalle();
+		this.codigoPostal=tienda.getCodigoPostal();
+		this.descripcion=tienda.getDescripcion();
+		this.horario=tienda.getHorario();
+		this.imagen=tienda.getImagen();
+		this.nombre=tienda.getNombre();
+		this.provincia=tienda.getProvincia();
+		this.telefono=tienda.getTelefono();
+	}
+
+	public Tienda() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public String toString() {
