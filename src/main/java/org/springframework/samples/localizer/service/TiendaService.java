@@ -30,4 +30,10 @@ public class TiendaService {
 	public Collection<Tienda> findByCodigoPostal(Integer codigoPostal) throws DataAccessException {
 		return tiendaRepository.findByCodigoPostal(codigoPostal);
 	}
+	
+	@Transactional
+	public void saveTienda(Tienda tienda) throws DataAccessException{
+		Tienda p = new Tienda(tienda);
+		tiendaRepository.save(p);
+	}
 }
