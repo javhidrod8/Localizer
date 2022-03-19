@@ -6,12 +6,14 @@
 <petclinic:layout pageName="productosList">
 
 <h2>Productos</h2>
+<input id="myInput" type="text" placeholder="Search..">
+
 	<div class = "row">
 	<div class = "col-md-3"> FILTRO</div>
 		<div class = "col-md-9">
         <c:forEach items="${productos}" var="producto">
       
-        	<div class = "col-md-5">
+        	<div id="prueba" class = "col-md-5">
         		<br><br>
         		<spring:url value="/producto/{productoId}" var="productoUrl">
         			<spring:param name="productoId" value="${producto.id}"/>
@@ -36,22 +38,27 @@
                 <font size="+1">
                     <c:out value="${producto.marca}"/>
                 </font>
+                <span id="intolerancia">
+                    <c:out value="${producto.intolerancia}"/>
+                </span>
 			</div>
-			
-			<c:forEach var="item" items="${producto.intolerancia}">
-  			<c:if test="${item.nombre == 'GLUTEN'}">
-    		<script>
-			//PENSAR ALGO PARA ETIQUETAR CADA PRODUCTO
-
-			</script>
-  			</c:if>
-</c:forEach>
 
         </c:forEach>
 	</div></div>
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	
+	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("div").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>	
 	
 	
 	
