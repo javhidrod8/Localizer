@@ -5,7 +5,21 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <petclinic:layout pageName="productosList">
 
-<h2>Productos</h2>
+
+
+
+<h2>Productos</h2> <div style="text-align:center;">
+<input id="busqueda" type="text"> <button onClick="Buscar()">Buscar</button>
+</div>
+<script>
+		function Buscar(){
+		  var text = $("#busqueda").val();
+		  location.href = 'http://localhost:8080/productos/'+text;
+		}
+
+</script>
+
+
 	<div class = "row">
         <c:forEach items="${productos}" var="producto">
         	<div class = "col-md-3">
