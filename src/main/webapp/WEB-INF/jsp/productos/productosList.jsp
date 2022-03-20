@@ -56,32 +56,52 @@
 		    	productoDetails.intolerancias.push("${intolerancia}");
 		    	intolerancias.push("${intolerancia}");
 		    </c:forEach>
+
 		    productoDetails.preferencia = "${producto.preferencia}";
 		    preferencias.push(productoDetails.preferencia);
-		    productos.push(productoDetails);	 
+		    productos.push(productoDetails);
 		</c:forEach> 
-		
-		
-		productos.forEach(producto=> printProducto(producto));
-		var uniquePreferencias = preferencias.filter(onlyUnique);
-		uniquePreferencias.forEach(pref=>setPref(pref));
-		
 	
-	function setPref(pref){
-		  var button = document.createElement('button');
+		productos.forEach(producto=> printProducto(producto));
+		var uniquePreferencias = preferencias.filter(onlyUnique)[0];
+		
+		 var button = document.createElement('button');
 		  prodHtml = "";
-		  text = JSON.stringify(pref);
-		 
-		  button.innerHTML = text;
+		  button.innerHTML = "Filtrar";
 		  button.onclick = function(){
-			  console.log(pref);
 			  document.getElementById('productos').innerHTML= prodHtml;
-			  productosFiltrados = productos.filter(preferencia=>preferencia==pref);
+			  var productosFiltrados = {...productos};
+			  if(uniquePreferencias != "" || uniquePreferencias != null || intolerancias.length > 0){
+				  productosFiltrados = [];
+				  if(uniquePreferencias != "" || uniquePreferencias != null ) {
+					  productos.forEach(e => {
+						  if(e.preferencia == uniquePreferencias){
+							  productosFiltrados.push(e);
+						  }
+					  })
+				  } 
+				  if(intolerancias.length > 0) {
+					  var indexList = [];
+					  productos.forEach(e => {
+						  intolerancias.forEach(i => {
+							  if(e.intolerancias.includes(i)){
+								  var index = productos.indexOf(e);
+								  if(!(indexList.includes(index))){
+									  indexList.push(index);
+								  }
+							  }
+						  })
+					  })
+					  indexList.forEach(i => {
+						  productosFiltrados.splice(i, 1);
+					  })
+				  }
+			  }
 			  productosFiltrados.forEach(producto=> printProducto(producto));
 		  };
 			
 		  document.getElementById('preferencias').appendChild(button);
-	}; 
+		
 	
 	function printProducto(producto){
 		document.getElementById('productos').innerHTML+= "<p>"+JSON.stringify(producto)+"</p>";
