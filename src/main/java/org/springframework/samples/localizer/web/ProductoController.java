@@ -4,8 +4,10 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.localizer.model.Intolerancias;
 import org.springframework.samples.localizer.model.Producto;
 import org.springframework.samples.localizer.model.Tienda;
+import org.springframework.samples.localizer.service.IntoleranciasService;
 import org.springframework.samples.localizer.service.ProductoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,10 +21,13 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProductoController {
 
 	private final ProductoService productoService;
+	private final IntoleranciasService intoleranciasService;
+	
 
 	@Autowired
-	public ProductoController(ProductoService productoService) {
+	public ProductoController(ProductoService productoService, IntoleranciasService intoleranciasService) {
 		this.productoService = productoService;
+		this.intoleranciasService= intoleranciasService;
 	}
 //
 //	@ModelAttribute("producto")
@@ -74,6 +79,8 @@ public class ProductoController {
 	public String productListByName(@PathVariable("name") String name, ModelMap modelMap) {
 		String vista = "productos/productosList";
 		Iterable<Producto> productos = this.productoService.findByNombre(name);
+		Iterable<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
+			modelMap.addAttribute("intolerancias", intolerancias);
 			modelMap.addAttribute("productos", productos);
 			return vista;
 	}
@@ -83,6 +90,8 @@ public class ProductoController {
 	public String productList(ModelMap modelMap) {
 		String vista = "productos/productosList";
 		Iterable<Producto> productos = this.productoService.findAllProductos();
+		Iterable<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
+			modelMap.addAttribute("intolerancias", intolerancias);
 			modelMap.addAttribute("productos", productos);
 			return vista;
 	}
