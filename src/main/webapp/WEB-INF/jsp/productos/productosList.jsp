@@ -12,7 +12,7 @@
 	<div class = "col-md-2">
 	<div id="intolerancias">
 		<c:forEach items="${intolerancias}" var="intolerancia"> 
-			<input style:="display:block;" class="form-check-input" type="checkbox" id="${intolerancia}"/> <c:out value="${intolerancia}"></c:out></br></br>
+			<input class="form-check-input" type="checkbox" id="${intolerancia}"/> <c:out value="${intolerancia}"></c:out></br></br>
 			</c:forEach>
 	</div>
 	<div id="preferencias">
@@ -86,13 +86,16 @@
 		
 // 		var selectedPreferencia = preferencias.filter(onlyUnique)[0];
 //  	var selectedIntolerancias = intolerancias.filter(onlyUnique);	
-		var selectedPreferencia = new Array();
-		var selectedIntolerancias = new Array();	
+		//var selectedPreferencia = new Array();
+		//var selectedIntolerancias = new Array();	
 
 		var button = document.createElement('button');
 	  	prodHtml = "";
 	  	button.innerHTML = "Filtrar";
 	  	button.onclick = function(){
+	  		
+	  		var selectedPreferencia = new Array();
+			var selectedIntolerancias = new Array();
 	  		
 	  		preferencias.forEach(p => {
 				  if(!selectedPreferencia.includes(p)){
@@ -105,7 +108,7 @@
 					  selectedIntolerancias.push(i);
 				  }
 			  })
-			  
+			  			  
 			  document.getElementById('productos').innerHTML= prodHtml;
 			  var productosFiltrados = {...productos};
 			  if(selectedPreferencia != "" || selectedPreferencia != null || selectedIntolerancias.length > 0){
