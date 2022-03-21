@@ -7,7 +7,20 @@
 
 
 	<h2>Productos</h2><br>
-	<div class="row" id="productos">
+	
+	<div class="row">
+	<div class = "col-md-2">
+	<div id="intolerancias">
+		<c:forEach items="${intolerancias}" var="intolerancia"> 
+			<input style:="display:block;" class="form-check-input" type="checkbox" id="${intolerancia}"/> <c:out value="${intolerancia}"></c:out></br></br>
+			</c:forEach>
+	</div>
+	<div id="preferencias">
+		<c:forEach items="${preferencias}" var="preferencia"> 
+			 <input class="form-check-input" type="checkbox" id="${preferencia}" /> <c:out value="${preferencia}"></c:out></br>
+			</c:forEach></br>
+	</div></div>
+	<div class = "col-md-9" id="productos" >
 		<!-- <c:forEach items="${productos}" var="producto">
         	<div class = "col-md-3">
         		<br><br>
@@ -36,19 +49,8 @@
                 </font>
 			</div>
         </c:forEach> -->
-	</div>
+	</div></div>
 
-	<div class="row" id="intolerancias">
-		<c:forEach items="${intolerancias}" var="intolerancia"> 
-			 <input class="form-check-input" type="checkbox" id="${intolerancia}"/> <c:out value="${intolerancia}"></c:out>
-			</c:forEach>
-	</div>
-	<div class="row" id="preferencias">
-		<c:forEach items="${preferencias}" var="preferencia"> 
-			 <input class="form-check-input" type="checkbox" id="${preferencia}" /> <c:out value="${preferencia}"></c:out>
-			</c:forEach>
-	</div>
-	<br><br>
 	<script type="text/javascript">
     var productos = new Array();
 
@@ -141,7 +143,7 @@
 	function printProducto(producto){
 		
 		var prodDiv = document.createElement('div'); 
-		prodDiv.className = "col-md-3";
+		prodDiv.className = "col-md-4";
 		prodDiv.id = "prodDiv";       
 		
 		var img = document.createElement('img');
