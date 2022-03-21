@@ -38,9 +38,17 @@
         </c:forEach> -->
 	</div>
 
-	<div class="row" id="intolerancias"></div>
-	<div class="row" id="preferencias"></div>
-
+	<div class="row" id="intolerancias">
+		<c:forEach items="${intolerancias}" var="intolerancia"> 
+			 <input class="form-check-input" type="checkbox" name="" /> <c:out value="${intolerancia}"></c:out>
+			</c:forEach>
+	</div>
+	<div class="row" id="preferencias">
+		<c:forEach items="${preferencias}" var="preferencia"> 
+			 <input class="form-check-input" type="radio" name="" /> <c:out value="${preferencia}"></c:out>
+			</c:forEach>
+	</div>
+	<br><br>
 	<script type="text/javascript">
     var productos = new Array();
 
@@ -56,6 +64,7 @@
 		    productoDetails.nombre = "${producto.nombre}";
 		    productoDetails.precio = "${producto.precio}";
 		    productoDetails.marca = "${producto.marca}";
+		    productoDetails.imagen = "${producto.imagen}";
 		    productoDetails.intolerancias = new Array();
 		    <c:forEach items="${producto.intolerancia}" var="intolerancia">
 		    	productoDetails.intolerancias.push("${intolerancia}");
@@ -68,6 +77,7 @@
 		</c:forEach> 
 	
 		productos.forEach(producto=> printProducto(producto));
+		
 		
 	/*TODO: asignar a las siguientes variable las intolerancias seleccionadas y la preferencia*/
 	/* ahora solo esta cogiendo la primera de todas las preferencias de la lista y todas las intolerancias disponibles*/
@@ -113,8 +123,36 @@
 		
 	
 	function printProducto(producto){
+		
+		var prodDiv = document.createElement('div'); 
+		prodDiv.className = "col-md-3";
+		prodDiv.id = "prodDiv";       
+		
+		var img = document.createElement('img');
+		img.src = producto.imagen;
+		img.alt = "Imagen no encontrada";
+		img.id = "imagen"
+		img.height="200";
+// 		img.width="auto";
+ 		img.style="margin:0px 50px";
+		
+ 		var url = document.createElement("a");
+ 		url.href="http://localhost:8080/producto/"+producto.id;
+ 		
+ 		url.appendChild(img);
+		
+ 		prodDiv.appendChild(url);
+ 		
+		var url2 = document.createElement("a");
+ 		url2.href="http://localhost:8080/producto/"+producto.id;
+ 		url2.innerHTML+= "<p>"+producto.nombre+"</p>";;
+ 		prodDiv.appendChild(url2);
+ 		
+		prodDiv.innerHTML+= "<p>"+producto.precio+" &#8364, marca "+producto.marca+"</p><br>";
+		document.getElementById('productos').appendChild(prodDiv);
+	
 		/*TODO: crear aqui la estructura de un producto en la lista (se puede basar en lo que esta comentado de arriba) usando ya un objeto JS (producto) y no una variable de spring (${producto})*/
-		document.getElementById('productos').innerHTML+= "<p>"+JSON.stringify(producto)+"</p>";
+// 		document.getElementById('productos').innerHTML+= "<p>"+producto.nombre+"</p>";
 	};
 
 	function onlyUnique(value, index, self) {
@@ -122,7 +160,6 @@
 		};
 
 </script>
-
 
 
 </petclinic:layout>
