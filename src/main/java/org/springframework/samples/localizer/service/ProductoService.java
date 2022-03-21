@@ -38,4 +38,10 @@ public class ProductoService {
 	public Collection<Producto> findAllProductos() throws DataAccessException{
 		return productoRepository.findAllProductos();
 	}
+	
+	@Transactional
+	public void saveProducto(Producto producto) throws DataAccessException{
+		Producto p = new Producto(producto);
+		productoRepository.save(p);
+	}
 }

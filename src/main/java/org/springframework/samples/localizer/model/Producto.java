@@ -29,6 +29,23 @@ public class Producto extends BaseEntity{
 	
 	private String descripcion;
 	
+	public Producto(Producto producto) {
+		this.descripcion = producto.getDescripcion();
+		this.imagen = producto.getImagen();
+		this.marca = producto.getMarca();
+		this.nombre = producto.getNombre();
+		this.precio = producto.getPrecio();
+		this.preferencia = producto.getPreferencia();
+		this.intolerancia = producto.getIntolerancia();
+		this.verificado = producto.getVerificado();
+	}
+	
+	
+
+	public Producto() {
+		super();
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
