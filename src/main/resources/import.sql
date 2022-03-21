@@ -26,14 +26,19 @@ INSERT INTO intolerancias(nombre) VALUES ('SESAMO');
 INSERT INTO intolerancias(nombre) VALUES ('ALTRAMUCES');
 INSERT INTO intolerancias(nombre) VALUES ('MOLUSCOS');
 
--- Cracion de tienda y producto
+-- Creacion de tienda y producto
+
 
 INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono) VALUES ('Calle Mainomiedes, 9', '41009', 'Tienda de alimentacion', 'Alimentacion Carmen', 'Sevilla', '647654945');
 INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono) VALUES ('Calle Francos, 12, 6', '41004', 'Tienda de alimentacion', 'Taste of America', 'Sevilla', '955286486');
 INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono) VALUES ('Calle Verano, 8', '41009', 'Tienda de alimentacion', 'Alimentacion y Chuches Arco Iris', 'Sevilla', '654654654');
 INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono) VALUES ('Avenida de la Barzola, 46', '41008', 'Tienda de alimentacion', 'Alimentacion Chari', 'Sevilla', '647654876');
 INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono) VALUES ('Grupo Macarena Tres Huertas, 9', '41009', 'Tienda de alimentacion', 'Alimentacion Titi', 'Sevilla', '635903624');
-
+INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono) VALUES ('Calle Miguel Mañara, 6', '41001', 'Tienda de ultramarinos', 'Tienda Vending Murillo Sevilla', 'Sevilla', '954216095');
+INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono) VALUES ('Calle San Eloy, 2', '41002', 'Tienda de alimentacion', 'La Alacena de San Eloy', 'Sevilla', '954215580');
+INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono) VALUES ('Calle Regina, 24', '41003', 'Tienda de alimentacion', 'La Despensa Ecologica', 'Sevilla', '954221593');
+INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono) VALUES ('Plaza San Marcos, 3', '41004', 'Tienda de ultramarinos', 'El Rincon Sagrado', 'Sevilla', '717167160');
+INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono) VALUES ('Avenida Jose Laguillo, 27', '41005', 'Tienda de alimentacion', 'Fruteria y alimentacion El Semeruco', 'Sevilla', '671217460');
 -- Tienda 1
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Pasta de tipo penne rigate, 500g', 'https://www.barilla.com//-/media/images/es_es/products/groups/ranges/classic-es/_0015_3df_3030030473_1000012623pennerig_500gintl.png', 'Barilla', 'Pasta Penne Rigate, 500g', 1.66, 1, true, 1);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Zanahoria fresca, 1kg', 'https://static.carrefour.es/hd_510x_/img_pim_food/235422_00_1.jpg', 'Carrefour', 'Zanahoria, 1kg', 0.65, 1, true, 1);
@@ -64,6 +69,36 @@ INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, v
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Aquarius Naranja', 'https://es.openfoodfacts.org/images/products/544/900/013/3847/front_es.110.400.jpg', 'Aquarius', 'Aquarius Naranja', 0.89, 3, true, 5);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Hamburguesa Vegetariana, 200g', 'https://es.openfoodfacts.org/images/products/544/900/013/3847/front_es.110.400.jpg', 'Vemondo', 'Hamburguesa Vegana', 5.25, 2, true, 5);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Bifidus natural edulcorado sin gluten, 500g', 'https://es.openfoodfacts.org/images/products/841/050/001/2120/front_es.12.400.jpg', 'Danone', 'Bifidus', 1.34, 3, true, 5);
+-- Tienda 6
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Yaourt nature - Le Nature - 500g', 'https://es.openfoodfacts.org/images/products/303/349/000/4521/front_fr.85.400.jpg', 'Danone', 'Yaourt nature - Danone', 3.25, 3, true, 6);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Queso Crema Philadelphia Original - 150 g', 'https://es.openfoodfacts.org/images/products/762/230/044/1937/front_es.109.400.jpg', 'Kraft', 'Queso Crema Philadelphia Original', 1.63, 3, true, 6);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Barilla sauce tomates basilic - 400 g', 'https://es.openfoodfacts.org/images/products/807/680/951/3722/front_fr.153.400.jpg', 'Barilla', 'Barilla sauce tomates basilic', 1.89, 3, true, 6);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Caldo casero de pollo - Gallina Blanca - 1 L', 'https://es.openfoodfacts.org/images/products/841/030/034/9051/front_es.59.400.jpg', 'Gallina Blanca', 'Caldo casero de pollo', 1.32, 3, true, 6);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Pan de molde grande - Bimbo - 368 g', 'https://es.openfoodfacts.org/images/products/841/260/001/2185/front_es.4.400.jpg', 'Bimbo', 'Pan de molde grande', 1.56, 3, true, 6);
+-- Tienda 7
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Ristorante Pizza Tonno - Dr. Oetker - 355 g', 'https://es.openfoodfacts.org/images/products/400/172/481/9301/front_de.8.400.jpg', 'Dr. Oetker', 'Ristorante Pizza Tonno', 2.13, 3, true, 7);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Cola Cao El Original - 383 g', 'https://es.openfoodfacts.org/images/products/841/001/447/8733/front_es.59.400.jpg', 'ColaCao', 'ColaCao', 3.34, 3, true, 7);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Diet Nature María sin azúcares - Gullón - 400 g', 'https://es.openfoodfacts.org/images/products/841/037/601/0701/front_es.83.400.jpg', 'Gullon', 'Diet Nature María sin azúcares', 2.60, 3, true, 7);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Crema de chocolate - LU - 300 g', 'https://es.openfoodfacts.org/images/products/762/221/020/4424/front_es.69.400.jpg', 'LU', 'Crema de chocolate', 1.69, 3, true, 7);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Original - Pringles - 165 g', 'https://es.openfoodfacts.org/images/products/505/399/012/7726/front_es.69.400.jpg', 'Pringles', 'Original - Pringles', 1.14, 3, true, 7);
+-- Tienda 8
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Gazpacho - Alvalle - 1 L', 'https://es.openfoodfacts.org/images/products/541/018/803/1072/front_fr.132.400.jpg', 'Alvalle', 'Gazpacho', 1.32, 3, true, 8);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Crema de calabaza - Knorr', 'https://es.openfoodfacts.org/images/products/871/716/388/9152/front_es.25.400.jpg', 'Knorr', 'Crema de calabaza', 1.29, 3, true, 8);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Crema de Alicia con calabaza, zanahoria y guisantes - Knorr', 'https://es.openfoodfacts.org/images/products/871/716/388/9091/front_es.18.400.jpg', 'Knorr', 'Crema de Alicia con calabaza, zanahoria y guisantes', 1.37, 3, true, 8);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Fresas - Fresón de Palos - 500 g', 'https://es.openfoodfacts.org/images/products/840/004/803/3503/front_es.41.400.jpg', 'Fresón de Palos', 'Fresas', 1.75, 3, true, 8);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Judías verdes planas - Ybarra - 660 g', 'https://es.openfoodfacts.org/images/products/841/008/652/0057/front_es.10.400.jpg', 'Ybarra', 'Judías verdes planas', 1.45, 3, true, 8);
+-- Tienda 9
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Empanados de verduras vegetarianos - My Best Veggie - 200 g', 'https://es.openfoodfacts.org/images/products/20330736/front_de.4.400.jpg', 'My Best Veggie', 'Empanados de verduras vegetarianos', 2.94, 3, true, 9);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Lentejas con verduras - Litoral - 430 g', 'https://es.openfoodfacts.org/images/products/761/303/466/5676/front_es.6.400.jpg', 'Litoral', 'Lentejas con verduras', 2.37, 3, true, 9);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Maiz dulce - Bonduelle - 150 g', 'https://es.openfoodfacts.org/images/products/841/037/511/0228/front_es.39.400.jpg', 'Bonduelle', 'Maiz dulce', 1.29, 3, true, 9);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Tomate triturado - Freshona', 'https://es.openfoodfacts.org/images/products/405/648/916/8683/front_es.3.400.jpg', 'Freshona', 'Tomate triturado', 1.87, 3, true, 9);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Lechuga baby - Lucas - 4ud', 'https://es.openfoodfacts.org/images/products/843/600/618/0002/front_fr.25.400.jpg', 'Lucas', 'Lechuga baby', 1.18, 3, true, 9);
+-- Tienda 10
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Yogur artesanal cremoso con fresas sin gluten - Pastoret - 500 g', 'https://es.openfoodfacts.org/images/products/842/479/010/7046/front_es.23.400.jpg', 'Pastoret', 'Yogur artesanal cremoso con fresas sin gluten', 2.58, 3, true, 10);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Yogurt con frutas - Gutbio - 150 g', 'https://es.openfoodfacts.org/images/products/24069052/front_es.49.400.jpg', 'Gutbio', 'Yogurt con frutas', 1.63, 3, true, 10);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Aguacate - Avoax - 700 g', 'https://es.openfoodfacts.org/images/products/20462062/front_es.10.400.jpg', 'Avoax', 'Aguacate', 1.31, 3, true, 10);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Aceite de coco virgen extra - Nat Sanno - 450 g', 'https://es.openfoodfacts.org/images/products/843/654/219/3474/front_es.26.400.jpg', 'Nat Sanno', 'Aceite de coco virgen extra', 3.05, 3, true, 10);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Mermelada de frambuesas - La Vieja Fabrica', 'https://es.openfoodfacts.org/images/products/841/013/402/3646/front_es.19.400.jpg', 'La Vieja Fabrica', 'Mermelada de frambuesas', 2.69, 3, true, 10);
 
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,1);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,2);
