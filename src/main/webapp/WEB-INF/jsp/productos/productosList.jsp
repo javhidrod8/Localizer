@@ -92,17 +92,17 @@
 	  	button.innerHTML = "Filtrar";
 	  	button.onclick = function(){
 	  		
-// 	  		preferencias.forEach(p => {
-// 				  if(!selectedPreferencia.includes(p)){
-//  					  selectedPreferencia.push(p);
-// 				  }
-// 			  })
+	  		preferencias.forEach(p => {
+				  if(!selectedPreferencia.includes(p)){
+ 					  selectedPreferencia.push(p);
+				  }
+			  })
 	  		
-// 	  		intolerancias.forEach(i => {
-// 				  if(document.getElementById(i).checked && !selectedIntolerancias.includes(i)){
-// 					  selectedIntolerancias.push(i);
-// 				  }
-// 			  })
+	  		intolerancias.forEach(i => {
+				  if(document.getElementById(i).checked && !selectedIntolerancias.includes(i)){
+					  selectedIntolerancias.push(i);
+				  }
+			  })
 			  
 			  document.getElementById('productos').innerHTML= prodHtml;
 			  var productosFiltrados = {...productos};
