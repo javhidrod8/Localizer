@@ -6,7 +6,7 @@
 <petclinic:layout pageName="productosList">
 
 
-	<h2>Productos</h2>
+	<h2>Productos</h2><br>
 	<div class="row" id="productos">
 		<!-- <c:forEach items="${productos}" var="producto">
         	<div class = "col-md-3">
@@ -40,12 +40,12 @@
 
 	<div class="row" id="intolerancias">
 		<c:forEach items="${intolerancias}" var="intolerancia"> 
-			 <input class="form-check-input" type="checkbox" name="" /> <c:out value="${intolerancia}"></c:out>
+			 <input class="form-check-input" type="checkbox" id="${intolerancia}"/> <c:out value="${intolerancia}"></c:out>
 			</c:forEach>
 	</div>
 	<div class="row" id="preferencias">
 		<c:forEach items="${preferencias}" var="preferencia"> 
-			 <input class="form-check-input" type="radio" name="" /> <c:out value="${preferencia}"></c:out>
+			 <input class="form-check-input" type="checkbox" id="${preferencia}" /> <c:out value="${preferencia}"></c:out>
 			</c:forEach>
 	</div>
 	<br><br>
@@ -82,12 +82,28 @@
 	/*TODO: asignar a las siguientes variable las intolerancias seleccionadas y la preferencia*/
 	/* ahora solo esta cogiendo la primera de todas las preferencias de la lista y todas las intolerancias disponibles*/
 		
-		var selectedPreferencia = preferencias.filter(onlyUnique)[0];
-		var selectedIntolerancias = intolerancias.filter(onlyUnique);	
-		 var button = document.createElement('button');
-		  prodHtml = "";
-		  button.innerHTML = "Filtrar";
-		  button.onclick = function(){
+// 		var selectedPreferencia = preferencias.filter(onlyUnique)[0];
+//  	var selectedIntolerancias = intolerancias.filter(onlyUnique);	
+		var selectedPreferencia = new Array();
+		var selectedIntolerancias = new Array();	
+
+		var button = document.createElement('button');
+	  	prodHtml = "";
+	  	button.innerHTML = "Filtrar";
+	  	button.onclick = function(){
+	  		
+// 	  		preferencias.forEach(p => {
+// 				  if(!selectedPreferencia.includes(p)){
+//  					  selectedPreferencia.push(p);
+// 				  }
+// 			  })
+	  		
+// 	  		intolerancias.forEach(i => {
+// 				  if(document.getElementById(i).checked && !selectedIntolerancias.includes(i)){
+// 					  selectedIntolerancias.push(i);
+// 				  }
+// 			  })
+			  
 			  document.getElementById('productos').innerHTML= prodHtml;
 			  var productosFiltrados = {...productos};
 			  if(selectedPreferencia != "" || selectedPreferencia != null || selectedIntolerancias.length > 0){
@@ -145,10 +161,10 @@
  		
 		var url2 = document.createElement("a");
  		url2.href="http://localhost:8080/producto/"+producto.id;
- 		url2.innerHTML+= "<p>"+producto.nombre+"</p>";;
+ 		url2.innerHTML+= "<h2>"+producto.nombre+"</h2>";
  		prodDiv.appendChild(url2);
  		
-		prodDiv.innerHTML+= "<p>"+producto.precio+" &#8364, marca "+producto.marca+"</p><br>";
+		prodDiv.innerHTML+= "<h3>"+producto.precio+" &#8364, marca "+producto.marca+"</h3><br>";
 		document.getElementById('productos').appendChild(prodDiv);
 	
 		/*TODO: crear aqui la estructura de un producto en la lista (se puede basar en lo que esta comentado de arriba) usando ya un objeto JS (producto) y no una variable de spring (${producto})*/
