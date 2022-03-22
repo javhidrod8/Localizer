@@ -22,8 +22,6 @@
 	<p><c:out value="${tienda.horario}"/></p>
 
 
-
-
     <table class="table table-striped">
     </table>
     
