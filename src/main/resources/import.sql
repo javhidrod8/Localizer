@@ -7,6 +7,22 @@ INSERT INTO authorities(id,username,authority) VALUES (2,'owner1','owner');
 -- One vet user, named vet1 with passwor v3t
 INSERT INTO users(username,password,enabled) VALUES ('vet1','v3t',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');
+-- Un usuario cliente, llamado cliente1 con la contraseña cli1
+INSERT INTO users(username,password,enabled) VALUES ('cliente1','cli1',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (4,'cliente1','cliente');
+-- Un usuario cliente, llamado cliente2 con la contraseña cli2
+INSERT INTO users(username,password,enabled) VALUES ('cliente2','cli2',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (5,'cliente2','cliente');
+-- Un usuario vendedor, llamado vendedor1 con la contraseña vend1
+INSERT INTO users(username,password,enabled) VALUES ('vendedor1','vend1',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (6,'vendedor1','vendedor');
+-- Un usuario vendedor, llamado vendedor2 con la contraseña vend2
+INSERT INTO users(username,password,enabled) VALUES ('vendedor2','vend2',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (7,'vendedor2','vendedor');
+-- Un usuario nutricionista, llamado nutricionista1 con la contraseña nut1
+INSERT INTO users(username,password,enabled) VALUES ('nutricionista1','nut1',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (8,'nutricionista1','nutricionista');
+
 
 -- Tolerancias
 INSERT INTO intolerancias(nombre) VALUES ('GLUTEN');
