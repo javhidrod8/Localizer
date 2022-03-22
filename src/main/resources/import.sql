@@ -39,10 +39,17 @@ INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, v
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Sos Arroz Redondo, 1 Kg', 'https://m.media-amazon.com/images/I/71r5m+wvvcL._AC_SL1500_.jpg', 'SOS', 'Arroz Redondo, 1 Kg', 4.98, 1, true, 1);
 
 
+
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,1);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,2);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,3);
-
-INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (2,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (2,4);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (2,2);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (2,3);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (3,7);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (4,5);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (4,6);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (6,7);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (6,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (6,3);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (7,10);

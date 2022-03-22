@@ -4,63 +4,46 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
 <petclinic:layout pageName="productosList">
-
-	<h2>Productos</h2><br>
-	<div class = "col-md-7">
-<input id="busqueda" type="text" class="form-control" placeholder="Busqueda de productos..."> </div>
-<div class = "col-md-1"><button onClick="Buscar()">Buscar</button>
-</div>
-<script>
+	<spring:url value="/productos/" var="productosUrl">
+	</spring:url>
+		<h2>Productos</h2> <br> <script>
 		function Buscar(){
 		  var text = $("#busqueda").val();
-		  location.href = 'http://localhost:8080/productos/'+text;
+		  location.href = "${fn:escapeXml(productosUrl)}"+text;
 		}
-
 </script>
-	<div class="row">
-	<div class = "col-md-2">
-	<div id="intolerancias">
-		<c:forEach items="${intolerancias}" var="intolerancia"> 
-			<input class="form-check-input" type="checkbox" id="${intolerancia}"/> <c:out value="${intolerancia}"></c:out></br></br>
-			</c:forEach>
-	</div>
-	<div id="preferencias">
-		<c:forEach items="${preferencias}" var="preferencia"> 
-			 <input class="form-check-input" type="checkbox" id="${preferencia}" /> <c:out value="${preferencia}"></c:out></br>
-			</c:forEach></br>
-	</div></div>
-	<div class = "col-md-9" id="productos" >
-		<!-- <c:forEach items="${productos}" var="producto">
-        	<div class = "col-md-3">
-        		<br><br>
-        		<spring:url value="/producto/{productoId}" var="productoUrl">
-        			<spring:param name="productoId" value="${producto.id}"/>
-        		</spring:url>
-        		<a href="${fn:escapeXml(productoUrl)}">
-        			<img height="200px" width="auto" src="<c:out value="${producto.imagen}"/>" style="margin:0px 50px"/>
-        		</a>
-        		<br><br>
-                <font size="+1">
-                    <spring:url value="/producto/{productoId}" var="productoUrl">
-                        <spring:param name="productoId" value="${producto.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(productoUrl)}">
-                    	<c:out value="${producto.nombre}"/>
-					</a>
-                </font>
-                <br>
-                <font size="+1">
-                    <c:out value="${producto.precio}"/>
-                    &#8364, marca 
-                </font>
-                <font size="+1">
-                    <c:out value="${producto.marca}"/>
-                </font>
+		<div class="row">
+			<div class="col-md-9">
+				<input id="busqueda" type="text" class="form-control"
+					placeholder="Busqueda de productos...">
 			</div>
-        </c:forEach> -->
-	</div></div>
-
-	<script type="text/javascript">
+			<div class="col-md-3">
+				<button onClick="Buscar()">Buscar</button>
+			</div>
+		</div>
+		<div class="row" style="margin-top: 2%">
+			<div class="col-md-3">
+				<div id="intolerancias">
+					<c:forEach items="${intolerancias}" var="intolerancia">
+						<input class="form-check-input" type="checkbox"
+							id="${intolerancia}" />
+						<c:out value="${intolerancia}"></c:out>
+						</br>
+						</br>
+					</c:forEach>
+				</div>
+				<div id="preferencias">
+					<c:forEach items="${preferencias}" var="preferencia">
+						<input class="form-check-input" type="checkbox"
+							id="${preferencia}" />
+						<c:out value="${preferencia}"></c:out>
+						</br>
+					</c:forEach>
+					</br>
+				</div>
+			</div>
+			<div class="col-md-9" id="productos"></div>
+		</div> <script type="text/javascript">
     var productos = new Array();
 
 	
@@ -105,9 +88,10 @@
 	  		
 	  		var selectedPreferencia = new Array();
 			var selectedIntolerancias = new Array();
-	  		
+			document.getElementById('productos').innerHTML= prodHtml;
+			var productosFiltrados = [...productos];
 	  		preferencias.forEach(p => {
-				  if(!selectedPreferencia.includes(p)){
+				  if(document.getElementById(p).checked && !selectedPreferencia.includes(p)){
  					  selectedPreferencia.push(p);
 				  }
 			  })
@@ -118,35 +102,48 @@
 				  }
 			  })
 			  			  
-			  document.getElementById('productos').innerHTML= prodHtml;
-			  var productosFiltrados = {...productos};
-			  if(selectedPreferencia != "" || selectedPreferencia != null || selectedIntolerancias.length > 0){
-				  productosFiltrados = [];
-				  if(selectedPreferencia != "" || selectedPreferencia != null ) {
-					  productos.forEach(e => {
-						  if(e.preferencia == selectedPreferencia){
-							  productosFiltrados.push(e);
+			  if(selectedPreferencia.length > 0 || selectedIntolerancias.length > 0){
+				  var indexListPreferencias = [];
+				  var indexListIntolerancias = [];
+				  if(selectedPreferencia.length > 0 ) {
+					  productosFiltrados.forEach(e => {
+						  if(!(e.preferencia == selectedPreferencia[0])){
+							  var index = productosFiltrados.indexOf(e);
+							  if(!(indexListPreferencias.includes(index))){
+								  indexListPreferencias.push(index);
+							  }
 						  }
 					  })
-				  } 
-				  if(selectedIntolerancias.length > 0) {
-					  var indexList = [];
-					  productos.forEach(e => {
-						  selectedIntolerancias.forEach(i => {
-							  if(e.intolerancias.includes(i)){
-								  var index = productos.indexOf(e);
-								  if(!(indexList.includes(index))){
-									  indexList.push(index);
-								  }
-							  }
-						  })
-					  })
-					  indexList.forEach(i => {
+				  }
+				  if(indexListPreferencias.length > 0){
+					  indexListPreferencias = indexListPreferencias.reverse();
+					  indexListPreferencias.forEach(i => {
 						  productosFiltrados.splice(i, 1);
 					  })
 				  }
+				  if(selectedIntolerancias.length > 0) {
+					  productosFiltrados.forEach(e => {
+						  selectedIntolerancias.forEach(i => {
+							  if(e.intolerancias.includes(i)){
+								  var index = productosFiltrados.indexOf(e);
+								  if(!(indexListIntolerancias.includes(index))){
+									  indexListIntolerancias.push(index);
+								  }
+							  }
+						  })
+					  }) 
+				  }
+				  if(indexListIntolerancias.length > 0){
+					  indexListIntolerancias = indexListIntolerancias.reverse();
+					  indexListIntolerancias.forEach(i => {
+						  productosFiltrados.splice(i, 1);
+					  })
+				  }
+			  } else {
+				  productosFiltrados = [...productos]
 			  }
-			  productosFiltrados.forEach(producto=> printProducto(producto));
+	  			productosFiltrados.forEach(producto=> printProducto(producto));
+			  
 		  };
 			
 		  document.getElementById('preferencias').appendChild(button);
@@ -190,6 +187,4 @@
 		};
 
 </script>
-
-
 </petclinic:layout>
