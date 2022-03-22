@@ -4,46 +4,52 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
 <petclinic:layout pageName="productosList">
-	<spring:url value="/productos/" var="productosUrl">
-	</spring:url>
-		<h2>Productos</h2> <br> <script>
+	<spring:url value="/productos/" var="productosUrl"></spring:url>
+	<spring:url value="/producto/" var="productoUrl"></spring:url>
+	<h2>Productos</h2>
+	<br>
+
+	<script>
 		function Buscar(){
 		  var text = $("#busqueda").val();
 		  location.href = "${fn:escapeXml(productosUrl)}"+text;
 		}
 </script>
-		<div class="row">
-			<div class="col-md-9">
+	<div class="row">
+			<div class="col-sm-11">
 				<input id="busqueda" type="text" class="form-control"
 					placeholder="Busqueda de productos...">
 			</div>
-			<div class="col-md-3">
-				<button onClick="Buscar()">Buscar</button>
+			<div class="col-sm-1">
+				<button class="btn btn-default" onClick="Buscar()">Buscar</button>
+			</div>
+
+	</div>
+	<div class="row" style="margin-top: 2%">
+		<div class="col-md-2">
+			<div id="intolerancias">
+				<h3>Intolerancias</h3>
+				<c:forEach items="${intolerancias}" var="intolerancia">
+					<input class="form-check-input" type="checkbox"
+						id="${intolerancia}" />
+					<c:out value="${intolerancia}"></c:out>
+					</br>
+					</br>
+				</c:forEach>
+			</div>
+			<div id="preferencias">
+				<h3>Preferencias</h3>
+				<c:forEach items="${preferencias}" var="preferencia">
+					<input class="form-check-input" type="checkbox" id="${preferencia}" />
+					<c:out value="${preferencia}"></c:out>
+					</br>
+				</c:forEach>
+				</br>
 			</div>
 		</div>
-		<div class="row" style="margin-top: 2%">
-			<div class="col-md-3">
-				<div id="intolerancias">
-					<c:forEach items="${intolerancias}" var="intolerancia">
-						<input class="form-check-input" type="checkbox"
-							id="${intolerancia}" />
-						<c:out value="${intolerancia}"></c:out>
-						</br>
-						</br>
-					</c:forEach>
-				</div>
-				<div id="preferencias">
-					<c:forEach items="${preferencias}" var="preferencia">
-						<input class="form-check-input" type="checkbox"
-							id="${preferencia}" />
-						<c:out value="${preferencia}"></c:out>
-						</br>
-					</c:forEach>
-					</br>
-				</div>
-			</div>
-			<div class="col-md-9" id="productos"></div>
-		</div> <script type="text/javascript">
+		<div class="col-md-10" id="productos"></div>
+	</div>
+	<script type="text/javascript">
     var productos = new Array();
 
 	
@@ -164,14 +170,14 @@
  		img.style="margin:0px 50px";
 		
  		var url = document.createElement("a");
- 		url.href="http://localhost:8080/producto/"+producto.id;
+ 		url.href="${fn:escapeXml(productoUrl)}"+producto.id;
  		
  		url.appendChild(img);
 		
  		prodDiv.appendChild(url);
  		
 		var url2 = document.createElement("a");
- 		url2.href="http://localhost:8080/producto/"+producto.id;
+ 		url2.href="${fn:escapeXml(productosUrl)}"+producto.id;
  		url2.innerHTML+= "<h2>"+producto.nombre+"</h2>";
  		prodDiv.appendChild(url2);
  		
