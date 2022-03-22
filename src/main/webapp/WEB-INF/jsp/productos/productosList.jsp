@@ -5,7 +5,23 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <petclinic:layout pageName="productosList">
 
-<h2>Productos</h2>
+
+<div class = "row">
+<div class = "col-md-2">
+<h2>Productos</h2> </div>
+<div class = "col-md-7">
+<input id="busqueda" type="text" class="form-control" placeholder="Busqueda de productos..."> </div>
+<div class = "col-md-1"><button onClick="Buscar()">Buscar</button>
+</div></div>
+<script>
+		function Buscar(){
+		  var text = $("#busqueda").val();
+		  location.href = 'http://localhost:8080/productos/'+text;
+		}
+
+</script>
+
+
 	<div class = "row">
         <c:forEach items="${productos}" var="producto">
         	<div class = "col-md-3">
