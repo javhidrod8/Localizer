@@ -5,9 +5,18 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
 <petclinic:layout pageName="productosList">
 
-
 	<h2>Productos</h2><br>
-	
+	<div class = "col-md-7">
+<input id="busqueda" type="text" class="form-control" placeholder="Busqueda de productos..."> </div>
+<div class = "col-md-1"><button onClick="Buscar()">Buscar</button>
+</div>
+<script>
+		function Buscar(){
+		  var text = $("#busqueda").val();
+		  location.href = 'http://localhost:8080/productos/'+text;
+		}
+
+</script>
 	<div class="row">
 	<div class = "col-md-2">
 	<div id="intolerancias">

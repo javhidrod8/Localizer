@@ -5,17 +5,13 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="tiendas">
-
 	<style>
 	.image {
 	float: left;
-	margin: 0 150px 15px 0;
-	max-width: 400px;
-	height: auto;
 	}
 	</style>
-
-	<img src="https://economipedia.com/wp-content/uploads/test-de-estr%C3%A9s.png" class="image">
+	<img height="400px" width=auto
+		src="<c:out value="${tienda.imagen}"/>" style="margin: 0px 50px" class="image" />
 	<h1><c:out value="${tienda.nombre}"/></h1>
 	<br>
 	<p><b>Localizaci&oacuten: </b></p>
@@ -23,9 +19,7 @@
 	<br>
 	<br>
 	<p><b>Horarios: </b></p>
-	<p>Horarios</p>
-
-
+	<p><c:out value="${tienda.horario}"/></p>
 
 
     <table class="table table-striped">
