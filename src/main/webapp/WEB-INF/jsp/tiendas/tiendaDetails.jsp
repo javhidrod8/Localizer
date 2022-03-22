@@ -5,25 +5,24 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="tiendas">
-	<style>
-	.image {
-	float: left;
-	}
-	</style>
-	<img height="400px" width=auto
-		src="<c:out value="${tienda.imagen}"/>" style="margin: 0px 50px" class="image" />
-	<h1><c:out value="${tienda.nombre}"/></h1>
-	<br>
-	<p><b>Localizaci&oacuten: </b></p>
-	<p><c:out value="${tienda.calle}"/></p>
-	<br>
-	<br>
-	<p><b>Horarios: </b></p>
-	<p><c:out value="${tienda.horario}"/></p>
 
+	<div class="row">
+		<div class="col-md-5">
+			<img src="<c:out value="${tienda.imagen}"/>" class="img-responsive" alt="Responsive image"/>
+		</div>
+		<h1><strong><c:out value="${tienda.nombre}"/></strong></h1>
+		<br>
+		<br>
+		<dl>
+			<dt>Localizaci&oacuten: </dt>
+			<dd><c:out value="${tienda.calle}"/></dd>
+			<br>
+			<br>
+			<dt>Horarios: </dt>
+			<dd><c:out value="${tienda.horario}"/></dd>
+		</dl>
+	</div>
 
-    <table class="table table-striped">
-    </table>
     
     <h2>Productos:</h2>
 	<div class = "row">
@@ -33,9 +32,9 @@
         		<spring:url value="/producto/{productoId}" var="productoUrl">
         			<spring:param name="productoId" value="${producto.id}"/>
         		</spring:url>
-        		<a href="${fn:escapeXml(productoUrl)}">
+        		<div href="${fn:escapeXml(productoUrl)}">
         			<img height="200px" width="auto" src="<c:out value="${producto.imagen}"/>" style="margin:0px 50px"/>
-        		</a>
+        		</div>
         		<br><br>
                 <font size="+1">
                     <spring:url value="/producto/{productoId}" var="productoUrl">
@@ -50,7 +49,7 @@
                     <c:out value="${producto.precio}"/>&#8364
                 </font>
                 <font size="+1">
-                    <input type="button" value="Reservar">
+                    <button type="button" class="btn btn-default btn-sm">Reservar</button>
                 </font>
 			</div>
         </c:forEach>
