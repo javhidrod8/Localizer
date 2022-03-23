@@ -177,7 +177,7 @@
  		prodDiv.appendChild(url);
  		
 		var url2 = document.createElement("a");
- 		url2.href="${fn:escapeXml(productosUrl)}"+producto.id;
+		url2.href="${fn:escapeXml(productoUrl)}"+producto.id;
  		url2.innerHTML+= "<h2>"+producto.nombre+"</h2>";
  		prodDiv.appendChild(url2);
  		
