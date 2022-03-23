@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,13 +33,11 @@ public class Tienda extends BaseEntity{
 	@Column(name = "provincia")
 	@NotEmpty
 	private String provincia;
-	
+  
 	@Column(name = "codigo_postal")
-	
 	private Integer codigoPostal;
 	
 	@Column(name = "telefono")
-
 	private Integer telefono;
 	
 	@Column(name = "imagen")

@@ -14,7 +14,7 @@ PetClinic :: a Spring Framework demonstration
     <spring:url value="/resources/images/favicon.png" var="favicon"/>
     <link rel="shortcut icon" type="image/x-icon" href="${favicon}">
 
-    <title>PetClinic :: a Spring Framework demonstration</title>
+    <title>Localizer: Conecta con tus clientes</title>
 
     <%-- CSS generated from LESS --%>
     <spring:url value="/resources/css/petclinic.css" var="petclinicCss"/>
