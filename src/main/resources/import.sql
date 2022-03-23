@@ -110,12 +110,111 @@ INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, v
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Tomate triturado - Freshona', 'https://es.openfoodfacts.org/images/products/405/648/916/8683/front_es.3.400.jpg', 'Freshona', 'Tomate triturado', 1.87, 3, true, 9);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Lechuga baby - Lucas - 4ud', 'https://es.openfoodfacts.org/images/products/843/600/618/0002/front_fr.25.400.jpg', 'Lucas', 'Lechuga baby', 1.18, 3, true, 9);
 -- Tienda 10
-INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Yogur artesanal cremoso con fresas sin gluten - Pastoret - 500 g', 'https://es.openfoodfacts.org/images/products/842/479/010/7046/front_es.23.400.jpg', 'Pastoret', 'Yogur artesanal cremoso con fresas sin gluten', 2.58, 3, true, 10);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Yogurt artesanal cremoso con fresas sin gluten - Pastoret - 500 g', 'https://es.openfoodfacts.org/images/products/842/479/010/7046/front_es.23.400.jpg', 'Pastoret', 'Yogur artesanal cremoso con fresas sin gluten', 2.58, 3, true, 10);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Yogurt con frutas - Gutbio - 150 g', 'https://es.openfoodfacts.org/images/products/24069052/front_es.49.400.jpg', 'Gutbio', 'Yogurt con frutas', 1.63, 3, true, 10);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Aguacate - Avoax - 700 g', 'https://es.openfoodfacts.org/images/products/20462062/front_es.10.400.jpg', 'Avoax', 'Aguacate', 1.31, 3, true, 10);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Aceite de coco virgen extra - Nat Sanno - 450 g', 'https://es.openfoodfacts.org/images/products/843/654/219/3474/front_es.26.400.jpg', 'Nat Sanno', 'Aceite de coco virgen extra', 3.05, 3, true, 10);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Mermelada de frambuesas - La Vieja Fabrica', 'https://es.openfoodfacts.org/images/products/841/013/402/3646/front_es.19.400.jpg', 'La Vieja Fabrica', 'Mermelada de frambuesas', 2.69, 3, true, 10);
 
+-- Tienda 1
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,1);
-INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,2);
-INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,3);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (4,1);
+-- Tienda 2
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (6,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (6,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (6,11);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (6,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (7,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (7,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (8,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (8,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (8,5);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (8,6);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (8,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (8,11);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (9,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (9,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (10,2);
+-- Tienda 3
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (12,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (12,11);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (12,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (15,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (15,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (15,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (15,6);
+-- Tienda 4
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (16,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (16,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (17,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (18,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (18,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (18,6);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (19,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (19,11);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (20,1);
+-- Tienda 5
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (21,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (21,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (22,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (22,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (22,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (22,6);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (22,11);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (24,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (24,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (21,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (24,6);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (25,2);
+-- Tienda 6
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (26,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (27,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (29,12);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (29,6);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (29,7);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (29,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (29,8);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (29,16);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (30,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (30,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (30,14);
+-- Tienda 7
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (31,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (31,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (31,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (31,7);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (32,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (33,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (33,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (33,5);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (33,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (33,14);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (34,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (34,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (34,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (34,6);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (35,1);
+-- Tienda 8
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (37,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (37,12);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (37,6);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (37,13);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (37,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (38,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (38,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (38,6);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (38,10);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (38,13);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (38,12);
+-- Tienda 9
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (41,1);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (41,6);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (41,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (41,12);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (41,15);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (41,13);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (44,1);
+-- Tienda 10
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (46,2);
+INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (47,2);
