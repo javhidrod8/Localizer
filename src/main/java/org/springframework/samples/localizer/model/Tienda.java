@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,11 +35,11 @@ public class Tienda extends BaseEntity{
 	private String provincia;
 	
 	@Column(name = "codigoPostal")
-	@NotEmpty
+	@NotNull
 	private Integer codigoPostal;
 	
 	@Column(name = "telefono")
-	@NotEmpty
+	@NotNull
 	private Integer telefono;
 	
 	@Column(name = "imagen")
@@ -51,6 +52,21 @@ public class Tienda extends BaseEntity{
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tienda", fetch = FetchType.EAGER)
 	private Set<Producto> productos;
+
+	public Tienda(Tienda tienda) {
+		this.calle=tienda.getCalle();
+		this.codigoPostal=tienda.getCodigoPostal();
+		this.descripcion=tienda.getDescripcion();
+		this.horario=tienda.getHorario();
+		this.imagen=tienda.getImagen();
+		this.nombre=tienda.getNombre();
+		this.provincia=tienda.getProvincia();
+		this.telefono=tienda.getTelefono();
+	}
+
+	public Tienda() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public String toString() {
