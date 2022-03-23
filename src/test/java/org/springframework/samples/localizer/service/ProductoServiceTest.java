@@ -10,7 +10,6 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.samples.localizer.model.Preferencias;
 import org.springframework.samples.localizer.model.Producto;
 import org.springframework.samples.localizer.model.Tienda;
-import org.springframework.test.context.transaction.BeforeTransaction;
 
 @SpringBootTest
 public class ProductoServiceTest {
@@ -34,7 +32,8 @@ public class ProductoServiceTest {
 	Producto producto1 = new Producto();
 	Producto producto2 = new Producto();
 	Tienda tienda1 = new Tienda();
-
+	
+	/*
 	@BeforeTransaction
 	public void setup() {
 
@@ -76,12 +75,12 @@ public class ProductoServiceTest {
 		this.tienda1.setTelefono(955444765);
 		this.tiendaService.saveTienda(tienda1);
 
-	}
+	}*/
 
 	@Test
 	// Encontrar tienda por el id
 	public void shouldFindProductoById() {
-		Producto producto = new Producto();
+		/*Producto producto = new Producto();
 
 		producto.setDescripcion("Tomate frito para cocinar");
 		producto.setId(2);
@@ -94,9 +93,9 @@ public class ProductoServiceTest {
 		producto.setTienda(null);
 		producto.setVerificado(true);
 
-		this.productoService.saveProducto(producto);
-		Producto p = this.productoService.findProductoById(producto.getId());
-		assertThat(p.getId()).isEqualTo(2).isNotNull();
+		this.productoService.saveProducto(producto);*/
+		Producto p = this.productoService.findProductoById(1);
+		assertThat(p.getId()).isEqualTo(1).isNotNull();
 	}
 
 	@Test
@@ -158,7 +157,7 @@ public class ProductoServiceTest {
 	// Encontrar todos los productos que contengan un nombre
 	public void shouldFindProductosByNombre() {
 
-		Producto producto1 = new Producto();
+		/*Producto producto1 = new Producto();
 		producto1.setDescripcion("Tomate frito para cocinar");
 		producto1.setId(2);
 		producto1.setImagen("....");
@@ -182,7 +181,7 @@ public class ProductoServiceTest {
 		producto2.setPreferencia(Preferencias.TODO);
 		producto2.setTienda(null);
 		producto2.setVerificado(true);
-		this.productoService.saveProducto(producto2);
+		
 
 		Producto producto3 = new Producto();
 		producto3.setDescripcion("Tomate frito para cocinar");
@@ -194,11 +193,11 @@ public class ProductoServiceTest {
 		producto3.setPrecio(2.50);
 		producto3.setPreferencia(Preferencias.TODO);
 		producto3.setTienda(null);
-		producto3.setVerificado(true);
-		this.productoService.saveProducto(producto3);
+		producto3.setVerificado(true);*/
+		
 
-		Collection<Producto> productos = this.productoService.findByNombre(producto3.getNombre());
-		assertThat(productos.size()).isEqualTo(2);
+		Collection<Producto> productos = this.productoService.findByNombre("crema");
+		assertThat(productos.size()).isEqualTo(4);
 	}
 
 	@Test // CASO NEGATIVO
@@ -219,7 +218,7 @@ public class ProductoServiceTest {
 	public void findAllProducts() {
 
 		Collection<Producto> productos = this.productoService.findAllProductos();
-		assertThat(productos.size()).isEqualTo(11);
+		assertThat(productos.size()).isEqualTo(50);
 	}
 
 }
