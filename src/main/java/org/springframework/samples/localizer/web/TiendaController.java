@@ -28,7 +28,7 @@ public class TiendaController {
 		return this.tiendaService.findTiendaById(tiendaId);
 	}
 	
-	@GetMapping(value = "/tienda/find")
+	@GetMapping(value = "/tiendas/find")
 	public String initFindByCPForm(Map<String, Object> model) {
 		model.put("tienda", new Tienda());
 		return "tiendas/findTiendaByCP";
@@ -62,7 +62,7 @@ public class TiendaController {
 	}
 
 	
-	@GetMapping("/tiendas/{tiendaId}")
+	@GetMapping("/tienda/{tiendaId}")
 	public ModelAndView showTienda(@PathVariable("tiendaId") int tiendaId) {
 		ModelAndView mav = new ModelAndView("tiendas/tiendaDetails");
 		mav.addObject(this.tiendaService.findTiendaById(tiendaId));
