@@ -28,7 +28,7 @@ public class TiendaController {
 		return this.tiendaService.findTiendaById(tiendaId);
 	}
 	
-	@GetMapping(value = "/tiendas/find")
+	@GetMapping(value = "/tienda/find")
 	public String initFindByCPForm(Map<String, Object> model) {
 		model.put("tienda", new Tienda());
 		return "tiendas/findTiendaByCP";
