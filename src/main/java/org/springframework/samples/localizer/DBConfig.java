@@ -17,7 +17,7 @@ public class DBConfig {
         dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
         dataSourceBuilder.url("jdbc:mysql://localhost:3306/localizer?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=CET&createDatabaseIfNotExist=true");
         dataSourceBuilder.username("root");
-        dataSourceBuilder.password("1234");
+        dataSourceBuilder.password("localizer");
         return dataSourceBuilder.build();
     }
 
