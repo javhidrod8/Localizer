@@ -16,6 +16,7 @@ public class TiendaService {
 	
 	private TiendaRepository tiendaRepository;
 	
+	
 	@Autowired
 	public TiendaService(TiendaRepository tiendaRepository) {
 		this.tiendaRepository = tiendaRepository;
@@ -30,10 +31,11 @@ public class TiendaService {
 	public Collection<Tienda> findByCodigoPostal(Integer codigoPostal) throws DataAccessException {
 		return tiendaRepository.findByCodigoPostal(codigoPostal);
 	}
-	
+
 	@Transactional
-	public void saveTienda(Tienda tienda) throws DataAccessException{
-		Tienda p = new Tienda(tienda);
-		tiendaRepository.save(p);
-	}
+    public void saveTienda(Tienda tienda) throws DataAccessException {
+        Tienda t = new Tienda(tienda);
+		tiendaRepository.save(t); 
+
+    }
 }

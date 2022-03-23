@@ -33,13 +33,11 @@ public class Tienda extends BaseEntity{
 	@Column(name = "provincia")
 	@NotEmpty
 	private String provincia;
-	
-	@Column(name = "codigoPostal")
-	@NotNull
+  
+	@Column(name = "codigo_postal")
 	private Integer codigoPostal;
 	
 	@Column(name = "telefono")
-	@NotNull
 	private Integer telefono;
 	
 	@Column(name = "imagen")

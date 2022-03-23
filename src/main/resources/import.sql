@@ -108,6 +108,7 @@ INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, v
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Aceite de coco virgen extra - Nat Sanno - 450 g', 'https://es.openfoodfacts.org/images/products/843/654/219/3474/front_es.26.200.jpg', 'Nat Sanno', 'Aceite de coco virgen extra', 3.05, 2, true, 10);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, verificado, tienda_id) VALUES ('Mermelada de frambuesas - La Vieja Fabrica', 'https://es.openfoodfacts.org/images/products/841/013/402/3646/front_es.19.200.jpg', 'La Vieja Fabrica', 'Mermelada de frambuesas', 2.69, 2, true, 10);
 
+
 --Tienda 1
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,1);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (1,10);
