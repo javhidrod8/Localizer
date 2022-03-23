@@ -2,19 +2,15 @@ package org.springframework.samples.localizer.model;
 
 import java.util.Set;
 
-import javax.persistence.ElementCollection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Positive;
-
-import org.hibernate.annotations.Cascade;
-
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "productos")
@@ -122,12 +118,14 @@ public class Producto extends BaseEntity{
 	
 	private String imagen;
 	
-	@ManyToMany(cascade = javax.persistence.CascadeType.ALL)
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-    @JoinTable(name = "producto_intolerancias", 
-    joinColumns = @JoinColumn(name = "producto_id"),
-    inverseJoinColumns = @JoinColumn(name = "intolerancias_id"))
-    @ElementCollection(targetClass = Intolerancias.class)
+	@ManyToMany(fetch = FetchType.LAZY,
+	  	      cascade = {
+		              CascadeType.PERSIST,
+		              CascadeType.MERGE
+		          })
+	    @JoinTable(name = "producto_intolerancias", 
+	    joinColumns = @JoinColumn(name = "producto_id"),
+	    inverseJoinColumns = @JoinColumn(name = "intolerancias_id"))
 	private Set<Intolerancias> intolerancia;
 	
 	private Preferencias preferencia;
