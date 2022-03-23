@@ -8,11 +8,13 @@
 <petclinic:layout pageName="productos">
 
 	<div class="row">
-		<div class="col-xs-6 col-sm-3">
+	<div class="col-sm-2">
+		</div>
+		<div class="col-sm-3">
 			<img height="200px" width=auto
 				src="<c:out value="${producto.imagen}"/>" style="margin: 0px 50px" />
 		</div>
-		<div class="col-xs-6 col-sm-4" style="margin-left: 2%">
+		<div class="col-sm-4" style="margin-left: 2%">
 			<b><c:out value="${producto.nombre}" /></b><br> <br>
 			<h2>
 				<c:out value="${producto.precio}" />
@@ -21,10 +23,14 @@
 					<i class="fa fa-check" style="margin-left: 2%"></i>
 				</c:if>
 			</h2>
-			<br>
-			<c:if test="${not empty producto.intolerancia  }">Contiene:   <c:out
-					value="${producto.intolerancia}" />
+			<c:if test="${not empty producto.intolerancia  }">
+			Intolerancias: <c:forEach items="${producto.intolerancia}" var="intolerancia">
+			<c:out	value="${intolerancia.nombre} " />
+			</c:forEach>
 			</c:if>
+			<c:if test="${not empty producto.preferencia}">
+			</br></br>Preferencias: <c:out	value="${producto.preferencia} " />
+			</c:if></br></br>
 			<spring:url value="/tienda/{tiendaId}" var="tiendaUrl">
 				<spring:param name="tiendaId" value="${producto.tienda.id}" />
 			</spring:url>
@@ -34,31 +40,31 @@
 			<button>Reservar</button>
 
 		</div>
-		<div class="col-xs-6 col-sm-3">
+		
+	</div></br></br>
+<div class="row">
+<div class="col-md-12">
+
 			<h3>Productos de esta tienda:</h3>
 			<br> <br>
 			<c:forEach items="${producto.tienda.productos}" var="productos">
-				<img height="100px" width=auto
+				<div class="col-md-3"><img height="100px" width=auto
 					src="<c:out value="${productos.imagen}"/>" style="margin: 0px 50px" />
 				</br>
 				</br>
 				<c:out value="${productos.nombre}" /> marca <c:out
-					value="${producto.marca}" />, 
-     <c:out value="${productos.precio}" /> &#8364<c:if
+					value="${producto.marca}" /></br> 
+     				<c:out value="${productos.precio}" /> &#8364<c:if
 					test="${productos.verificado==true}">
 					<i class="fa fa-check" style="margin-left: 2%"></i>
 				</c:if>
 				</h2>
-				<br>
 				</br>
 				<button>Reservar</button>
 				</br>
-				</br>
+				</br></div>
 			</c:forEach>
-		</div>
-	</div>
-
-
+		</div></div>
 
 
 
