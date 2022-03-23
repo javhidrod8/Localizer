@@ -7,20 +7,22 @@
 <petclinic:layout pageName="tiendas">
 
 	<div class="row">
-		<div class="col-md-5">
+		<div class="col-md-6">
 			<img src="<c:out value="${tienda.imagen}"/>" class="img-responsive" alt="Responsive image"/>
 		</div>
-		<h1><strong><c:out value="${tienda.nombre}"/></strong></h1>
-		<br>
-		<br>
-		<dl>
-			<dt>Localizaci&oacuten: </dt>
-			<dd><c:out value="${tienda.calle}"/></dd>
+		<div class="col-md-6">
+			<h1><strong><c:out value="${tienda.nombre}"/></strong></h1>
 			<br>
 			<br>
-			<dt>Horarios: </dt>
-			<dd><c:out value="${tienda.horario}"/></dd>
-		</dl>
+			<dl>
+				<dt>Localizaci&oacuten: </dt>
+				<dd><c:out value="${tienda.calle}"/></dd>
+				<br>
+				<br>
+				<dt>Horarios: </dt>
+				<dd><c:out value="${tienda.horario}"/></dd>
+			</dl>
+		</div>
 	</div>
 
     
