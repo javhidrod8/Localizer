@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.localizer.model.Intolerancias;
 import org.springframework.samples.localizer.model.Preferencias;
@@ -14,19 +16,28 @@ import org.springframework.samples.localizer.service.ProductoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ProductoController {
 
+	private static final String VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM = "productos/createOrUpdateProductoForm";
 	private final ProductoService productoService;
 
 	@Autowired
 	public ProductoController(ProductoService productoService) {
 		this.productoService = productoService;
+	}
+	
+	@InitBinder
+	public void setAllowedFields(WebDataBinder dataBinder) {
+		dataBinder.setDisallowedFields("id");
 	}
 //
 //	@ModelAttribute("producto")
@@ -107,4 +118,26 @@ public class ProductoController {
 			return vista;
 	}
 	
+	@GetMapping(value = "/producto/{productoId}/edit")
+	public String initUpdateProductoForm(@PathVariable("productoId") int productoId, ModelMap model) {
+		Producto producto = this.productoService.findProductoById(productoId);
+		model.put("editando", true);
+		model.put("producto",producto);
+		return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
+	}
+	
+	@PostMapping(value = "/producto/{productoId}/edit")
+	public String processUpdateProductoForm(@Valid Producto producto, BindingResult result,
+			@PathVariable("productoId") int productoId,ModelMap model) {
+		model.put("editando", true);
+		if (result.hasErrors()) {
+			model.put("producto",producto);
+			return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
+		}
+		else {
+			producto.setId(productoId);			
+			this.productoService.saveProducto(producto);
+			return "redirect:/producto/{productoId}";
+		}
+	}
 }
