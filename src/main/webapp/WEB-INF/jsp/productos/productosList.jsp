@@ -14,7 +14,8 @@
 		  var text = $("#busqueda").val();
 		  location.href = "${fn:escapeXml(productosUrl)}"+text;
 		}
-</script>
+	</script>
+	
 	<div class="row">
 			<div class="col-sm-11">
 				<input id="busqueda" type="text" class="form-control"
@@ -25,6 +26,7 @@
 			</div>
 
 	</div>
+	
 	<div class="row" style="margin-top: 2%">
 		<div class="col-md-2">
 			<div id="intolerancias">
@@ -49,10 +51,10 @@
 		</div>
 		<div class="col-md-10" id="productos"></div>
 	</div>
+	
 	<script type="text/javascript">
     var productos = new Array();
 
-	
 	/* TODO: rellenar los 2 siguientes arrays y crear un checkbox por cada ${preferencia} e ${intolerancia} (vienen del back, mientras se estan asignado en 1 y 2) */
 	/* se deben poder marcar varias intolerancias perso solo una preferencia */
 	
@@ -163,11 +165,10 @@
 		
 		var img = document.createElement('img');
 		img.src = producto.imagen;
+		img.className = 'img-responsive';
 		img.alt = "Imagen no encontrada";
 		img.id = "imagen"
-		img.height="200";
-// 		img.width="auto";
- 		img.style="margin:0px 50px";
+ 		img.style="margin:0px 50px; max-height: 200px; max-width: 200px";
 		
  		var url = document.createElement("a");
  		url.href="${fn:escapeXml(productoUrl)}"+producto.id;
