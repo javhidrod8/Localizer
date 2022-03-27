@@ -1,12 +1,18 @@
 package org.springframework.samples.localizer.web;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.localizer.model.Intolerancias;
+import org.springframework.samples.localizer.model.Preferencias;
+import org.springframework.samples.localizer.model.Producto;
 import org.springframework.samples.localizer.model.Tienda;
 import org.springframework.samples.localizer.service.TiendaService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -62,11 +68,27 @@ public class TiendaController {
 	}
 
 	
-	@GetMapping("/tienda/{tiendaId}")
-	public ModelAndView showTienda(@PathVariable("tiendaId") int tiendaId) {
-		ModelAndView mav = new ModelAndView("tiendas/tiendaDetails");
-		mav.addObject(this.tiendaService.findTiendaById(tiendaId));
-		return mav;
+//	@GetMapping("/tienda/{tiendaId}")
+//	public ModelAndView showTienda(@PathVariable("tiendaId") int tiendaId) {
+//		ModelAndView mav = new ModelAndView("tiendas/tiendaDetails");
+//		mav.addObject(this.tiendaService.findTiendaById(tiendaId));
+//		return mav;
+//	}
+	
+	@GetMapping(value = "/tienda/{tiendaId}")
+	public String productList(ModelMap modelMap) {
+		String vista = "tiendas/tiendaDetails";
+		Iterable<Producto> productos = this.tiendaService.findProductos();
+		Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
+		Set<Preferencias> preferencias = new HashSet<Preferencias>();
+		for (Producto p:productos) {
+			intolerancias.addAll(p.getIntolerancia());
+			preferencias.add(p.getPreferencia());
+		}
+			modelMap.addAttribute("productos", productos);
+			modelMap.addAttribute("intolerancias", intolerancias);
+			modelMap.addAttribute("preferencias", preferencias);
+			return vista;
 	}
 	
 }
