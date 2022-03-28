@@ -122,12 +122,16 @@ public class ProductoController {
 	public String initCreationProductoForm(Map<String, Object> model) {
 		Producto producto = new Producto();
 		model.put("producto", producto);
+        Boolean isNew = true;
+		model.put("isNew", isNew);
 		return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
 	}
 	
 	@PostMapping(value = "/productos/new")
 	public String processCreationProductoForm(@Valid Producto producto, BindingResult result, Map<String, Object> model) {		
 		if (result.hasErrors()) {
+            Boolean isNew = true;
+			model.put("isNew", isNew);
 			model.put("producto", producto);
 			return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
 		}
