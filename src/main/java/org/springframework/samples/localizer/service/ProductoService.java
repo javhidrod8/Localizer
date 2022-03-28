@@ -1,6 +1,5 @@
 package org.springframework.samples.localizer.service;
 
-
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,7 @@ public class ProductoService {
 	public ProductoService(ProductoRepository productoRepository) {
 		this.productoRepository = productoRepository;
 	}
+	
 	
 	@Transactional(readOnly = true)
 	public Producto findProductoById(int id) throws DataAccessException {
@@ -49,5 +49,13 @@ public class ProductoService {
 	@Transactional
 	public void saveProducto(Producto producto) throws DataAccessException{
 		productoRepository.save(producto);
+
+	}
+
+	@Transactional
+	public void deleteProducto(Producto producto) throws DataAccessException{
+		productoRepository.delete(producto);
+		
+
 	}
 }
