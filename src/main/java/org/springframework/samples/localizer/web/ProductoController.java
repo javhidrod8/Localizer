@@ -121,16 +121,18 @@ public class ProductoController {
 	@GetMapping(value = "/producto/{productoId}/edit")
 	public String initUpdateProductoForm(@PathVariable("productoId") int productoId, ModelMap model) {
 		Producto producto = this.productoService.findProductoById(productoId);
-		model.put("editando", true);
 		model.put("producto",producto);
+        Boolean isNew = false;
+		model.put("isNew", isNew)
 		return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
 	}
 	
 	@PostMapping(value = "/producto/{productoId}/edit")
 	public String processUpdateProductoForm(@Valid Producto producto, BindingResult result,
 			@PathVariable("productoId") int productoId,ModelMap model) {
-		model.put("editando", true);
 		if (result.hasErrors()) {
+            Boolean isNew = false;
+			model.put("isNew", isNew);
 			model.put("producto",producto);
 			return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
 		}
