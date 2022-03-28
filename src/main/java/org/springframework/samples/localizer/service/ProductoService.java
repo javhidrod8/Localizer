@@ -22,10 +22,6 @@ public class ProductoService {
 		this.productoRepository = productoRepository;
 	}
 	
-	@InitBinder
-	public void setAllowedFields(WebDataBinder dataBinder) {
-		dataBinder.setDisallowedFields("id");
-	}
 	
 	@Transactional(readOnly = true)
 	public Producto findProductoById(int id) throws DataAccessException {
