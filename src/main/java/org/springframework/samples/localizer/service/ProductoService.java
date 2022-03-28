@@ -3,6 +3,9 @@ package org.springframework.samples.localizer.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -17,6 +20,11 @@ public class ProductoService {
 	@Autowired
 	public ProductoService(ProductoRepository productoRepository) {
 		this.productoRepository = productoRepository;
+	}
+	
+	@InitBinder
+	public void setAllowedFields(WebDataBinder dataBinder) {
+		dataBinder.setDisallowedFields("id");
 	}
 	
 	@Transactional(readOnly = true)
@@ -41,7 +49,12 @@ public class ProductoService {
 	
 	@Transactional
 	public void saveProducto(Producto producto) throws DataAccessException{
-		Producto p = new Producto(producto);
-		productoRepository.save(p);
+		productoRepository.save(producto);
+	}
+
+	@Transactional
+	public void deleteProducto(Producto producto) throws DataAccessException{
+		productoRepository.delete(producto);
+		
 	}
 }
