@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -142,7 +144,6 @@ public class ProductoController {
 		}
 	}
 	
-
 	@GetMapping(value = "/producto/{productoId}/edit")
 	public String initUpdateProductoForm(@PathVariable("productoId") int productoId, ModelMap model) {
 		Producto producto = this.productoService.findProductoById(productoId);
@@ -165,5 +166,14 @@ public class ProductoController {
 			producto.setId(productoId);			
 			this.productoService.saveProducto(producto);
 			return "redirect:/producto/{productoId}";
+    }
+  }
+  	@RequestMapping(value = "/producto/{productoId}/delete")
+	public String deleteProducto(@PathVariable("productoId") final int productoId, final ModelMap model) {
+		Producto producto = this.productoService.findProductoById(productoId);
+		Integer id = producto.getTienda().getId();
+		this.productoService.deleteProducto(producto);
+		return "redirect:/tienda/"+id;
+	}
       
 }
