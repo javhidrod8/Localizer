@@ -39,6 +39,7 @@ public class ProductoController {
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
+
 //
 //	@ModelAttribute("producto")
 //	public Producto findProducto(@PathVariable("productoId") int productoId) {
@@ -57,7 +58,7 @@ public class ProductoController {
 //		model.put("producto", new Producto());
 //		return "productos/findProductos";
 //	}
-	
+
 //	@GetMapping(value = "/productos")
 //	public String processFindForm(Producto producto, BindingResult result, Map<String, Object> model) {
 //
@@ -84,40 +85,64 @@ public class ProductoController {
 //			return "productos/productosList";
 //		}
 //	}
-	
+
 	@GetMapping(value = "/productos/{name}")
 	public String productListByName(@PathVariable("name") String name, ModelMap modelMap) {
 		String vista = "productos/productosList";
 		Iterable<Producto> productos = this.productoService.findByNombre(name);
 		Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
 		Set<Preferencias> preferencias = new HashSet<Preferencias>();
-		for (Producto p:productos) {
+		for (Producto p : productos) {
 			intolerancias.addAll(p.getIntolerancia());
 			preferencias.add(p.getPreferencia());
 		}
-			modelMap.addAttribute("productos", productos);
-			modelMap.addAttribute("intolerancias", intolerancias);
-			modelMap.addAttribute("preferencias", preferencias);
-			return vista;
+		modelMap.addAttribute("productos", productos);
+		modelMap.addAttribute("intolerancias", intolerancias);
+		modelMap.addAttribute("preferencias", preferencias);
+		return vista;
 	}
-	
-	
+
 	@GetMapping(value = "/productos")
 	public String productList(ModelMap modelMap) {
 		String vista = "productos/productosList";
 		Iterable<Producto> productos = this.productoService.findAllProductos();
 		Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
 		Set<Preferencias> preferencias = new HashSet<Preferencias>();
-		for (Producto p:productos) {
+		for (Producto p : productos) {
 			intolerancias.addAll(p.getIntolerancia());
 			preferencias.add(p.getPreferencia());
 		}
-			modelMap.addAttribute("productos", productos);
-			modelMap.addAttribute("intolerancias", intolerancias);
-			modelMap.addAttribute("preferencias", preferencias);
-			return vista;
+		modelMap.addAttribute("productos", productos);
+		modelMap.addAttribute("intolerancias", intolerancias);
+		modelMap.addAttribute("preferencias", preferencias);
+		return vista;
+	}
+
+	@GetMapping(value = "/productos/new")
+	public String initCreationProductoForm(Map<String, Object> model) {
+		Producto producto = new Producto();
+		model.put("producto", producto);
+        Boolean isNew = true;
+		model.put("isNew", isNew);
+		return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
+	}
+  
+  @PostMapping(value = "/productos/new")
+	public String processCreationProductoForm(@Valid Producto producto, BindingResult result, Map<String, Object> model) {		
+		if (result.hasErrors()) {
+            Boolean isNew = true;
+			model.put("isNew", isNew);
+			model.put("producto", producto);
+			return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
+		}
+		else {
+			this.productoService.saveProducto(producto);
+            return "redirect:/producto/"+producto.getId();
+
+		}
 	}
 	
+
 	@GetMapping(value = "/producto/{productoId}/edit")
 	public String initUpdateProductoForm(@PathVariable("productoId") int productoId, ModelMap model) {
 		Producto producto = this.productoService.findProductoById(productoId);
@@ -140,6 +165,5 @@ public class ProductoController {
 			producto.setId(productoId);			
 			this.productoService.saveProducto(producto);
 			return "redirect:/producto/{productoId}";
-		}
-	}
+      
 }
