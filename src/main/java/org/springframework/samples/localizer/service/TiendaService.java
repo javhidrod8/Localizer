@@ -38,4 +38,10 @@ public class TiendaService {
 		tiendaRepository.save(t); 
 
     }
+	
+	@Transactional
+    public void deleteTienda(Tienda tienda) throws DataAccessException {
+		tiendaRepository.delete(tienda); 
+
+    }
 }

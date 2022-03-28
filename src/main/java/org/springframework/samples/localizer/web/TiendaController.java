@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.localizer.model.Tienda;
 import org.springframework.samples.localizer.service.TiendaService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -68,5 +69,13 @@ public class TiendaController {
 		mav.addObject(this.tiendaService.findTiendaById(tiendaId));
 		return mav;
 	}
+	
+	@GetMapping(value = "/tienda/{tiendaId}/delete")
+    public String deleteTienda(@PathVariable("tiendaId") int tiendaId, ModelMap model) {
+		Tienda tienda = this.tiendaService.findTiendaById(tiendaId);
+		this.tiendaService.deleteTienda(tienda);
+        return "redirect:/";
+     
+    }
 	
 }
