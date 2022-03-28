@@ -45,11 +45,13 @@ public class ProductoService {
 	@Transactional
 	public void saveProducto(Producto producto) throws DataAccessException{
 		productoRepository.save(producto);
+
 	}
 
 	@Transactional
 	public void deleteProducto(Producto producto) throws DataAccessException{
 		productoRepository.delete(producto);
 		
+
 	}
 }
