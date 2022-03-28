@@ -90,5 +90,29 @@ public class TiendaController {
 			modelMap.addAttribute("preferencias", preferencias);
 			return vista;
 	}
+		
+	@GetMapping("/tiendas/new")
+	public String initCreationTiendaForm(Map<String, Object> model) {
+		Tienda tienda = new Tienda();
+		model.put("tienda", tienda);
+		Boolean isNew = true;
+		model.put("isNew", isNew);
+		return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
+	}
+	
+	@PostMapping("/tiendas/new")
+	public String processCreationTiendaForm(@Valid Tienda tienda, BindingResult result, Map<String, Object> model) {
+		if(result.hasErrors()) {
+			Boolean isNew = true;
+			model.put("isNew", isNew);
+			model.put("tienda", tienda);
+			return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
+		}
+		else {
+			this.tiendaService.saveTienda(tienda);
+			return "redirect:/tienda/" + tienda.getId();
+		}
+	}
 	
 }
+
