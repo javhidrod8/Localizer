@@ -41,7 +41,6 @@ public class ProductoService {
 	
 	@Transactional
 	public void saveProducto(Producto producto) throws DataAccessException{
-		Producto p = new Producto(producto);
-		productoRepository.save(p);
+		productoRepository.save(producto);
 	}
 }
