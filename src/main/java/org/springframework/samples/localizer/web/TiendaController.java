@@ -2,25 +2,36 @@ package org.springframework.samples.localizer.web;
 
 import java.util.Collection;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.localizer.model.Tienda;
 import org.springframework.samples.localizer.service.TiendaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class TiendaController {
 	
+	private static final String VIEWS_TIENDA_CREATE_OR_UPDATE_FORM = "tiendas/createOrUpdateTiendaForm";
 	private final TiendaService tiendaService;
 	
 	@Autowired
 	public TiendaController(TiendaService tiendaService) {
 		this.tiendaService = tiendaService;
+	}
+	
+	@InitBinder
+	public void setAllowedFields(WebDataBinder dataBinder) {
+		dataBinder.setDisallowedFields("id");
 	}
 	
 	@ModelAttribute("tienda")
@@ -67,6 +78,29 @@ public class TiendaController {
 		ModelAndView mav = new ModelAndView("tiendas/tiendaDetails");
 		mav.addObject(this.tiendaService.findTiendaById(tiendaId));
 		return mav;
+	}
+	
+	@GetMapping("/tiendas/new")
+	public String initCreationTiendaForm(Map<String, Object> model) {
+		Tienda tienda = new Tienda();
+		model.put("tienda", tienda);
+		Boolean isNew = true;
+		model.put("isNew", isNew);
+		return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
+	}
+	
+	@PostMapping("/tiendas/new")
+	public String processCreationTiendaForm(@Valid Tienda tienda, BindingResult result, Map<String, Object> model) {
+		if(result.hasErrors()) {
+			Boolean isNew = true;
+			model.put("isNew", isNew);
+			model.put("tienda", tienda);
+			return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
+		}
+		else {
+			this.tiendaService.saveTienda(tienda);
+			return "redirect:/tienda/" + tienda.getId();
+		}
 	}
 	
 }
