@@ -39,7 +39,7 @@ public class ProductoController {
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
+
 //
 //	@ModelAttribute("producto")
 //	public Producto findProducto(@PathVariable("productoId") int productoId) {
@@ -126,8 +126,8 @@ public class ProductoController {
 		model.put("isNew", isNew);
 		return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
 	}
-	
-	@PostMapping(value = "/productos/new")
+  
+  @PostMapping(value = "/productos/new")
 	public String processCreationProductoForm(@Valid Producto producto, BindingResult result, Map<String, Object> model) {		
 		if (result.hasErrors()) {
             Boolean isNew = true;
@@ -138,6 +138,32 @@ public class ProductoController {
 		else {
 			this.productoService.saveProducto(producto);
             return "redirect:/producto/"+producto.getId();
+
 		}
 	}
+	
+
+	@GetMapping(value = "/producto/{productoId}/edit")
+	public String initUpdateProductoForm(@PathVariable("productoId") int productoId, ModelMap model) {
+		Producto producto = this.productoService.findProductoById(productoId);
+		model.put("producto",producto);
+        Boolean isNew = false;
+		model.put("isNew", isNew);
+		return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
+	}
+	
+	@PostMapping(value = "/producto/{productoId}/edit")
+	public String processUpdateProductoForm(@Valid Producto producto, BindingResult result,
+			@PathVariable("productoId") int productoId,ModelMap model) {
+		if (result.hasErrors()) {
+            Boolean isNew = false;
+			model.put("isNew", isNew);
+			model.put("producto",producto);
+			return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
+		}
+		else {
+			producto.setId(productoId);			
+			this.productoService.saveProducto(producto);
+			return "redirect:/producto/{productoId}";
+      
 }
