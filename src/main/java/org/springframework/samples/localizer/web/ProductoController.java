@@ -123,7 +123,7 @@ public class ProductoController {
 		Producto producto = this.productoService.findProductoById(productoId);
 		model.put("producto",producto);
         Boolean isNew = false;
-		model.put("isNew", isNew)
+		model.put("isNew", isNew);
 		return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
 	}
 	
