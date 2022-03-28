@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
+import javax.validation.Valid;
+import org.springframework.web.bind.annotation.PostMapping;
+
 
 @Controller
 public class TiendaController {
-	
+	private static final String VIEWS_TIENDA_CREATE_OR_UPDATE_FORM = "tiendas/createOrUpdateTiendaForm";
 	private final TiendaService tiendaService;
 	
 	@Autowired
@@ -115,4 +118,3 @@ public class TiendaController {
 	}
 	
 }
-
