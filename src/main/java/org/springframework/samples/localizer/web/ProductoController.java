@@ -13,6 +13,7 @@ import org.springframework.samples.localizer.model.Estado;
 import org.springframework.samples.localizer.model.Intolerancias;
 import org.springframework.samples.localizer.model.Preferencias;
 import org.springframework.samples.localizer.model.Producto;
+import org.springframework.samples.localizer.service.IntoleranciasService;
 import org.springframework.samples.localizer.service.ProductoService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -36,10 +37,12 @@ public class ProductoController {
 	private static final String VIEWS_ERROR_AUTH = "productos/createOrUpdateProductoForm";
 	private static final String VIEWS_PRODUCTO_RECHAZAR_FORM = "productos/rechazarProductoForm";
 	private final ProductoService productoService;
+	private final IntoleranciasService intoleranciasService;
 
 	@Autowired
-	public ProductoController(ProductoService productoService) {
+	public ProductoController(ProductoService productoService, IntoleranciasService intoleranciasService) {
 		this.productoService = productoService;
+		this.intoleranciasService = intoleranciasService;
 	}
 
 	@InitBinder
@@ -53,15 +56,14 @@ public class ProductoController {
 		mav.addObject(this.productoService.findProductoById(productoId));
 		return mav;
 	}
-	
+
 	@GetMapping(value = "/productos/search")
 	public String productListSearchEmpty(ModelMap modelMap) {
 		String vista = "productos/productosList";
 		Iterable<Producto> productos = this.productoService.findAllProductos();
-		Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
+		Collection<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
 		Set<Preferencias> preferencias = new HashSet<Preferencias>();
 		for (Producto p : productos) {
-			intolerancias.addAll(p.getIntolerancia());
 			preferencias.add(p.getPreferencia());
 		}
 		modelMap.addAttribute("productos", productos);
@@ -74,10 +76,9 @@ public class ProductoController {
 	public String productListByName(@PathVariable("name") String name, ModelMap modelMap) {
 		String vista = "productos/productosList";
 		Iterable<Producto> productos = this.productoService.findByNombre(name);
-		Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
+		Collection<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
 		Set<Preferencias> preferencias = new HashSet<Preferencias>();
 		for (Producto p : productos) {
-			intolerancias.addAll(p.getIntolerancia());
 			preferencias.add(p.getPreferencia());
 		}
 		modelMap.addAttribute("productos", productos);
@@ -91,10 +92,9 @@ public class ProductoController {
 	public String productList(ModelMap modelMap) {
 		String vista = "productos/productosList";
 		Iterable<Producto> productos = this.productoService.findAllProductos();
-		Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
+		Collection<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
 		Set<Preferencias> preferencias = new HashSet<Preferencias>();
 		for (Producto p : productos) {
-			intolerancias.addAll(p.getIntolerancia());
 			preferencias.add(p.getPreferencia());
 		}
 		modelMap.addAttribute("productos", productos);
@@ -142,7 +142,7 @@ public class ProductoController {
 
 		}
 	}
-  
+
 	@GetMapping(value = "/producto/{productoId}/edit")
 	public String initUpdateProductoForm(@PathVariable("productoId") int productoId, ModelMap model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -206,14 +206,15 @@ public class ProductoController {
 			producto.setId(productoId);
 			this.productoService.saveProducto(producto);
 			return "redirect:/producto/{productoId}";
-    }
-  }
-  	@RequestMapping(value = "/producto/{productoId}/delete")
+		}
+	}
+
+	@RequestMapping(value = "/producto/{productoId}/delete")
 	public String deleteProducto(@PathVariable("productoId") final int productoId, final ModelMap model) {
 		Producto producto = this.productoService.findProductoById(productoId);
 		Integer id = producto.getTienda().getId();
 		this.productoService.deleteProducto(producto);
-		return "redirect:/tienda/"+id;
+		return "redirect:/tienda/" + id;
 	}
 
 }
