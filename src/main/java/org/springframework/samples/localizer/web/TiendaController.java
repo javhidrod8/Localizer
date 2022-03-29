@@ -15,8 +15,10 @@ import org.springframework.samples.localizer.model.Tienda;
 import org.springframework.samples.localizer.model.User;
 import org.springframework.samples.localizer.service.TiendaService;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class TiendaController {
 	private static final String VIEWS_TIENDA_CREATE_OR_UPDATE_FORM = "tiendas/createOrUpdateTiendaForm";
+	private static final String VIEWS_ERROR_AUTH = "productos/createOrUpdateProductoForm";
 	private final TiendaService tiendaService;
 	
 	@Autowired
@@ -100,21 +103,26 @@ public class TiendaController {
 	@GetMapping("/tiendas/new")
 	public String initCreationTiendaForm(Map<String, Object> model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User currentUser = (User) authentication.getPrincipal();
-		Tienda tienda = new Tienda();
-		tienda.setUser(currentUser);
-		model.put("tienda", tienda);
-		Boolean isNew = true;
-		model.put("isNew", isNew);
+		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		String auth = currentPrincipalName.iterator().next().toString().trim();
+		model.put("auth", auth);
+		if (auth.equals("vendedor") || auth.equals("admin")) {
+			Tienda tienda = new Tienda();
+			model.put("tienda", tienda);
+			Boolean isNew = true;
+			model.put("isNew", isNew);
+			return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
+		}else {
+			return VIEWS_ERROR_AUTH;
+		}
 		
-		return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
 	}
 	
 	@PostMapping("/tiendas/new")
 	public String processCreationTiendaForm(@Valid Tienda tienda, BindingResult result, Map<String, Object> model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User currentUser = (User) authentication.getPrincipal();
 		if(result.hasErrors()) {
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			User currentUser = (User) authentication.getPrincipal();
 			Boolean isNew = true;
 			tienda.setUser(currentUser);
 			model.put("isNew", isNew);
@@ -122,26 +130,35 @@ public class TiendaController {
 			return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
 		}
 		else {
+			tienda.setUser(currentUser);
 			this.tiendaService.saveTienda(tienda);
 			return "redirect:/tienda/" + tienda.getId();
 		}
 	}
   
   @GetMapping(value = "/tienda/{tiendaId}/edit")
-	public String initUpdateTiendaForm(@PathVariable("tiendaId") int tiendaId, Model model) {
-		Tienda tienda = this.tiendaService.findTiendaById(tiendaId);
-		Boolean isNew=false;
-		model.addAttribute(isNew);
-		model.addAttribute(tienda);
-		return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
+	public String initUpdateTiendaForm(@PathVariable("tiendaId") int tiendaId, Map<String, Object> model) {
+	  Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		String auth = currentPrincipalName.iterator().next().toString().trim();
+		model.put("auth", auth);
+		if (auth.equals("vendedor") || auth.equals("admin")) {
+			 Tienda tienda = this.tiendaService.findTiendaById(tiendaId);
+				Boolean isNew=false;
+				model.put("isNew", isNew);
+				model.put("tienda", tienda);
+				return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
+		}else {
+			return VIEWS_ERROR_AUTH;
+		}
 	}
 	
 	@PostMapping(value = "/tienda/{tiendaId}/edit")
 	public String processUpdateTiendaForm(@Valid Tienda tienda, BindingResult result,
-			@PathVariable("tiendaId") int tiendaId,Model model) {
+			@PathVariable("tiendaId") int tiendaId,Map<String, Object> model) {
 		if (result.hasErrors()) {
 			Boolean isNew=false;
-			model.addAttribute(isNew);
+			model.put("isNew", isNew);
 			return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
 		}
 		else {
@@ -153,10 +170,20 @@ public class TiendaController {
 	
 	@GetMapping(value = "/tienda/{tiendaId}/delete")
     public String deleteTienda(@PathVariable("tiendaId") int tiendaId, ModelMap model) {
-		Tienda tienda = this.tiendaService.findTiendaById(tiendaId);
-		this.tiendaService.deleteTienda(tienda);
-        return "redirect:/";
-     
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		String auth = currentPrincipalName.iterator().next().toString().trim();
+		model.put("auth", auth);
+		User currentUser = (User) authentication.getPrincipal();
+		if ((auth.equals("vendedor") && currentUser.getTienda().getId().equals(tiendaId)) || auth.equals("admin")) {
+			Tienda tienda = this.tiendaService.findTiendaById(tiendaId);
+			this.tiendaService.deleteTienda(tienda);
+			return "redirect:/";
+		}else {
+			return VIEWS_ERROR_AUTH;
+		}
+		
+		
     }
 	
 }
