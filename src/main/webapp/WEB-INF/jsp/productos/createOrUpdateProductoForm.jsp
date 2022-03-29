@@ -124,19 +124,20 @@
 	<script type="text/javascript">
 var intolerancias = new Array();
 <c:forEach items="${intolerancias}" var="intolerancia">
-	intolerancias.push("${intolerancia}");
+	intolerancia = {id:"${intolerancia.id}", nombre:"${intolerancia.nombre}"};
+	intolerancias.push(intolerancia);
 </c:forEach>
-intolerancias.forEach((intolerancia, i) => {
+intolerancias.forEach((intolerancia) => {
       var divIntolerancia = document.createElement('div');
       divIntolerancia.className="checkbox-inline";
       var label = document.createElement('label');
       var input = document.createElement('input');
       input.type ="checkbox";
       input.name ="intolerancia";
-      input.value = i;
-      console.log(intolerancia,i);
+      input.value = intolerancia.id;
+      console.log(intolerancia);
       label.appendChild(input);
-      label.innerHTML +=" "+ intolerancia;
+      label.innerHTML +=" "+ intolerancia.nombre;
       divIntolerancia.appendChild(label);
       document.getElementById("intolerancias-producto").appendChild(divIntolerancia);
 
@@ -149,17 +150,20 @@ var preferencias = new Array();
 	preferencias.push("${preferencia}");
 </c:forEach>
 preferencias.forEach((preferencia, i) => {
-      var divPreferencia = document.createElement('div');
-      divPreferencia.className="radio-inline";
-      var label = document.createElement('label');
-      var input = document.createElement('input');
-      input.type ="radio";
-      input.name ="preferencia";
-      input.value = preferencia;
-      label.appendChild(input);
-      label.innerHTML +=" "+ preferencia;
-      divPreferencia.appendChild(label);
-      document.getElementById("preferencias-producto").appendChild(divPreferencia);
+	if (preferencia!="" && preferencia!=null){
+	      var divPreferencia = document.createElement('div');
+	      divPreferencia.className="radio-inline";
+	      var label = document.createElement('label');
+	      var input = document.createElement('input');
+	      input.type ="radio";
+	      input.name ="preferencia";
+	      input.value = preferencia;
+	      label.appendChild(input);
+	      label.innerHTML +=" "+ preferencia;
+	      divPreferencia.appendChild(label);
+	      document.getElementById("preferencias-producto").appendChild(divPreferencia);
+	}
+
 
    });
 </script>
