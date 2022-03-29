@@ -19,7 +19,8 @@
             <petclinic:inputField label="Motivo" name="motivo"></petclinic:inputField><%--es un textArea --%>
             <petclinic:inputField label="Promocionado" name="promocionado"></petclinic:inputField><%--es un radio con dos opciones, tiene que devolver 0 o 1 --%>
            <%-- <petclinic:inputField label="Intolerancias" name="intolerancia"></petclinic:inputField><%--es un checkbox y necesita toda la lista de intolerancias --%>
-           <%-- <petclinic:inputField label="Preferencia" name="preferencia"></petclinic:inputField>es un radio y necesita toda la lista de preferencias --%>
+           <petclinic:inputField label="Preferencia" name="preferencia"></petclinic:inputField><%-- es un radio y necesita toda la lista de preferencias --%>
+           <petclinic:inputField label="Tienda" name="tienda"></petclinic:inputField>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
