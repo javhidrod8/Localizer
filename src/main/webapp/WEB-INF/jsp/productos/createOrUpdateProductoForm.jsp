@@ -56,19 +56,23 @@
 				</div>
 				<div id="estado-producto">
 					<h3>Estado:</h3>
+					<script type="text/javascript">console.log("${producto.estado}")</script>
 					<div class="radio-inline">
 						<label> <input type="radio" name="estado" id="pendiente"
-							value="PENDIENTE"> PENDIENTE
+							value="PENDIENTE" 						     				
+							<c:if test="${producto.estado=='PENDIENTE'}">checked</c:if> > PENDIENTE
 						</label>
 					</div>
 					<div class="radio-inline">
 						<label> <input type="radio" name="estado" id="aceptado"
-							value="ACEPTADO"> ACEPTADO
+							value="ACEPTADO"
+							<c:if test="${producto.estado=='ACEPTADO'}">checked</c:if> > ACEPTADO
 						</label>
 					</div>
 					<div class="radio-inline">
 						<label> <input type="radio" name="estado" id="rechazado"
-							value="RECHAZADO"> RECHAZADO
+							value="RECHAZADO"
+							<c:if test="${producto.estado=='RECHAZADO'}">checked</c:if> > RECHAZADO
 						</label>
 					</div>
 				</div>
@@ -85,12 +89,12 @@
 					<h3>Promocionado:</h3>
 					<div class="radio-inline">
 						<label> <input type="radio" name="promocionado"
-							id="pendiente" value="TRUE"> SI
+							id="no" value="TRUE" <c:if test="${producto.promocionado}">checked</c:if>> SI
 						</label>
 					</div>
 					<div class="radio-inline">
 						<label> <input type="radio" name="promocionado"
-							id="aceptado" value="FALSE"> NO
+							id="si" value="FALSE" <c:if test="${!producto.promocionado}">checked</c:if>> NO
 						</label>
 					</div>
 				</div>
