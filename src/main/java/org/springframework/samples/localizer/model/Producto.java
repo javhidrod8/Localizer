@@ -12,19 +12,47 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Positive;
 
+import org.springframework.lang.Nullable;
+
 @Entity
 @Table(name = "productos")
-public class Producto extends BaseEntity{
-	
+public class Producto extends BaseEntity {
+
 	private String nombre;
-	
+
 	@Positive
 	private Double precio;
-	
+
 	private String marca;
-	
+
 	private String descripcion;
+
+	private Estado estado;
+
+	private Boolean promocionado;
+
+	private String imagen;
 	
+	private String motivo;
+
+	public String getMotivo() {
+		return motivo;
+	}
+
+	public void setMotivo(String motivo) {
+		this.motivo = motivo;
+	}
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "producto_intolerancias", joinColumns = @JoinColumn(name = "producto_id"), inverseJoinColumns = @JoinColumn(name = "intolerancias_id"))
+	private Set<Intolerancias> intolerancia;
+
+	private Preferencias preferencia;
+
+	@ManyToOne
+	@JoinColumn(name = "tienda_id")
+	private Tienda tienda;
+
 	public Producto(Producto producto) {
 		this.descripcion = producto.getDescripcion();
 		this.imagen = producto.getImagen();
@@ -33,10 +61,17 @@ public class Producto extends BaseEntity{
 		this.precio = producto.getPrecio();
 		this.preferencia = producto.getPreferencia();
 		this.intolerancia = producto.getIntolerancia();
-		this.verificado = producto.getVerificado();
+		this.promocionado = producto.getPromocionado();
+		this.estado = producto.getEstado();
 	}
-	
-	
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
 
 	public Producto() {
 		super();
@@ -74,12 +109,12 @@ public class Producto extends BaseEntity{
 		this.descripcion = descripcion;
 	}
 
-	public Boolean getVerificado() {
-		return verificado;
+	public Boolean getPromocionado() {
+		return promocionado;
 	}
 
-	public void setVerificado(Boolean verificado) {
-		this.verificado = verificado;
+	public void setPromocionado(Boolean promocionado) {
+		this.promocionado = promocionado;
 	}
 
 	public String getImagen() {
@@ -114,32 +149,11 @@ public class Producto extends BaseEntity{
 		this.tienda = tienda;
 	}
 
-	private Boolean verificado;
-	
-	private String imagen;
-	
-	@ManyToMany(fetch = FetchType.LAZY,
-	  	      cascade = {
-		              CascadeType.PERSIST,
-		              CascadeType.MERGE
-		          })
-	    @JoinTable(name = "producto_intolerancias", 
-	    joinColumns = @JoinColumn(name = "producto_id"),
-	    inverseJoinColumns = @JoinColumn(name = "intolerancias_id"))
-	private Set<Intolerancias> intolerancia;
-	
-	private Preferencias preferencia;
-	
-	@ManyToOne
-	@JoinColumn(name="tienda_id")
-	private Tienda tienda;
-
 	@Override
 	public String toString() {
 		return "Producto [nombre=" + nombre + ", precio=" + precio + ", marca=" + marca + ", descripcion=" + descripcion
-				+ ", verificado=" + verificado + ", imagen=" + imagen + ", intolerancia=" + intolerancia
-				+ ", preferencia=" + preferencia + "]";
+				+ ", promocionado=" + promocionado + ", imagen=" + imagen + ", intolerancia=" + intolerancia
+				+ ", preferencia=" + preferencia + ", estado=" + estado + "]";
 	}
-	
 
 }

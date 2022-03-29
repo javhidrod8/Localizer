@@ -126,7 +126,7 @@ public class ProductoServiceTest {
 		producto1.setPrecio(2.50);
 		producto1.setPreferencia(Preferencias.TODO);
 		producto1.setTienda(tienda);
-		producto1.setVerificado(true);
+		producto1.setPromocionado(true);
 		this.productoService.saveProducto(producto1);
 
 		Producto producto2 = new Producto();
@@ -139,7 +139,7 @@ public class ProductoServiceTest {
 		producto2.setPrecio(20.00);
 		producto2.setPreferencia(Preferencias.TODO);
 		producto2.setTienda(tienda);
-		producto2.setVerificado(true);
+		producto2.setPromocionado(true);
 		this.productoService.saveProducto(producto2);
 
 		Set<Producto> productos = new HashSet<Producto>();
