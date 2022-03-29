@@ -44,6 +44,10 @@ public class TiendaService {
 	public Collection<Producto> findProductos() throws DataAccessException {		
 		return tiendaRepository.findAllProductos();
 	}
+  
+  @Transactional
+  public void deleteTienda(Tienda tienda) throws DataAccessException {
+		tiendaRepository.delete(tienda); 
+  }
 	
 }
-

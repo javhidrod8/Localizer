@@ -151,4 +151,12 @@ public class TiendaController {
 		}
 	}
 	
+	@GetMapping(value = "/tienda/{tiendaId}/delete")
+    public String deleteTienda(@PathVariable("tiendaId") int tiendaId, ModelMap model) {
+		Tienda tienda = this.tiendaService.findTiendaById(tiendaId);
+		this.tiendaService.deleteTienda(tienda);
+        return "redirect:/";
+     
+    }
+	
 }
