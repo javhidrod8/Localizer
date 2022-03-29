@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.localizer.model.Estado;
+import org.springframework.samples.localizer.model.Preferencias;
 import org.springframework.samples.localizer.model.Producto;
 import org.springframework.samples.localizer.repository.ProductoRepository;
 import org.springframework.stereotype.Service;
@@ -14,48 +15,51 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductoService {
 
 	private ProductoRepository productoRepository;
-	
+
 	@Autowired
 	public ProductoService(ProductoRepository productoRepository) {
 		this.productoRepository = productoRepository;
 	}
-	
-	
+
 	@Transactional(readOnly = true)
 	public Producto findProductoById(int id) throws DataAccessException {
 		return productoRepository.findById(id);
 	}
-	
+
 	@Transactional(readOnly = true)
-	public Collection<Producto> findProductoTiendaByLike(Integer id) throws DataAccessException{
+	public Collection<Producto> findProductoTiendaByLike(Integer id) throws DataAccessException {
 		return productoRepository.findProductoByTiendaLike(id);
 	}
-	
+
 	@Transactional(readOnly = true)
-	public Collection<Producto> findByNombre(String nombre) throws DataAccessException{
+	public Collection<Producto> findByNombre(String nombre) throws DataAccessException {
 		return productoRepository.findByNombreIgnoreCaseContaining(nombre);
 	}
-	
+
 	@Transactional(readOnly = true)
-	public Collection<Producto> findAllProductos() throws DataAccessException{
+	public Collection<Producto> findAllProductos() throws DataAccessException {
 		return productoRepository.findAllProductos();
 	}
-	
+
+	@Transactional(readOnly = true)
+	public Collection<Preferencias> findAllPreferencias() throws DataAccessException {
+		return productoRepository.findAllPreferencias();
+	}
+
 	@Transactional(readOnly = true)
 	public Collection<Producto> findProductoByEstado(Estado estado) throws DataAccessException {
 		return productoRepository.findProductosByEstado(estado);
 	}
-	
+
 	@Transactional
-	public void saveProducto(Producto producto) throws DataAccessException{
+	public void saveProducto(Producto producto) throws DataAccessException {
 		productoRepository.save(producto);
 
 	}
 
 	@Transactional
-	public void deleteProducto(Producto producto) throws DataAccessException{
+	public void deleteProducto(Producto producto) throws DataAccessException {
 		productoRepository.delete(producto);
-		
 
 	}
 }

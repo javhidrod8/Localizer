@@ -1,14 +1,11 @@
 package org.springframework.samples.localizer.web;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.localizer.model.Authorities;
 import org.springframework.samples.localizer.model.Estado;
 import org.springframework.samples.localizer.model.Intolerancias;
 import org.springframework.samples.localizer.model.Preferencias;
@@ -25,9 +22,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -62,10 +58,7 @@ public class ProductoController {
 		String vista = "productos/productosList";
 		Iterable<Producto> productos = this.productoService.findAllProductos();
 		Collection<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
-		Set<Preferencias> preferencias = new HashSet<Preferencias>();
-		for (Producto p : productos) {
-			preferencias.add(p.getPreferencia());
-		}
+		Collection<Preferencias> preferencias = this.productoService.findAllPreferencias();
 		modelMap.addAttribute("productos", productos);
 		modelMap.addAttribute("intolerancias", intolerancias);
 		modelMap.addAttribute("preferencias", preferencias);
@@ -77,10 +70,7 @@ public class ProductoController {
 		String vista = "productos/productosList";
 		Iterable<Producto> productos = this.productoService.findByNombre(name);
 		Collection<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
-		Set<Preferencias> preferencias = new HashSet<Preferencias>();
-		for (Producto p : productos) {
-			preferencias.add(p.getPreferencia());
-		}
+		Collection<Preferencias> preferencias = this.productoService.findAllPreferencias();
 		modelMap.addAttribute("productos", productos);
 		modelMap.addAttribute("intolerancias", intolerancias);
 		modelMap.addAttribute("preferencias", preferencias);
@@ -93,10 +83,7 @@ public class ProductoController {
 		String vista = "productos/productosList";
 		Iterable<Producto> productos = this.productoService.findAllProductos();
 		Collection<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
-		Set<Preferencias> preferencias = new HashSet<Preferencias>();
-		for (Producto p : productos) {
-			preferencias.add(p.getPreferencia());
-		}
+		Collection<Preferencias> preferencias = this.productoService.findAllPreferencias();
 		modelMap.addAttribute("productos", productos);
 		modelMap.addAttribute("intolerancias", intolerancias);
 		modelMap.addAttribute("preferencias", preferencias);
