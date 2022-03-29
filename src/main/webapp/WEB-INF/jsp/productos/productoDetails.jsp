@@ -3,6 +3,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
+
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <petclinic:layout pageName="productos">
@@ -19,9 +21,9 @@
 			<h2>
 				<c:out value="${producto.precio}" />
 				&#8364
-				<c:if test="${producto.verificado==true}">
+				<%-- <c:if test="${producto.verificado==true}">
 					<i class="fa fa-check" style="margin-left: 2%"></i>
-				</c:if>
+				</c:if> --%>
 			</h2>
 			<c:if test="${not empty producto.intolerancia  }">
 			Intolerancias: <c:forEach items="${producto.intolerancia}" var="intolerancia">
@@ -37,7 +39,21 @@
 			<a href="${fn:escapeXml(tiendaUrl)}">
 				<button>Ver tienda</button>
 			</a>
-			<button>Reservar</button>
+			<button>Reservar</button> </br></br>
+			<sec:authorize access="hasAuthority('nutricionista')">
+			<spring:url value="/producto/{productoId}/edit" var="productoUrl">
+					<spring:param name="productoId" value="${producto.id}" />
+			</spring:url>
+			<a href="${fn:escapeXml(productoUrl)}">
+				<button>Validar producto</button>
+			</a>
+			<spring:url value="/producto/{productoId}/rechazar" var="productoUrl">
+					<spring:param name="productoId" value="${producto.id}" />
+			</spring:url>
+			<a href="${fn:escapeXml(productoUrl)}">
+				<button>Rechazar producto</button>
+			</a>
+			</sec:authorize>
 
 		</div>
 		
@@ -54,15 +70,19 @@
 				</br>
 				<c:out value="${productos.nombre}" /> marca <c:out
 					value="${producto.marca}" /></br> 
-     				<c:out value="${productos.precio}" /> &#8364<c:if
+     				<c:out value="${productos.precio}" /> &#8364<%-- <c:if
 					test="${productos.verificado==true}">
 					<i class="fa fa-check" style="margin-left: 2%"></i>
-				</c:if>
+				</c:if> --%>
 				</h2>
 				</br>
 				<button>Reservar</button>
+				
 				</br>
-				</br></div>
+				</br>
+				
+					
+				</div>
 			</c:forEach>
 		</div></div>
 

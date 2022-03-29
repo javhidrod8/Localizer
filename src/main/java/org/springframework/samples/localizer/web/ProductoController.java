@@ -199,10 +199,16 @@ public class ProductoController {
 	@PostMapping(value = "/producto/{productoId}/rechazar")
 	public String processRechazarProductoForm(@Valid Producto producto, BindingResult result,
 			@PathVariable("productoId") int productoId, ModelMap model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		String auth = currentPrincipalName.iterator().next().toString().trim();
 		if (result.hasErrors()) {
 			model.put("producto", producto);
 			return VIEWS_PRODUCTO_RECHAZAR_FORM;
 		} else {
+			if (auth.equals("nutricionista")) {
+				producto.setEstado(Estado.RECHAZADO);
+			}
 			producto.setId(productoId);
 			this.productoService.saveProducto(producto);
 			return "redirect:/producto/{productoId}";

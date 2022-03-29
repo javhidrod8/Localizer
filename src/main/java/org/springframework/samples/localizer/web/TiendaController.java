@@ -127,29 +127,29 @@ public class TiendaController {
 		}
 	}
   
-  @GetMapping(value = "/tienda/{tiendaId}/edit")
-	public String initUpdateTiendaForm(@PathVariable("tiendaId") int tiendaId, Model model) {
-		Tienda tienda = this.tiendaService.findTiendaById(tiendaId);
-		Boolean isNew=false;
-		model.addAttribute(isNew);
-		model.addAttribute(tienda);
-		return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
-	}
-	
-	@PostMapping(value = "/tienda/{tiendaId}/edit")
-	public String processUpdateTiendaForm(@Valid Tienda tienda, BindingResult result,
-			@PathVariable("tiendaId") int tiendaId,Model model) {
-		if (result.hasErrors()) {
-			Boolean isNew=false;
-			model.addAttribute(isNew);
-			return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
-		}
-		else {
-			tienda.setId(tiendaId);
-			this.tiendaService.saveTienda(tienda);
-			return "redirect:/tienda/{tiendaId}";					
-		}
-	}
+//  @GetMapping(value = "/tienda/{tiendaId}/edit")
+//	public String initUpdateTiendaForm(@PathVariable("tiendaId") int tiendaId, Model model) {
+//		Tienda tienda = this.tiendaService.findTiendaById(tiendaId);
+//		Boolean isNew=false;
+//		model.addAttribute(isNew);
+//		model.addAttribute(tienda);
+//		return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
+//	}
+//	
+//	@PostMapping(value = "/tienda/{tiendaId}/edit")
+//	public String processUpdateTiendaForm(@Valid Tienda tienda, BindingResult result,
+//			@PathVariable("tiendaId") int tiendaId,Model model) {
+//		if (result.hasErrors()) {
+//			Boolean isNew=false;
+//			model.addAttribute(isNew);
+//			return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
+//		}
+//		else {
+//			tienda.setId(tiendaId);
+//			this.tiendaService.saveTienda(tienda);
+//			return "redirect:/tienda/{tiendaId}";					
+//		}
+//	}
 	
 	@GetMapping(value = "/tienda/{tiendaId}/delete")
     public String deleteTienda(@PathVariable("tiendaId") int tiendaId, ModelMap model) {
