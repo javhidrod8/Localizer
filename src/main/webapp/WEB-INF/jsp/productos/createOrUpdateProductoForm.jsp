@@ -18,12 +18,19 @@
 				<div id="nombre-producto col-md-12">
 					<label for="nombre">
 						<h3>Nombre:</h3>
-					</label> <input type="text" id="nombre" name="nombre" class="form-control"><br>
+					</label> <input type="text" id="nombre" name="nombre" class="form-control" value="${producto.nombre}"><br>
 				</div>
 				<div id="imagen-producto col-md-12">
 					<label for="imagen">
 						<h3>Imagen (URL):</h3>
-					</label> <input type="text" id="imagen" name="imagen" class="form-control"><br>
+						     				<c:if
+						test="${producto.imagen!=null}"> 
+						<img src="${producto.imagen }" class="img-responsive"/>
+				</c:if> 
+					</label> <input type="text" id="imagen" name="imagen" class="form-control" value="${producto.imagen}"><br>
+
+
+
 				</div>
 				<div id="precio-producto" class="form-group col-md-12">
 					<label for="precio">
@@ -31,27 +38,27 @@
 					</label>
 					<div class="input-group">
 						<input type="number" id="precio" class="form-control" id="precio"
-							name="precio" placeholder="0" min=0 step="any">
+							name="precio" placeholder="0" min=0 step="any" value="${producto.precio}">
 						<div class="input-group-addon">&#8364</div>
 					</div>
 				</div>
 				<div id="marca-producto col-md-12">
 					<label for="marca">
 						<h3>Marca:</h3>
-					</label> <input type="text" id="marca" name="marca" class="form-control"><br>
+					</label> <input type="text" id="marca" name="marca" class="form-control" value="${producto.marca}"><br>
 				</div>
 				<div id="descripcion-producto col-md-12">
 					<label for="descripcion">
 						<h3>Descripción:</h3>
 					</label>
-					<textarea class="form-control" name="descripcion" rows="3"></textarea>
+					<textarea class="form-control" name="descripcion" rows="3" value="${producto.descripcion}"></textarea>
 					<br>
 				</div>
 				<div id="estado-producto">
 					<h3>Estado:</h3>
 					<div class="radio-inline">
 						<label> <input type="radio" name="estado" id="pendiente"
-							value="PENDIENTE" checked> PENDIENTE
+							value="PENDIENTE"> PENDIENTE
 						</label>
 					</div>
 					<div class="radio-inline">
@@ -70,7 +77,7 @@
 					<label for="motivo">
 						<h3>Motivo:</h3>
 					</label>
-					<textarea class="form-control" rows="3" name="motivo"></textarea>
+					<textarea class="form-control" rows="3" name="motivo" value="${producto.motivo}"></textarea>
 					<br>
 				</div>
 
@@ -78,7 +85,7 @@
 					<h3>Promocionado:</h3>
 					<div class="radio-inline">
 						<label> <input type="radio" name="promocionado"
-							id="pendiente" value="TRUE" checked> SI
+							id="pendiente" value="TRUE"> SI
 						</label>
 					</div>
 					<div class="radio-inline">
