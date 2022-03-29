@@ -10,7 +10,12 @@
     </h2>
     <form:form modelAttribute="producto" class="form-horizontal" id="add-producto-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="Nombre" name="nombre"/>
+                <div id="nombre-producto col-md-12">
+      <label for="nombre">
+        <h3>Nombre:</h3>
+      </label>
+      <input type="text" id="nombre" name="nombre" class="form-control"><br>
+    </div>
             <petclinic:inputField label="Imagen" name="imagen"/>
             <petclinic:inputField label="Precio" name="precio"/>  <%--Necesita validación de numeros--%>
             <petclinic:inputField label="Marca" name="marca"></petclinic:inputField>
@@ -18,7 +23,7 @@
             <petclinic:inputField label="Estado" name="estado"></petclinic:inputField><%--es un radio con 3 opciones --%>
             <petclinic:inputField label="Motivo" name="motivo"></petclinic:inputField><%--es un textArea --%>
             <petclinic:inputField label="Promocionado" name="promocionado"></petclinic:inputField><%--es un radio con dos opciones, tiene que devolver 0 o 1 --%>
-           <%-- <petclinic:inputField label="Intolerancias" name="intolerancia"></petclinic:inputField><%--es un checkbox y necesita toda la lista de intolerancias --%>
+           <petclinic:inputField label="Intolerancias" name="intolerancia"></petclinic:inputField><%--es un checkbox y necesita toda la lista de intolerancias --%>
            <petclinic:inputField label="Preferencia" name="preferencia"></petclinic:inputField><%-- es un radio y necesita toda la lista de preferencias --%>
            <petclinic:inputField label="Tienda" name="tienda"></petclinic:inputField>
         </div>
