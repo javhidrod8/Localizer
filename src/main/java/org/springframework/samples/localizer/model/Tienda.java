@@ -7,12 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "tiendas")
@@ -50,6 +47,9 @@ public class Tienda extends BaseEntity{
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tienda", fetch = FetchType.EAGER)
 	private Set<Producto> productos;
+	
+	@OneToOne(optional=true)
+	private User user;
 
 	public Tienda(Tienda tienda) {
 		this.calle=tienda.getCalle();
@@ -144,6 +144,16 @@ public class Tienda extends BaseEntity{
 	public void setHorario(String horario) {
 		this.horario = horario;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	
 	
 	
 	
