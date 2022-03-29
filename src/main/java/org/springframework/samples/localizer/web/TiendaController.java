@@ -5,20 +5,23 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.localizer.model.Intolerancias;
 import org.springframework.samples.localizer.model.Preferencias;
 import org.springframework.samples.localizer.model.Producto;
 import org.springframework.samples.localizer.model.Tienda;
+import org.springframework.samples.localizer.model.User;
 import org.springframework.samples.localizer.service.TiendaService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.servlet.ModelAndView;
-import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -96,17 +99,24 @@ public class TiendaController {
 		
 	@GetMapping("/tiendas/new")
 	public String initCreationTiendaForm(Map<String, Object> model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User currentUser = (User) authentication.getPrincipal();
 		Tienda tienda = new Tienda();
+		tienda.setUser(currentUser);
 		model.put("tienda", tienda);
 		Boolean isNew = true;
 		model.put("isNew", isNew);
+		
 		return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
 	}
 	
 	@PostMapping("/tiendas/new")
 	public String processCreationTiendaForm(@Valid Tienda tienda, BindingResult result, Map<String, Object> model) {
 		if(result.hasErrors()) {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			User currentUser = (User) authentication.getPrincipal();
 			Boolean isNew = true;
+			tienda.setUser(currentUser);
 			model.put("isNew", isNew);
 			model.put("tienda", tienda);
 			return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
