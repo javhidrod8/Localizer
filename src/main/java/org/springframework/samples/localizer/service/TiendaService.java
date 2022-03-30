@@ -45,7 +45,6 @@ public class TiendaService {
 		return tiendaRepository.findAll();
 	}
 
-}
 	
 	@Transactional
 	public Collection<Producto> findProductos() throws DataAccessException {		

@@ -94,8 +94,6 @@ public class TiendaController {
 		return vista;
 	}
 	
-	
-}
 
 	@PostMapping("/tiendas/new")
 	public String processCreationTiendaForm(@Valid Tienda tienda, BindingResult result, Map<String, Object> model) {
