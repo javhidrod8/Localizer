@@ -52,8 +52,9 @@ public class TiendaController {
 //	}
 	
 	@GetMapping(value = "/tienda/{tiendaId}")
-	public String productList(ModelMap modelMap) {
+	public String productList(ModelMap modelMap, @PathVariable("tiendaId") int tiendaId) {
 		String vista = "tiendas/tiendaDetails";
+		Tienda tienda = this.tiendaService.findTiendaById(tiendaId);
 		Iterable<Producto> productos = this.tiendaService.findProductos();
 		Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
 		Set<Preferencias> preferencias = new HashSet<Preferencias>();
@@ -61,6 +62,7 @@ public class TiendaController {
 			intolerancias.addAll(p.getIntolerancia());
 			preferencias.add(p.getPreferencia());
 		}
+			modelMap.addAttribute("tienda", tienda);
 			modelMap.addAttribute("productos", productos);
 			modelMap.addAttribute("intolerancias", intolerancias);
 			modelMap.addAttribute("preferencias", preferencias);
@@ -85,13 +87,13 @@ public class TiendaController {
 		
 	}
 	
-
-	@GetMapping(value = "/tiendas/{codigoPostal}")
-	public String productListByName(@PathVariable("codigoPostal") Integer codigoPostal, ModelMap modelMap) {
+	@GetMapping(value = "/tiendas/search/{codigoPostal}")
+	public String tiendasByCP(@PathVariable("codigoPostal") Integer codigoPostal, ModelMap modelMap) {
 		String vista = "tiendas/tiendasList";
 		Iterable<Tienda> tiendas = this.tiendaService.findByCodigoPostal(codigoPostal);
 		modelMap.addAttribute("tiendas", tiendas);
 		return vista;
+
 	}
 	
 
