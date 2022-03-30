@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import com.sun.istack.NotNull;
+
 @Entity
 @Table(name = "users")
 public class User{
@@ -93,5 +95,12 @@ public class User{
 	public void setTienda(Tienda tienda) {
 		this.tienda = tienda;
 	}
+
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", password=" + password + ", enabled=" + enabled + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", tienda=" + tienda + ", authorities=" + authorities + "]";
+	}
+	
 	
 }

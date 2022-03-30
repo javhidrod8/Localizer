@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.localizer.model.User;
 import org.springframework.samples.localizer.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ class UserController {
 
 	private final UserService userService;
 
+	@Autowired
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
@@ -44,13 +46,14 @@ class UserController {
 	}
 
 	@PostMapping("/users/new")
-	public String processCreationForm(@Valid User user, BindingResult result) {
+	public String processCreationForm(@Valid Optional<User> user, BindingResult result, Model model) {
 		if (result.hasErrors()) {
+			model.addAttribute(user.get());
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			this.userService.saveUser(user);
-			return "redirect:/users/" + user.getUsername();
+			this.userService.saveUser(user.get());
+			return "redirect:/users/" + user.get().getUsername();
 		}
 	}
 
@@ -114,21 +117,26 @@ class UserController {
 */
 
 	@GetMapping("/users/{username}/edit")
-	public String initUpdateUserForm(@PathVariable("username") String username, Model model) {
+	public String initUpdateUserForm(@PathVariable("username") String username, Map<String, Object> model) {
 		Optional<User> user = this.userService.findUser(username);
-		model.addAttribute(user);
+		System.out.println("RUBIANCO ERES UN TONTO"+user.toString());
+		model.put("user", user.get());
+		Boolean isNew = false;
+		model.put("isNew", isNew);
 		return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping("/users/{username}/edit")
-	public String processUpdateUserForm(@Valid User user, BindingResult result,
-			@PathVariable("username") String username) {
+	public String processUpdateUserForm(@Valid Optional<User> user, BindingResult result,
+			@PathVariable("username") String username,  Model model) {
 		if (result.hasErrors()) {
+			model.addAttribute(user.get());
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			user.setUsername(username);
-			this.userService.saveUser(user);
+			User u = user.get();
+			u.setUsername(username);
+			this.userService.saveUser(u);
 			return "redirect:/users/{username}";
 		}
 	}
@@ -138,7 +146,7 @@ class UserController {
 	public ModelAndView showUser(@PathVariable("username") String username) {
 		ModelAndView mav = new ModelAndView("users/userDetails");
 		Optional<User> user = this.userService.findUser(username);
-		mav.addObject(user);
+		mav.addObject(user.get());
 		return mav;
 	}
 

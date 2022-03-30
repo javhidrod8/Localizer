@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.samples.localizer.model.Authorities;
 import org.springframework.samples.localizer.model.User;
 
 
@@ -23,7 +24,9 @@ class UserServiceTest {
 		user.setFirstName("Test");
 		user.setLastName("Prueba");
 		user.setTienda(null);
-		
+		Authorities javi = new Authorities();
+		javi.setAuthority("cliente");
+		user.getAuthorities().add(javi);
 		this.userService.saveUser(user);
 		Optional<User> usuario = this.userService.findUser("pruebador");
 		assertThat(usuario.get().getUsername()).isEqualTo(user.getUsername());
