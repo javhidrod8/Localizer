@@ -6,6 +6,8 @@
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 <%@ attribute name="name" required="true" rtexprvalue="true"
 	description="Name of the active menu: home, owners, vets or error"%>
+	<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
+	
 
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container">
@@ -54,12 +56,19 @@
 					<span>Inicio</span>
 				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'products'}" url="/productos"
+				<petclinic:menuItem active="${name eq 'productos'}" url="/productos"
 					title="productos">
 					<!-- <span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
 					<span>Productos</span>
 				</petclinic:menuItem>
-
+				
+				<sec:authorize access="hasAuthority('nutricionista')">
+				<petclinic:menuItem active="${name eq 'productosVerificar'}" url="/productos/verificar"
+					title="productosVerificar">
+					<!-- <span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
+					<span>Verificar productos</span>
+				</petclinic:menuItem>
+				</sec:authorize>
 	
 
 

@@ -11,40 +11,20 @@
 
 	
     <form:form modelAttribute="producto" class="form-horizontal" id="edit-producto-form">
-	
-	<div class="row">
-	<div class="col-sm-2">
-		</div>
-		<div class="col-sm-3">
-			<img height="200px" width=auto
-				src="<c:out value="${producto.imagen}"/>" style="margin: 0px 50px" />
-		</div>
-		<div class="col-sm-4" style="margin-left: 2%">
-			<b><c:out value="${producto.nombre}" /></b><br> <br>
-			<h2>
-				<c:out value="${producto.precio}" />
-				&#8364
-			</h2>
-			<c:if test="${not empty producto.intolerancia  }">
-			Intolerancias: <c:forEach items="${producto.intolerancia}" var="intolerancia">
-			<c:out	value="${intolerancia.nombre} " />
-			</c:forEach>
-			</c:if>
-			<c:if test="${not empty producto.preferencia}">
-			</br></br>Preferencias: <c:out	value="${producto.preferencia} " />
-			</c:if>
 			<spring:url value="/productos/verificar" var="productoUrl">
 			</spring:url>
-			
-				<button type="submit">Rechazar Producto</button>
-
-			
-
-		</div>
-		
-	</div>
+			<button id="rechazarProducto" type="submit">Rechazar Producto</button>
 </form:form>
-
+<spring:url value="/productos/verificar" var="productosVerificarUrl"></spring:url>
+<script>
+  var a = confirm("¿Está seguro de que quiere rechazar el producto?");
+ 
+  if(a==true){
+	  document.getElementById("rechazarProducto").click();
+  }else{
+	  location.href = "${fn:escapeXml(productosVerificarUrl)}";
+  }
+</script>
 
 
 </petclinic:layout>

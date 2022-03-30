@@ -40,6 +40,9 @@
 				<button>Ver tienda</button>
 			</a>
 			<button>Reservar</button> </br></br>
+			
+			<c:if test="${producto.estado != 'RECHAZADO'}">
+			<c:if test="${producto.estado != 'ACEPTADO' }">
 			<sec:authorize access="hasAuthority('nutricionista')">
 			<spring:url value="/producto/{productoId}/edit" var="productoUrl">
 					<spring:param name="productoId" value="${producto.id}" />
@@ -54,7 +57,7 @@
 				<button>Rechazar producto</button>
 			</a>
 			</sec:authorize>
-
+			</c:if></c:if>
 		</div>
 		
 	</div></br></br>
