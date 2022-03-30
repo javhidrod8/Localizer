@@ -68,8 +68,7 @@
 			<div id="intolerancias">
 				<h3>Intolerancias</h3>
 				<c:forEach items="${intolerancias}" var="intolerancia">
-					<input class="form-check-input" type="checkbox"
-						id="${intolerancia}" />
+					<input class="form-check-input" type="checkbox" id="${intolerancia}" />
 					<c:out value="${intolerancia}"></c:out>
 					</br>
 					</br>
@@ -77,8 +76,9 @@
 			</div>
 			<div id="preferencias">
 				<h3>Preferencias</h3>
+				<input class="form-check-input" type="radio" name = "preferencia" checked> NINGUNA </br></input>
 				<c:forEach items="${preferencias}" var="preferencia">
-					<input class="form-check-input" type="checkbox" id="${preferencia}" />
+					<input class="form-check-input" type="radio" name = "preferencia" id="${preferencia}" />	
 					<c:out value="${preferencia}"></c:out>
 					</br>
 				</c:forEach>
