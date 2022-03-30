@@ -40,10 +40,10 @@ public class ProductoController {
   private final TiendaService tiendaService;
 
 	@Autowired
-	public ProductoController(ProductoService productoService, IntoleranciasService intoleranciasService) {
+	public ProductoController(ProductoService productoService, IntoleranciasService intoleranciasService, TiendaService tiendaService) {
 		this.productoService = productoService;
 		this.intoleranciasService = intoleranciasService;
-    this.tiendaService = tiendaService;
+		this.tiendaService = tiendaService;
 	}
 
 	@InitBinder
