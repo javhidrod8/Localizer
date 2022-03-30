@@ -1,6 +1,9 @@
 package org.springframework.samples.localizer.web;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -109,6 +112,16 @@ public class ProductoController {
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
+		Collection<Producto> productos = this.productoService.findAllProductos();
+		Set<Intolerancias> intolerancias = new LinkedHashSet<Intolerancias>();
+		Set<Preferencias> preferencias = new LinkedHashSet<Preferencias>();
+		for (Producto p : productos) {
+			intolerancias.addAll(p.getIntolerancia());
+			preferencias.add(p.getPreferencia());
+		}
+		model.put("productos", productos);
+		model.put("intolerancias", intolerancias);
+		model.put("preferencias", preferencias);
 		if (auth.equals("vendedor") || auth.equals("admin")) {
 			Producto producto = new Producto();
 			model.put("producto", producto);
@@ -145,6 +158,16 @@ public class ProductoController {
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
+		Collection<Producto> productos = this.productoService.findAllProductos();
+		Set<Intolerancias> intolerancias = new LinkedHashSet<Intolerancias>();
+		Set<Preferencias> preferencias = new LinkedHashSet<Preferencias>();
+		for (Producto p : productos) {
+			intolerancias.addAll(p.getIntolerancia());
+			preferencias.add(p.getPreferencia());
+		}
+		model.put("productos", productos);
+		model.put("intolerancias", intolerancias);
+		model.put("preferencias", preferencias);
 		if (auth.equals("vendedor") || auth.equals("admin") || auth.equals("nutricionista")) {
 			Producto producto = this.productoService.findProductoById(productoId);
 			model.put("producto", producto);
