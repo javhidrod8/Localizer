@@ -39,6 +39,12 @@ public class TiendaService {
 		tiendaRepository.save(t); 
 
     }
+
+	@Transactional(readOnly = true)
+	public Collection<Tienda> findAll() throws DataAccessException {
+		return tiendaRepository.findAll();
+	}
+
 	
 	@Transactional
 	public Collection<Producto> findProductos() throws DataAccessException {		

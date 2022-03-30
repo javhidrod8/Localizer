@@ -59,6 +59,11 @@
 					<!-- <span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
 					<span>Productos</span>
 				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'tiendas'}" url="/tiendas"
+					title="tiendas">
+					<span>Tiendas</span>
+				</petclinic:menuItem>
 
 	
 

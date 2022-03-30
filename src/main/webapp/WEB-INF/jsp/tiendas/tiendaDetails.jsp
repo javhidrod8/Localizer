@@ -1,8 +1,10 @@
-<%@ page session="false" trimDirectiveWhitespaces="true"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
+<%@ page session="false" trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 
 <petclinic:layout pageName="tiendas">
 
@@ -16,7 +18,7 @@
 		<div class="infoTienda">
   			<h1><c:out value="${tienda.nombre}" /></h1>
 			<dl>
-							<dt>Descripción:</dt>
+							<dt>DescripciÃ³n:</dt>
 				<dd>
 					<c:out value="${tienda.descripcion}" />
 				</dd>
@@ -30,7 +32,7 @@
 				<dd>
 					<c:out value="${tienda.horario}" />
 				</dd>
-				<dt><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>Teléfono:</dt>
+				<dt><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>TelÃ©fono:</dt>
 				<dd>
 					<c:out value="${tienda.telefono}" />
 				</dd>
