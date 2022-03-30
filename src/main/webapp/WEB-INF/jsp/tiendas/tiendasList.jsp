@@ -8,7 +8,7 @@
 	<h2>Tiendas</h2>
 	<div class="row">
 			<div class="col-sm-11">
-				<input id="busqueda" type="text" class="form-control"
+				<input id=busquedaCP type="text" class="form-control"
 					placeholder="Busqueda de tiendas por Código postal...">
 			</div>
 			<div class="col-sm-1">
@@ -20,7 +20,7 @@
 	<script>
 		function Buscar(){
 		  var text = $("#busquedaCP").val();
-		  location.href = "/tiendas/"+text;
+		  location.href = "/tiendas/search/"+text;
 		}
 </script>
 
