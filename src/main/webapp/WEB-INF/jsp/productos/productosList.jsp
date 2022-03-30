@@ -90,6 +90,7 @@
 		//var selectedIntolerancias = new Array();	
 
 		var button = document.createElement('button');
+		button.className="btn btn-default";
 	  	prodHtml = "";
 	  	button.innerHTML = "Filtrar";
 	  	button.onclick = function(){
@@ -164,34 +165,40 @@
 	function printProducto(producto){
 		
 		var prodDiv = document.createElement('div'); 
-		prodDiv.className = "col-md-4";
-		prodDiv.id = "prodDiv";       
+		prodDiv.className = "col-sm-6 col-md-4";
+		prodDiv.id = "producto"; 
+    
+    	var thumbnail = document.createElement('div');
+    	thumbnail.className = "thumbnail";
+    	thumbnail.id ="productThumbnail";
 		
 		var img = document.createElement('img');
 		img.src = producto.imagen;
-		img.alt = "Imagen no encontrada";
-		img.id = "imagen"
-		img.height="200";
-// 		img.width="auto";
- 		img.style="margin:0px 50px";
-		
+		img.alt = producto.nombre;
+// 		prodDiv.style = "object-fit: cover";
+		img.id = "productoImg";
+    
  		var url = document.createElement("a");
  		url.href="${fn:escapeXml(productoUrl)}"+producto.id;
- 		
  		url.appendChild(img);
-		
- 		prodDiv.appendChild(url);
- 		
-		var url2 = document.createElement("a");
-		url2.href="${fn:escapeXml(productoUrl)}"+producto.id;
- 		url2.innerHTML+= "<h2>"+producto.nombre+"</h2>";
- 		prodDiv.appendChild(url2);
- 		
-		prodDiv.innerHTML+= "<h3>"+producto.precio+" &#8364, marca "+producto.marca+"</h3><br>";
+    	thumbnail.appendChild(url);
+
+    
+    	var caption = document.createElement('div'); 
+		caption.className = "caption";
+		caption.id = "productoInfo";
+		if(producto.nombre.length>=30){
+	    	caption.innerHTML+="<h3>"+producto.nombre.substring(0,30)+"...</h3>";
+		}else{
+	    	caption.innerHTML+="<h3>"+producto.nombre+"</h3>";
+		}
+
+    	caption.innerHTML+="<p> Marca: "+producto.marca+"</p>"
+    	caption.innerHTML+="<h3>"+producto.precio+"<span class='glyphicon glyphicon-euro' aria-hidden='true'></span></h3>";
+    	caption.innerHTML+="<button class='btn btn-default btn-sm'>Resevar</button>";
+    	thumbnail.appendChild(caption);
+    	prodDiv.appendChild(thumbnail);
 		document.getElementById('productos').appendChild(prodDiv);
-	
-		/*TODO: crear aqui la estructura de un producto en la lista (se puede basar en lo que esta comentado de arriba) usando ya un objeto JS (producto) y no una variable de spring (${producto})*/
-// 		document.getElementById('productos').innerHTML+= "<p>"+producto.nombre+"</p>";
 	};
 
 	function onlyUnique(value, index, self) {
