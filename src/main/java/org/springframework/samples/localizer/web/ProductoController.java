@@ -101,14 +101,21 @@ public class ProductoController {
 
 	@GetMapping(value = "/productos/verificar")
 	public String productListNutricionista(ModelMap modelMap) {
-		String vista = "productos/productosVerificar";
-		Iterable<Producto> productos = this.productoService.findProductoByEstado(Estado.PENDIENTE);
-		modelMap.addAttribute("productos", productos);
-		return vista;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		String auth = currentPrincipalName.iterator().next().toString().trim();
+		if (auth.equals("nutricionista")) {
+			String vista = "productos/productosVerificar";
+			Iterable<Producto> productos = this.productoService.findProductoByEstado(Estado.PENDIENTE);
+			modelMap.addAttribute("productos", productos);
+			return vista;
+		} else {
+			return VIEWS_ERROR_AUTH;
+		}
 	}
 
 	@GetMapping(value = "/tienda/{tiendaId}/productos/new")
-	public String initCreationProductoForm(Map<String, Object> model) {
+	public String initCreationProductoForm(@PathVariable("tiendaId") Integer tiendaId, Map<String, Object> model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
@@ -124,6 +131,7 @@ public class ProductoController {
 		model.put("intolerancias", intolerancias);
 		model.put("preferencias", preferencias);
 		if (auth.equals("vendedor") || auth.equals("admin")) {
+			model.put("tiendaId", tiendaId);
 			Producto producto = new Producto();
 			model.put("producto", producto);
 			Boolean isNew = true;
@@ -138,6 +146,7 @@ public class ProductoController {
 	public String processCreationProductoForm(@PathVariable("tiendaId") Integer tiendaId, @Valid Producto producto, BindingResult result,
 			Map<String, Object> model) {
 		if (result.hasErrors()) {
+			model.put("tiendaId", tiendaId);
 			Boolean isNew = true;
 			model.put("isNew", isNew);
 			model.put("producto", producto);
@@ -154,7 +163,7 @@ public class ProductoController {
 	}
   
 	@GetMapping(value = "/tienda/{tiendaId}/producto/{productoId}/edit")
-	public String initUpdateProductoForm(@PathVariable("productoId") int productoId, ModelMap model) {
+	public String initUpdateProductoForm(@PathVariable("tiendaId") Integer tiendaId,@PathVariable("productoId") int productoId, ModelMap model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
@@ -170,6 +179,7 @@ public class ProductoController {
 		model.put("intolerancias", intolerancias);
 		model.put("preferencias", preferencias);
 		if (auth.equals("vendedor") || auth.equals("admin") || auth.equals("nutricionista")) {
+			model.put("tiendaId", tiendaId);
 			Producto producto = this.productoService.findProductoById(productoId);
 			model.put("producto", producto);
 			Boolean isNew = false;
@@ -187,6 +197,7 @@ public class ProductoController {
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		if (result.hasErrors()) {
+			model.put("tiendaId", tiendaId);
 			Boolean isNew = false;
 			model.put("isNew", isNew);
 			model.put("producto", producto);
@@ -201,13 +212,14 @@ public class ProductoController {
 		}
 	}
 
-	@GetMapping(value = "/producto/{productoId}/rechazar")
-	public String initRechazarProductoForm(@PathVariable("productoId") int productoId, ModelMap model) {
+	@GetMapping(value = "/tienda/{tiendaId}/producto/{productoId}/rechazar")
+	public String initRechazarProductoForm(@PathVariable("productoId") int productoId, @PathVariable("tiendaId") int tiendaId, ModelMap model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
 		if (auth.equals("nutricionista")) {
+			model.put("tiendaId", tiendaId);
 			Producto producto = this.productoService.findProductoById(productoId);
 			model.put("producto", producto);
 			return VIEWS_PRODUCTO_RECHAZAR_FORM;
@@ -216,10 +228,11 @@ public class ProductoController {
 		}
 	}
 
-	@PostMapping(value = "/producto/{productoId}/rechazar")
+	@PostMapping(value = "/tienda/{tiendaId}/producto/{productoId}/rechazar")
 	public String processRechazarProductoForm(@Valid Producto producto, BindingResult result,
-			@PathVariable("productoId") int productoId, ModelMap model) {
+			@PathVariable("productoId") int productoId, @PathVariable("tiendaId") int tiendaId, ModelMap model) {
 		if (result.hasErrors()) {
+			model.put("tiendaId", tiendaId);
 			model.put("producto", producto);
 			return VIEWS_PRODUCTO_RECHAZAR_FORM;
 		} else {
@@ -237,6 +250,7 @@ public class ProductoController {
 		model.put("auth", auth);
 		User currentUser = (User) authentication.getPrincipal();
 		if ((auth.equals("vendedor") && currentUser.getTienda().getId().equals(tiendaId)) || auth.equals("admin")) {
+			model.put("tiendaId", tiendaId);
 			Producto producto = this.productoService.findProductoById(productoId);
 			Integer id = producto.getTienda().getId();
 			this.productoService.deleteProducto(producto);
