@@ -56,7 +56,6 @@
 				</div>
 				<div id="estado-producto">
 					<h3>Estado:</h3>
-					<script type="text/javascript">console.log("${producto.estado}")</script>
 					<div class="radio-inline">
 						<label> <input type="radio" name="estado" id="pendiente"
 							value="PENDIENTE" 						     				
@@ -127,10 +126,21 @@
 	</form:form>
 	<script type="text/javascript">
 var intolerancias = new Array();
+var intoleranciasSeleccionadas = new Array();
+var intoleranciasSeleccionadasNombres = new Array();
 <c:forEach items="${intolerancias}" var="intolerancia">
 	intolerancia = {id:"${intolerancia.id}", nombre:"${intolerancia.nombre}"};
 	intolerancias.push(intolerancia);
 </c:forEach>
+<c:forEach items="${producto.intolerancia}" var="intolerancia">
+intoleranciaSeleccionada = {id:"${intolerancia.id}", nombre:"${intolerancia.nombre}"};
+intoleranciasSeleccionadas.push(intoleranciaSeleccionada);
+</c:forEach>
+<c:forEach items="${producto.intolerancia}" var="intolerancia">
+intoleranciaSeleccionada = "${intolerancia.nombre}";
+intoleranciasSeleccionadasNombres.push(intoleranciaSeleccionada);
+</c:forEach>
+
 intolerancias.forEach((intolerancia) => {
       var divIntolerancia = document.createElement('div');
       divIntolerancia.className="checkbox-inline";
@@ -139,20 +149,24 @@ intolerancias.forEach((intolerancia) => {
       input.type ="checkbox";
       input.name ="intolerancia";
       input.value = intolerancia.id;
-      console.log(intolerancia);
+      input.id = intolerancia.nombre;
       label.appendChild(input);
       label.innerHTML +=" "+ intolerancia.nombre;
       divIntolerancia.appendChild(label);
       document.getElementById("intolerancias-producto").appendChild(divIntolerancia);
-
+      if (intoleranciasSeleccionadasNombres.includes(intolerancia.nombre)){
+    	  document.getElementById(intolerancia.nombre).checked = true;
+      }
    });
 </script>
 
 	<script type="text/javascript">
 var preferencias = new Array();
+var preferenciaSeleccionada = "${producto.preferencia}";
 <c:forEach items="${preferencias}" var="preferencia">
 	preferencias.push("${preferencia}");
 </c:forEach>
+
 preferencias.forEach((preferencia, i) => {
 	if (preferencia!="" && preferencia!=null){
 	      var divPreferencia = document.createElement('div');
@@ -162,10 +176,14 @@ preferencias.forEach((preferencia, i) => {
 	      input.type ="radio";
 	      input.name ="preferencia";
 	      input.value = preferencia;
+	      input.id = preferencia;
 	      label.appendChild(input);
 	      label.innerHTML +=" "+ preferencia;
 	      divPreferencia.appendChild(label);
 	      document.getElementById("preferencias-producto").appendChild(divPreferencia);
+	      if (preferenciaSeleccionada == preferencia){
+	    	  document.getElementById(preferencia).checked = true;
+	      }
 	}
 
 
