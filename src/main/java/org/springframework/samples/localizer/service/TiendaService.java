@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.localizer.model.Producto;
 import org.springframework.samples.localizer.model.Tienda;
 import org.springframework.samples.localizer.repository.TiendaRepository;
 import org.springframework.stereotype.Service;
@@ -44,4 +45,16 @@ public class TiendaService {
 		return tiendaRepository.findAll();
 	}
 
+}
+	
+	@Transactional
+	public Collection<Producto> findProductos() throws DataAccessException {		
+		return tiendaRepository.findAllProductos();
+	}
+  
+  @Transactional
+  public void deleteTienda(Tienda tienda) throws DataAccessException {
+		tiendaRepository.delete(tienda); 
+  }
+	
 }

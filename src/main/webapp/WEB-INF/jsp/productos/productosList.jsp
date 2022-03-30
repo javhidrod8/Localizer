@@ -6,13 +6,14 @@
 <petclinic:layout pageName="productosList">
 	<spring:url value="/productos/" var="productosUrl"></spring:url>
 	<spring:url value="/producto/" var="productoUrl"></spring:url>
+	<spring:url value="/productos/search/" var="searchUrl"></spring:url>
 	<h2>Productos</h2>
 	<br>
 
 	<script>
 		function Buscar(){
 		  var text = $("#busqueda").val();
-		  location.href = "${fn:escapeXml(productosUrl)}"+text;
+		  location.href = "${fn:escapeXml(searchUrl)}"+text;
 		}
 </script>
 	<div class="row">
@@ -65,6 +66,7 @@
 		    productoDetails.precio = "${producto.precio}";
 		    productoDetails.marca = "${producto.marca}";
 		    productoDetails.imagen = "${producto.imagen}";
+		    productoDetails.estado = "${producto.estado}";
 		    productoDetails.intolerancias = new Array();
 		    <c:forEach items="${producto.intolerancia}" var="intolerancia">
 		    	productoDetails.intolerancias.push("${intolerancia}");
