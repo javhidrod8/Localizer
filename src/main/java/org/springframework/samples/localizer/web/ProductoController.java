@@ -3,18 +3,21 @@ package org.springframework.samples.localizer.web;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+
 import java.util.Map;
-import java.util.Set;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.localizer.model.Authorities;
 import org.springframework.samples.localizer.model.Estado;
 import org.springframework.samples.localizer.model.Intolerancias;
 import org.springframework.samples.localizer.model.Preferencias;
 import org.springframework.samples.localizer.model.Producto;
+import org.springframework.samples.localizer.service.IntoleranciasService;
+import org.springframework.samples.localizer.model.Tienda;
+import org.springframework.samples.localizer.model.User;
 import org.springframework.samples.localizer.service.ProductoService;
+import org.springframework.samples.localizer.service.TiendaService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,9 +28,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -37,10 +39,14 @@ public class ProductoController {
 	private static final String VIEWS_ERROR_AUTH = "productos/createOrUpdateProductoForm";
 	private static final String VIEWS_PRODUCTO_RECHAZAR_FORM = "productos/rechazarProductoForm";
 	private final ProductoService productoService;
+	private final IntoleranciasService intoleranciasService;
+  private final TiendaService tiendaService;
 
 	@Autowired
-	public ProductoController(ProductoService productoService) {
+	public ProductoController(ProductoService productoService, IntoleranciasService intoleranciasService, TiendaService tiendaService) {
 		this.productoService = productoService;
+		this.intoleranciasService = intoleranciasService;
+		this.tiendaService = tiendaService;
 	}
 
 	@InitBinder
@@ -54,17 +60,13 @@ public class ProductoController {
 		mav.addObject(this.productoService.findProductoById(productoId));
 		return mav;
 	}
-	
+
 	@GetMapping(value = "/productos/search")
 	public String productListSearchEmpty(ModelMap modelMap) {
 		String vista = "productos/productosList";
 		Iterable<Producto> productos = this.productoService.findAllProductos();
-		Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
-		Set<Preferencias> preferencias = new HashSet<Preferencias>();
-		for (Producto p : productos) {
-			intolerancias.addAll(p.getIntolerancia());
-			preferencias.add(p.getPreferencia());
-		}
+		Collection<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
+		Collection<Preferencias> preferencias = this.productoService.findAllPreferencias();
 		modelMap.addAttribute("productos", productos);
 		modelMap.addAttribute("intolerancias", intolerancias);
 		modelMap.addAttribute("preferencias", preferencias);
@@ -75,12 +77,8 @@ public class ProductoController {
 	public String productListByName(@PathVariable("name") String name, ModelMap modelMap) {
 		String vista = "productos/productosList";
 		Iterable<Producto> productos = this.productoService.findByNombre(name);
-		Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
-		Set<Preferencias> preferencias = new HashSet<Preferencias>();
-		for (Producto p : productos) {
-			intolerancias.addAll(p.getIntolerancia());
-			preferencias.add(p.getPreferencia());
-		}
+		Collection<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
+		Collection<Preferencias> preferencias = this.productoService.findAllPreferencias();
 		modelMap.addAttribute("productos", productos);
 		modelMap.addAttribute("intolerancias", intolerancias);
 		modelMap.addAttribute("preferencias", preferencias);
@@ -92,12 +90,8 @@ public class ProductoController {
 	public String productList(ModelMap modelMap) {
 		String vista = "productos/productosList";
 		Iterable<Producto> productos = this.productoService.findAllProductos();
-		Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
-		Set<Preferencias> preferencias = new HashSet<Preferencias>();
-		for (Producto p : productos) {
-			intolerancias.addAll(p.getIntolerancia());
-			preferencias.add(p.getPreferencia());
-		}
+		Collection<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
+		Collection<Preferencias> preferencias = this.productoService.findAllPreferencias();
 		modelMap.addAttribute("productos", productos);
 		modelMap.addAttribute("intolerancias", intolerancias);
 		modelMap.addAttribute("preferencias", preferencias);
@@ -112,7 +106,7 @@ public class ProductoController {
 		return vista;
 	}
 
-	@GetMapping(value = "/productos/new")
+	@GetMapping(value = "/tienda/{tiendaId}/productos/new")
 	public String initCreationProductoForm(Map<String, Object> model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
@@ -139,8 +133,8 @@ public class ProductoController {
 		}
 	}
 
-	@PostMapping(value = "/productos/new")
-	public String processCreationProductoForm(@Valid Producto producto, BindingResult result,
+	@PostMapping(value = "/tienda/{tiendaId}/productos/new")
+	public String processCreationProductoForm(@PathVariable("tiendaId") Integer tiendaId, @Valid Producto producto, BindingResult result,
 			Map<String, Object> model) {
 		if (result.hasErrors()) {
 			Boolean isNew = true;
@@ -148,13 +142,17 @@ public class ProductoController {
 			model.put("producto", producto);
 			return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
 		} else {
+			Tienda t = tiendaService.findTiendaById(tiendaId);
+			producto.setTienda(t);
+			t.getProductos().add(producto);
 			this.productoService.saveProducto(producto);
+			this.tiendaService.saveTienda(t);
 			return "redirect:/producto/" + producto.getId();
 
 		}
 	}
   
-	@GetMapping(value = "/producto/{productoId}/edit")
+	@GetMapping(value = "/tienda/{tiendaId}/producto/{productoId}/edit")
 	public String initUpdateProductoForm(@PathVariable("productoId") int productoId, ModelMap model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
@@ -181,9 +179,9 @@ public class ProductoController {
 		}
 	}
 
-	@PostMapping(value = "/producto/{productoId}/edit")
+	@PostMapping(value = "/tienda/{tiendaId}/producto/{productoId}/edit")
 	public String processUpdateProductoForm(@Valid Producto producto, BindingResult result,
-			@PathVariable("productoId") int productoId, ModelMap model) {
+			@PathVariable("productoId") int productoId,@PathVariable("tiendaId") int tiendaId, ModelMap model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
@@ -198,7 +196,7 @@ public class ProductoController {
 			}
 			producto.setId(productoId);
 			this.productoService.saveProducto(producto);
-			return "redirect:/producto/{productoId}";
+			return "redirect:/producto/"+producto.getId();
 		}
 	}
 
@@ -227,14 +225,24 @@ public class ProductoController {
 			producto.setId(productoId);
 			this.productoService.saveProducto(producto);
 			return "redirect:/producto/{productoId}";
-    }
-  }
-  	@RequestMapping(value = "/producto/{productoId}/delete")
-	public String deleteProducto(@PathVariable("productoId") final int productoId, final ModelMap model) {
-		Producto producto = this.productoService.findProductoById(productoId);
-		Integer id = producto.getTienda().getId();
-		this.productoService.deleteProducto(producto);
-		return "redirect:/tienda/"+id;
+		}
+	}
+
+  	@RequestMapping(value = "/tienda/{tiendaId}/producto/{productoId}/delete")
+	public String deleteProducto(@PathVariable("productoId") final int productoId,@PathVariable("tiendaId") final int tiendaId, final ModelMap model) {
+  		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		String auth = currentPrincipalName.iterator().next().toString().trim();
+		model.put("auth", auth);
+		User currentUser = (User) authentication.getPrincipal();
+		if ((auth.equals("vendedor") && currentUser.getTienda().getId().equals(tiendaId)) || auth.equals("admin")) {
+			Producto producto = this.productoService.findProductoById(productoId);
+			Integer id = producto.getTienda().getId();
+			this.productoService.deleteProducto(producto);
+			return "redirect:/tienda/"+id;
+		}else {
+			return VIEWS_ERROR_AUTH;
+		}
 	}
 
 }

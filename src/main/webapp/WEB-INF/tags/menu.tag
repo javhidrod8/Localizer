@@ -59,6 +59,11 @@
 					<!-- <span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
 					<span>Productos</span>
 				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'tiendas'}" url="/tiendas"
+					title="tiendas">
+					<span>Tiendas</span>
+				</petclinic:menuItem>
 
 	
 
@@ -70,7 +75,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
 					<li><a href="<c:url value="/login" />">Login</a></li>
-					<li><a href="<c:url value="/" />">Registro</a></li>
+					<li><a href="<c:url value="/users/new" />">Registro</a></li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
