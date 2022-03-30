@@ -71,11 +71,11 @@ class UserControllerTests {
 		this.george.setTienda(null);
 		
 	//	this.userService.saveUser(this.george);
-		this.g = Optional.of(this.george);
+		//this.g = Optional.of(this.george);
 		
 	//	System.out.println(this.george.toString()+"sdasdasdaspiodjasdfujhasdfguihasdofiuhasdfouiasdhfoasdf");
 	//	System.out.println(this.userService.findUser("admin1").toString()+"----------jfnsdajkfhlasdoikfjasdfiojaspdofiajsd");
-		BDDMockito.given(this.userService.findUser("george1")).willReturn(this.g);
+		BDDMockito.given(this.userService.findUser("george1")).willReturn(this.george);
 	}
 
 	@WithMockUser(value = "spring")
@@ -147,11 +147,11 @@ class UserControllerTests {
 	void testInitUpdateUserForm() throws Exception {
 		mockMvc.perform(get("/users/{username}/edit", "george1")).andExpect(status().isOk())
 //				.andExpect(model().attributeExists("optional"))
-				.andExpect(model().attribute("user", this.g.get()))
-//				.andExpect(model().attribute("user", hasProperty("lastName", is("Franklin"))))
-//				.andExpect(model().attribute("user", hasProperty("firstName", is("George"))))
-//				.andExpect(model().attribute("user", hasProperty("username", is("george1"))))
-//				.andExpect(model().attribute("user", hasProperty("password", is("pass123"))))
+//				.andExpect(model().attribute("user", this.g.get()))
+				.andExpect(model().attribute("user", hasProperty("lastName", is("Franklin"))))
+				.andExpect(model().attribute("user", hasProperty("firstName", is("George"))))
+				.andExpect(model().attribute("user", hasProperty("username", is("george1"))))
+				.andExpect(model().attribute("user", hasProperty("password", is("pass123"))))
 				.andExpect(view().name("users/createOrUpdateUserForm"));
 	}
 
@@ -187,10 +187,10 @@ class UserControllerTests {
 	void testShowUser() throws Exception {
 		mockMvc.perform(get("/users/{username}", "george1")).andExpect(status().isOk())
 //		.andExpect(model().attributeExists("optional"))
-		.andExpect(model().attribute("user", this.g.get()))
-//				.andExpect(model().attribute("user", hasProperty("firstName", is("George"))))
-//				.andExpect(model().attribute("user", hasProperty("username", is("george1"))))
-//				.andExpect(model().attribute("user", hasProperty("password", is("pass123"))))
+//		.andExpect(model().attribute("user", this.g.get()))
+				.andExpect(model().attribute("user", hasProperty("firstName", is("George"))))
+				.andExpect(model().attribute("user", hasProperty("username", is("george1"))))
+				.andExpect(model().attribute("user", hasProperty("password", is("pass123"))))
 				.andExpect(view().name("users/userDetails"));
 	}
 

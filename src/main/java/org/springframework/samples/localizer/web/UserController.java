@@ -46,14 +46,14 @@ class UserController {
 	}
 
 	@PostMapping("/users/new")
-	public String processCreationForm(@Valid Optional<User> user, BindingResult result, Model model) {
+	public String processCreationForm(@Valid User user, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			model.addAttribute(user.get());
+			model.addAttribute(user);
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			this.userService.saveUser(user.get());
-			return "redirect:/users/" + user.get().getUsername();
+			this.userService.saveUser(user);
+			return "redirect:/users/" + user.getUsername();
 		}
 	}
 
@@ -118,23 +118,23 @@ class UserController {
 
 	@GetMapping("/users/{username}/edit")
 	public String initUpdateUserForm(@PathVariable("username") String username, Map<String, Object> model) {
-		Optional<User> user = this.userService.findUser(username);
+		User user = this.userService.findUser(username);
 		System.out.println("RUBIANCO ERES UN TONTO"+user.toString());
-		model.put("user", user.get());
+		model.put("user", user);
 		Boolean isNew = false;
 		model.put("isNew", isNew);
 		return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping("/users/{username}/edit")
-	public String processUpdateUserForm(@Valid Optional<User> user, BindingResult result,
+	public String processUpdateUserForm(@Valid User user, BindingResult result,
 			@PathVariable("username") String username,  Model model) {
 		if (result.hasErrors()) {
-			model.addAttribute(user.get());
+			model.addAttribute(user);
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			User u = user.get();
+			User u = user;
 			u.setUsername(username);
 			this.userService.saveUser(u);
 			return "redirect:/users/{username}";
@@ -145,8 +145,8 @@ class UserController {
 	@GetMapping("/users/{username}")
 	public ModelAndView showUser(@PathVariable("username") String username) {
 		ModelAndView mav = new ModelAndView("users/userDetails");
-		Optional<User> user = this.userService.findUser(username);
-		mav.addObject(user.get());
+		User user = this.userService.findUser(username);
+		mav.addObject(user);
 		return mav;
 	}
 
