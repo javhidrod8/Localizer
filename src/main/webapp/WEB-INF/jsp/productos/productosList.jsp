@@ -6,13 +6,14 @@
 <petclinic:layout pageName="productosList">
 	<spring:url value="/productos/" var="productosUrl"></spring:url>
 	<spring:url value="/producto/" var="productoUrl"></spring:url>
+	<spring:url value="/productos/search/" var="searchUrl"></spring:url>
 	<h2>Productos</h2>
 	<br>
 
 	<script>
 		function Buscar(){
 		  var text = $("#busqueda").val();
-		  location.href = "${fn:escapeXml(productosUrl)}"+text;
+		  location.href = "${fn:escapeXml(searchUrl)}"+text;
 		}
 </script>
 	<div class="row">
@@ -65,6 +66,7 @@
 		    productoDetails.precio = "${producto.precio}";
 		    productoDetails.marca = "${producto.marca}";
 		    productoDetails.imagen = "${producto.imagen}";
+		    productoDetails.estado = "${producto.estado}";
 		    productoDetails.intolerancias = new Array();
 		    <c:forEach items="${producto.intolerancia}" var="intolerancia">
 		    	productoDetails.intolerancias.push("${intolerancia}");
@@ -96,17 +98,21 @@
 			var selectedIntolerancias = new Array();
 			document.getElementById('productos').innerHTML= prodHtml;
 			var productosFiltrados = [...productos];
-	  		preferencias.forEach(p => {
-				  if(document.getElementById(p).checked && !selectedPreferencia.includes(p)){
+			preferencias.forEach(p => {
+	  			if(document.getElementById(p) != null){
+				 	if(document.getElementById(p).checked && !selectedPreferencia.includes(p)){
  					  selectedPreferencia.push(p);
-				  }
+				 	}
+	  			}
 			  })
 	  		
 	  		intolerancias.forEach(i => {
-				  if(document.getElementById(i).checked && !selectedIntolerancias.includes(i)){
-					  selectedIntolerancias.push(i);
-				  }
-			  })
+	  			if(document.getElementById(i) != null){
+  					if(document.getElementById(i).checked && !selectedIntolerancias.includes(i)){
+					 	selectedIntolerancias.push(i);
+					 }
+	  			} 
+			  })	
 			  			  
 			  if(selectedPreferencia.length > 0 || selectedIntolerancias.length > 0){
 				  var indexListPreferencias = [];
