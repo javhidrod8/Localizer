@@ -1,5 +1,7 @@
 package org.springframework.samples.localizer.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +45,8 @@ public class ProductoService {
 
 	@Transactional(readOnly = true)
 	public Collection<Preferencias> findAllPreferencias() throws DataAccessException {
-		return productoRepository.findAllPreferencias();
+		Collection<Preferencias> preferencias = new ArrayList<Preferencias>(Arrays.asList(Preferencias.values()));
+		return preferencias;
 	}
 
 	@Transactional(readOnly = true)

@@ -24,6 +24,5 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 	@Query("select p from Producto p where p.estado like ?1")
 	public Collection<Producto> findProductosByEstado(Estado estado);
 	
-	@Query("select p.preferencia from Producto p")
 	public Collection<Preferencias> findAllPreferencias();
 }
