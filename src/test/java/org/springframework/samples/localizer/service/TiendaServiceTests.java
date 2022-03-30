@@ -147,7 +147,7 @@ class TiendaServiceTests {
 		
 		int count = t.size();
 		
-		Assertions.assertTrue(count == 3);
+		Assertions.assertTrue(count == 4);
 	}
 	@Test //CASO NEGATIVO
 	//No encontrar ninguna tienda por el cp
