@@ -21,9 +21,9 @@
 			<h2>
 				<c:out value="${producto.precio}" />
 				&#8364
-				<%-- <c:if test="${producto.verificado==true}">
+				<c:if test="${producto.estado == 'ACEPTADO'}">
 					<i class="fa fa-check" style="margin-left: 2%"></i>
-				</c:if> --%>
+				</c:if>
 			</h2>
 			<c:if test="${not empty producto.intolerancia  }">
 			Intolerancias: <c:forEach items="${producto.intolerancia}" var="intolerancia">
@@ -73,10 +73,9 @@
 				</br>
 				<c:out value="${productos.nombre}" /> marca <c:out
 					value="${producto.marca}" /></br> 
-     				<c:out value="${productos.precio}" /> &#8364<%-- <c:if
-					test="${productos.verificado==true}">
+     				<c:out value="${productos.precio}" /> &#8364<c:if test="${producto.estado == 'ACEPTADO'}">
 					<i class="fa fa-check" style="margin-left: 2%"></i>
-				</c:if> --%>
+				</c:if>
 				</h2>
 				</br>
 				<button>Reservar</button>
