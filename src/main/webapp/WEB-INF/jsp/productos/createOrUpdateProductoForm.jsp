@@ -104,8 +104,10 @@
 				<div id="preferencias-producto">
 					<h3>Preferencias</h3>
 				</div>
-
-				<petclinic:inputField label="Tienda" name="tienda"></petclinic:inputField>
+				
+				<div id="marca-producto col-md-12">
+					<input type="text" id="tienda" name="tienda" class="hidden" value="${tiendaId}"><br>
+				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
@@ -125,6 +127,7 @@
 
 	</form:form>
 	<script type="text/javascript">
+console.log(${tiendaId})
 var intolerancias = new Array();
 var intoleranciasSeleccionadas = new Array();
 var intoleranciasSeleccionadasNombres = new Array();
