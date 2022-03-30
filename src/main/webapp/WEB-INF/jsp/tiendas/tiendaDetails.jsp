@@ -1,9 +1,9 @@
-<%@ page session="false" trimDirectiveWhitespaces="true" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page session="false" trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 
 <petclinic:layout pageName="tiendas">
@@ -14,30 +14,46 @@
 				alt="Responsive image" />
 		</div>
 		<div class="col-md-6">
-		
-		<div class="infoTienda">
-  			<h1><c:out value="${tienda.nombre}" /></h1>
-			<dl>
-							<dt>Descripción:</dt>
-				<dd>
-					<c:out value="${tienda.descripcion}" />
-				</dd>
-				<dt><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Localizaci&oacuten:</dt>
-				<dd>
-					<p><c:out value="${tienda.calle}" /></p>
-					<p><c:out value="${tienda.provincia}" /></p>
-					<p><c:out value="${tienda.codigoPostal}" /></p>
-				</dd>
-				<dt><span class="glyphicon glyphicon-time" aria-hidden="true"></span> Horarios:</dt>
-				<dd>
-					<c:out value="${tienda.horario}" />
-				</dd>
-				<dt><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>Teléfono:</dt>
-				<dd>
-					<c:out value="${tienda.telefono}" />
-				</dd>
-			</dl>
-</div>
+
+			<div class="infoTienda">
+				<h1>
+					<c:out value="${tienda.nombre}" />
+				</h1>
+				<dl>
+					<dt>Descripción:</dt>
+					<dd>
+						<c:out value="${tienda.descripcion}" />
+					</dd>
+					<dt>
+						<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+						Localizaci&oacuten:
+					</dt>
+					<dd>
+						<p>
+							<c:out value="${tienda.calle}" />
+						</p>
+						<p>
+							<c:out value="${tienda.provincia}" />
+						</p>
+						<p>
+							<c:out value="${tienda.codigoPostal}" />
+						</p>
+					</dd>
+					<dt>
+						<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+						Horarios:
+					</dt>
+					<dd>
+						<c:out value="${tienda.horario}" />
+					</dd>
+					<dt>
+						<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>Teléfono:
+					</dt>
+					<dd>
+						<c:out value="${tienda.telefono}" />
+					</dd>
+				</dl>
+			</div>
 
 		</div>
 	</div>
@@ -105,7 +121,6 @@
 		    preferencias.push(productoDetails.preferencia);/*2 - quitar cuando esten los checkbox*/
 		    productos.push(productoDetails);
 		</c:forEach> 
-	
 		productos.forEach(producto=> printProducto(producto));
 		
 		
@@ -127,17 +142,21 @@
 			var selectedIntolerancias = new Array();
 			document.getElementById('productos').innerHTML= prodHtml;
 			var productosFiltrados = [...productos];
-	  		preferencias.forEach(p => {
-				  if(document.getElementById(p).checked && !selectedPreferencia.includes(p)){
+			preferencias.forEach(p => {
+	  			if(document.getElementById(p) != null){
+				 	if(document.getElementById(p).checked && !selectedPreferencia.includes(p)){
  					  selectedPreferencia.push(p);
-				  }
+				 	}
+	  			}
 			  })
 	  		
 	  		intolerancias.forEach(i => {
-				  if(document.getElementById(i).checked && !selectedIntolerancias.includes(i)){
-					  selectedIntolerancias.push(i);
-				  }
-			  })
+	  			if(document.getElementById(i) != null){
+  					if(document.getElementById(i).checked && !selectedIntolerancias.includes(i)){
+					 	selectedIntolerancias.push(i);
+					 }
+	  			} 
+			  })	
 			  			  
 			  if(selectedPreferencia.length > 0 || selectedIntolerancias.length > 0){
 				  var indexListPreferencias = [];
