@@ -2,7 +2,12 @@ package org.springframework.samples.localizer.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,27 +20,40 @@ import org.springframework.samples.localizer.model.User;
 class UserServiceTest {
 	@Autowired
 	protected UserService userService;
+	@Autowired
+	protected AuthoritiesService auService;
 
 	@Test
 	void shouldFindUserByUserName() {
+		
 		User user = new User();
+		Authorities au = new Authorities();
+		Set<Authorities> aus = new HashSet<Authorities>(); 
+		
+		
 		user.setUsername("pruebador");
 		user.setPassword("Contrasen4");
 		user.setFirstName("Test");
 		user.setLastName("Prueba");
 		user.setTienda(null);
-		Authorities javi = new Authorities();
-		javi.setAuthority("cliente");
-		user.getAuthorities().add(javi);
+		au.setAuthority("cliente");
+		au.setUser(user);
+		aus.add(au);
+		user.setAuthorities(aus);
+		
 		this.userService.saveUser(user);
-		Optional<User> usuario = this.userService.findUser("pruebador");
-		assertThat(usuario.get().getUsername()).isEqualTo(user.getUsername());
+		this.auService.saveAuthorities(au);
+		
+		User usuario = this.userService.findUser("pruebador");
+		
+		assertThat(usuario.getUsername()).isEqualTo(user.getUsername());
 	}
 
 	@Test
 	public void shouldInsertUser() {
 
 		User user = new User();
+		
 		user.setUsername("pruebador");
 		user.setPassword("Contrasen4");
 		user.setFirstName("Test");
@@ -44,26 +62,23 @@ class UserServiceTest {
 		String found = user.getUsername();
 
 		this.userService.saveUser(user);
-
-		Optional<User> usuarios = this.userService.findUser("pruebador");
-		assertThat(usuarios.get().getUsername()).isEqualTo(found);
+		User usuarios = this.userService.findUser("pruebador");
+		
+		assertThat(usuarios.getUsername()).isEqualTo(found);
 	}
 
 	@Test
 	public void shouldDeleteUser() {
 
 		User user = new User();
-		user.setUsername("pruebador");
-		user.setPassword("Contrasen4");
-		user.setFirstName("Test");
-		user.setLastName("Prueba");
-		user.setTienda(null);
+		Authorities au = new Authorities();
+		Set<Authorities> aus = new HashSet<Authorities>(); 
 		
-		this.userService.saveUser(user);
-		this.userService.deleteUser(user);
-		Optional<User> usuarios = this.userService.findUser("pruebador");
+		user = this.userService.findUser("admin1");
+		this.userService.deleteUser(user);	
+		User usuario = this.userService.findUser("admin1");
 
-		assertThat(usuarios.orElse(null)).isNull();
+		assertThat(usuario).isNull();
 	}
 
 }

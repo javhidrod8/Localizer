@@ -47,6 +47,8 @@ class UserController {
 
 	@PostMapping("/users/new")
 	public String processCreationForm(@Valid User user, BindingResult result, Model model) {
+		
+		System.out.println("");
 		if (result.hasErrors()) {
 			model.addAttribute(user);
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
@@ -119,7 +121,6 @@ class UserController {
 	@GetMapping("/users/{username}/edit")
 	public String initUpdateUserForm(@PathVariable("username") String username, Map<String, Object> model) {
 		User user = this.userService.findUser(username);
-		System.out.println("RUBIANCO ERES UN TONTO"+user.toString());
 		model.put("user", user);
 		Boolean isNew = false;
 		model.put("isNew", isNew);
@@ -134,10 +135,8 @@ class UserController {
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			User u = user;
-			u.setUsername(username);
-			this.userService.saveUser(u);
-			return "redirect:/users/{username}";
+			this.userService.saveUser(user);
+			return "redirect:/users/" + user.getUsername();
 		}
 	}
 

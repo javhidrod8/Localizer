@@ -88,10 +88,12 @@ class UserControllerTests {
 	@WithMockUser(value = "spring")
         @Test
 	void testProcessCreationFormSuccess() throws Exception {
-		mockMvc.perform(post("/users/new").param("firstName", "Jose").param("lastName", "Hidalgo")
-							.with(csrf())
-							.param("username", "jose1")
-							.param("password", "password123"))
+		mockMvc.perform(post("/users/new")
+				.param("firstName", "Jose")
+				.param("lastName", "Hidalgo")
+				.with(csrf())
+				.param("username", "jose1")
+				.param("password", "password123"))
 				.andExpect(status().is3xxRedirection());
 	}
 
@@ -99,9 +101,11 @@ class UserControllerTests {
         @Test
 	void testProcessCreationFormHasErrors() throws Exception {
 		mockMvc.perform(post("/users/new")
-							.with(csrf())
-							.param("firstName", "Jose")
-							.param("lastName", "Hidalgo"))
+				.with(csrf())
+				.param("firstName", "Jose")
+				.param("lastName", "Hidalgo")
+				.param("username", "")
+				.param("password", ""))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeHasErrors("user"))
 				.andExpect(model().attributeHasFieldErrors("user", "username"))
@@ -146,8 +150,6 @@ class UserControllerTests {
 	@Test
 	void testInitUpdateUserForm() throws Exception {
 		mockMvc.perform(get("/users/{username}/edit", "george1")).andExpect(status().isOk())
-//				.andExpect(model().attributeExists("optional"))
-//				.andExpect(model().attribute("user", this.g.get()))
 				.andExpect(model().attribute("user", hasProperty("lastName", is("Franklin"))))
 				.andExpect(model().attribute("user", hasProperty("firstName", is("George"))))
 				.andExpect(model().attribute("user", hasProperty("username", is("george1"))))
@@ -161,11 +163,11 @@ class UserControllerTests {
 		mockMvc.perform(post("/users/{username}/edit", "george1")
 							.with(csrf())
 							.param("firstName", "Geo")
-							.param("lastName", "Frank")
+							.param("lastName", "Fran")
 							.param("username", "george1")
 							.param("password", "pass123"))
-				.andExpect(status().is3xxRedirection())
-				.andExpect(view().name("redirect:/users/{username}"));
+				.andExpect(status().isOk())
+				.andExpect(view().name("redirect:/users/"+this.george.getUsername()));
 	}
 
         @WithMockUser(value = "spring")
@@ -185,7 +187,8 @@ class UserControllerTests {
         @WithMockUser(value = "spring")
 	@Test
 	void testShowUser() throws Exception {
-		mockMvc.perform(get("/users/{username}", "george1")).andExpect(status().isOk())
+		mockMvc.perform(get("/users/{username}", "george1"))
+		.andExpect(status().isOk())
 //		.andExpect(model().attributeExists("optional"))
 //		.andExpect(model().attribute("user", this.g.get()))
 				.andExpect(model().attribute("user", hasProperty("firstName", is("George"))))
