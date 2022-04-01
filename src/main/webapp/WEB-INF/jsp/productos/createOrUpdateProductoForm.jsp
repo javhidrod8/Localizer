@@ -87,16 +87,8 @@
 							value="PENDIENTE"> PENDIENTE
 					</c:if>	
 				
-				<c:if test="${auth == 'nutricionista'}">
-				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 				
-				<script>
-				$("#nombre2").hide();$("#nombre").hide();
-				$("#imagen").hide();$("#imagen2").hide();
-				$("#marca").hide();$("#marca2").hide();
-				$("#descripcion").hide();$("#descripcion2").hide();
-				$("#precio").hide();$("#precio2").hide();
-				</script>
+				<div id="vendedor">
 				<div id="motivo-producto col-md-12">
 					<label for="motivo">
 						<h3>Motivo:</h3>
@@ -130,7 +122,6 @@
 					<input type="text" id="tienda" name="tienda" class="hidden" value="${tiendaId}"><br>
 				</div>
 			</div>
-			</c:if>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<c:choose>
@@ -144,7 +135,7 @@
 						</c:otherwise>
 					</c:choose>
 				</div>
-			</div>
+			</div></div>
 		</div>
 
 	</form:form>
@@ -213,5 +204,24 @@ preferencias.forEach((preferencia, i) => {
 
    });
 </script>
+
+<c:if test="${auth == 'nutricionista'}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		
+	<script>
+	$("#nombre2").hide();$("#nombre").hide();
+	$("#imagen").hide();$("#imagen2").hide();
+	$("#marca").hide();$("#marca2").hide();
+	$("#descripcion").hide();$("#descripcion2").hide();
+	$("#precio").hide();$("#precio2").hide();
+	</script>
+</c:if>
+<c:if test="${auth == 'vendedor'}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		
+	<script>
+	$("#vendedor").hide();
+	</script>
+</c:if>
 </petclinic:layout>
 
