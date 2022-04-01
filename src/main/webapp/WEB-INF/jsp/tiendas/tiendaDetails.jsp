@@ -1,9 +1,10 @@
-<%@ page session="false" trimDirectiveWhitespaces="true" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page session="false" trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 
 <petclinic:layout pageName="tiendas">
@@ -14,30 +15,88 @@
 				alt="Responsive image" />
 		</div>
 		<div class="col-md-6">
-		
-		<div class="infoTienda">
-  			<h1><c:out value="${tienda.nombre}" /></h1>
-			<dl>
-							<dt>Descripción:</dt>
-				<dd>
-					<c:out value="${tienda.descripcion}" />
+
+			<div class="infoTienda">
+				<h1>
+					<c:out value="${tienda.nombre}" />
+				</h1>
+				<dl>
+					<dt>Descripci&oacuten:</dt>
+					<dd>
+						<c:out value="${tienda.descripcion}" />
+					</dd>
+					<dt>
+						<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+						Localizaci&oacuten:
+					</dt>
+					<dd>
+						<p>
+							<c:out value="${tienda.calle}" />
+						</p>
+						<p>
+							<c:out value="${tienda.provincia}" />
+						</p>
+						<p>
+							<c:out value="${tienda.codigoPostal}" />
+						</p>
+					</dd>
+					<dt>
+						<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+						Horarios:
+					</dt>
+					<dd>
+						<c:out value="${tienda.horario}" />
+					</dd>
+					<dt>
+						<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>Tel&eacutefono:
+					</dt>
+					<dd>
+						<c:out value="${tienda.telefono}" />
+					</dd>
+					<sec:authorize access="hasAuthority('admin')">
+				<dd>				
+					<spring:url value="/tienda/{tiendaId}/delete" var="tiendaDeleteUrl">
+						<spring:param name="tiendaId" value="${tienda.id}" />
+					</spring:url>	
+					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
+						<button>Eliminar tienda</button>
+					</a>
 				</dd>
-				<dt><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Localizaci&oacuten:</dt>
-				<dd>
-					<p><c:out value="${tienda.calle}" /></p>
-					<p><c:out value="${tienda.provincia}" /></p>
-					<p><c:out value="${tienda.codigoPostal}" /></p>
+				</sec:authorize>
+				  <sec:authorize access="hasAuthority('admin')">
+				<dd>				
+					<spring:url value="/tienda/{tiendaId}/edit" var="tiendaEditUrl">
+						<spring:param name="tiendaId" value="${tienda.id}" />
+					</spring:url>	
+					<a href="${fn:escapeXml(tiendaEditUrl)}">
+						<button>Editar tienda</button>
+					</a>
 				</dd>
-				<dt><span class="glyphicon glyphicon-time" aria-hidden="true"></span> Horarios:</dt>
-				<dd>
-					<c:out value="${tienda.horario}" />
-				</dd>
-				<dt><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>Teléfono:</dt>
-				<dd>
-					<c:out value="${tienda.telefono}" />
-				</dd>
-			</dl>
-</div>
+				</sec:authorize>
+				 <sec:authorize access="hasAuthority('vendedor')">
+<%-- 			        <sec:authentication var="user" property="name" /> --%>
+<%-- 					<c:if test="${username == user}"> --%>
+					<dd>				
+						<spring:url value="/tienda/{tiendaId}/edit" var="tiendaEditUrl">
+							<spring:param name="tiendaId" value="${tienda.id}" />
+						</spring:url>	
+						<a href="${fn:escapeXml(tiendaEditUrl)}">
+							<button>Editar tienda</button>
+						</a>
+						<spring:url value="/tienda/{tiendaId}/productos/new" var="tiendaUrl">
+							<spring:param name="tiendaId" value="${tienda.id}" />
+						</spring:url>	
+						<a href="${fn:escapeXml(tiendaUrl)}">
+							<button>Nuevo Producto</button>
+						</a>
+					</dd>
+
+					
+<%-- 					</c:if> --%>
+
+				</sec:authorize>
+				</dl>
+			</div>
 
 		</div>
 	</div>
@@ -52,8 +111,7 @@
 			<div id="intolerancias">
 				<h3>Intolerancias</h3>
 				<c:forEach items="${intolerancias}" var="intolerancia">
-					<input class="form-check-input" type="checkbox"
-						id="${intolerancia}" />
+					<input class="form-check-input" type="checkbox" id="${intolerancia}" />
 					<c:out value="${intolerancia}"></c:out>
 					</br>
 					</br>
@@ -61,8 +119,9 @@
 			</div>
 			<div id="preferencias">
 				<h3>Preferencias</h3>
+				<input class="form-check-input" type="radio" name = "preferencia" checked> NINGUNA </br></input>
 				<c:forEach items="${preferencias}" var="preferencia">
-					<input class="form-check-input" type="checkbox" id="${preferencia}" />
+					<input class="form-check-input" type="radio" name = "preferencia" id="${preferencia}" />	
 					<c:out value="${preferencia}"></c:out>
 					</br>
 				</c:forEach>
@@ -105,7 +164,6 @@
 		    preferencias.push(productoDetails.preferencia);/*2 - quitar cuando esten los checkbox*/
 		    productos.push(productoDetails);
 		</c:forEach> 
-	
 		productos.forEach(producto=> printProducto(producto));
 		
 		
@@ -127,17 +185,21 @@
 			var selectedIntolerancias = new Array();
 			document.getElementById('productos').innerHTML= prodHtml;
 			var productosFiltrados = [...productos];
-	  		preferencias.forEach(p => {
-				  if(document.getElementById(p).checked && !selectedPreferencia.includes(p)){
+			preferencias.forEach(p => {
+	  			if(document.getElementById(p) != null){
+				 	if(document.getElementById(p).checked && !selectedPreferencia.includes(p)){
  					  selectedPreferencia.push(p);
-				  }
+				 	}
+	  			}
 			  })
 	  		
 	  		intolerancias.forEach(i => {
-				  if(document.getElementById(i).checked && !selectedIntolerancias.includes(i)){
-					  selectedIntolerancias.push(i);
-				  }
-			  })
+	  			if(document.getElementById(i) != null){
+  					if(document.getElementById(i).checked && !selectedIntolerancias.includes(i)){
+					 	selectedIntolerancias.push(i);
+					 }
+	  			} 
+			  })	
 			  			  
 			  if(selectedPreferencia.length > 0 || selectedIntolerancias.length > 0){
 				  var indexListPreferencias = [];
