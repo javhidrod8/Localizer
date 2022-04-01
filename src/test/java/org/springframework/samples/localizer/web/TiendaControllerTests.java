@@ -92,7 +92,8 @@ public class TiendaControllerTests {
     @WithMockUser(value="localizer1")
     @Test
     void testShowTienda() throws Exception {
-        mockMvc.perform(get("/tiendas/{tiendaId}",TEST_TIENDA_ID )).andExpect(status().isOk())
+        mockMvc.perform(get("/tienda/{tiendaId}",TEST_TIENDA_ID ))
+        .andExpect(status().isOk())
         .andExpect(model().attribute("tienda",this.tienda));
 //        .andExpect(model().attribute("calle","Sevilla"));
 //        .andExpect(model().attribute("codigoPostal", 41011))
@@ -105,12 +106,12 @@ public class TiendaControllerTests {
                 //.andExpect(view().name("tiendas/tiendaDetails"));
     }
     
-    @WithMockUser(value="localizer1")
-    @Test
-    void testShowFinderByCPTienda() throws Exception {
-        mockMvc.perform(get("/tiendas/find")).andExpect(status().is5xxServerError()); //TODO: Arreglar cuando se arregle el controlador
-        //.andExpect(model().attribute("tienda",new Tienda()));
-    }
+//    @WithMockUser(value="localizer1")
+//    @Test
+//    void testShowFinderByCPTienda() throws Exception {
+//        mockMvc.perform(get("/tiendas/find")).andExpect(status().is5xxServerError()); //TODO: Arreglar cuando se arregle el controlador
+//        //.andExpect(model().attribute("tienda",new Tienda()));
+//    }
 //    @WithMockUser(value="localizer1")
 //    @Test
 //    void testListFinderByCPTienda() throws Exception {

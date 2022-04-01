@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.localizer.model.User;
 import org.springframework.samples.localizer.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ class UserController {
 
 	private final UserService userService;
 
+	@Autowired
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
@@ -44,11 +46,15 @@ class UserController {
 	}
 
 	@PostMapping("/users/new")
-	public String processCreationForm(@Valid User user, BindingResult result) {
+	public String processCreationForm(@Valid User user, BindingResult result, Model model) {
+		
+		System.out.println("");
 		if (result.hasErrors()) {
+			model.addAttribute(user);
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
 		else {
+
 			this.userService.saveUser(user);
 			return "redirect:/users/" + user.getUsername();
 		}
@@ -114,22 +120,24 @@ class UserController {
 */
 
 	@GetMapping("/users/{username}/edit")
-	public String initUpdateUserForm(@PathVariable("username") String username, Model model) {
-		Optional<User> user = this.userService.findUser(username);
-		model.addAttribute(user);
+	public String initUpdateUserForm(@PathVariable("username") String username, Map<String, Object> model) {
+		User user = this.userService.findUser(username);
+		model.put("user", user);
+		Boolean isNew = false;
+		model.put("isNew", isNew);
 		return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping("/users/{username}/edit")
 	public String processUpdateUserForm(@Valid User user, BindingResult result,
-			@PathVariable("username") String username) {
+			@PathVariable("username") String username,  Model model) {
 		if (result.hasErrors()) {
+			model.addAttribute(user);
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			user.setUsername(username);
 			this.userService.saveUser(user);
-			return "redirect:/users/{username}";
+			return "redirect:/users/" + user.getUsername();
 		}
 	}
 
@@ -137,7 +145,7 @@ class UserController {
 	@GetMapping("/users/{username}")
 	public ModelAndView showUser(@PathVariable("username") String username) {
 		ModelAndView mav = new ModelAndView("users/userDetails");
-		Optional<User> user = this.userService.findUser(username);
+		User user = this.userService.findUser(username);
 		mav.addObject(user);
 		return mav;
 	}

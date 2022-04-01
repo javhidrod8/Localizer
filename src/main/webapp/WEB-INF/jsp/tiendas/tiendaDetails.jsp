@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 
 <petclinic:layout pageName="tiendas">
@@ -20,7 +21,7 @@
 					<c:out value="${tienda.nombre}" />
 				</h1>
 				<dl>
-					<dt>Descripción:</dt>
+					<dt>Descripci&oacuten:</dt>
 					<dd>
 						<c:out value="${tienda.descripcion}" />
 					</dd>
@@ -47,11 +48,53 @@
 						<c:out value="${tienda.horario}" />
 					</dd>
 					<dt>
-						<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>Teléfono:
+						<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>Tel&eacutefono:
 					</dt>
 					<dd>
 						<c:out value="${tienda.telefono}" />
 					</dd>
+					<sec:authorize access="hasAuthority('admin')">
+				<dd>				
+					<spring:url value="/tienda/{tiendaId}/delete" var="tiendaDeleteUrl">
+						<spring:param name="tiendaId" value="${tienda.id}" />
+					</spring:url>	
+					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
+						<button>Eliminar tienda</button>
+					</a>
+				</dd>
+				</sec:authorize>
+				  <sec:authorize access="hasAuthority('admin')">
+				<dd>				
+					<spring:url value="/tienda/{tiendaId}/edit" var="tiendaEditUrl">
+						<spring:param name="tiendaId" value="${tienda.id}" />
+					</spring:url>	
+					<a href="${fn:escapeXml(tiendaEditUrl)}">
+						<button>Editar tienda</button>
+					</a>
+				</dd>
+				</sec:authorize>
+				 <sec:authorize access="hasAuthority('vendedor')">
+<%-- 			        <sec:authentication var="user" property="name" /> --%>
+<%-- 					<c:if test="${username == user}"> --%>
+					<dd>				
+						<spring:url value="/tienda/{tiendaId}/edit" var="tiendaEditUrl">
+							<spring:param name="tiendaId" value="${tienda.id}" />
+						</spring:url>	
+						<a href="${fn:escapeXml(tiendaEditUrl)}">
+							<button>Editar tienda</button>
+						</a>
+						<spring:url value="/tienda/{tiendaId}/productos/new" var="tiendaUrl">
+							<spring:param name="tiendaId" value="${tienda.id}" />
+						</spring:url>	
+						<a href="${fn:escapeXml(tiendaUrl)}">
+							<button>Nuevo Producto</button>
+						</a>
+					</dd>
+
+					
+<%-- 					</c:if> --%>
+
+				</sec:authorize>
 				</dl>
 			</div>
 
