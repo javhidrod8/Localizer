@@ -3,58 +3,64 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 
 
 <petclinic:layout pageName="productos">
 
 	<h2>
 		<c:if test="${producto['new']}">Nuevo </c:if>
-		Producto
+		Producto <c:if test="${auth == 'nutricionista'}">:
+					<c:out value="${producto.nombre}"></c:out></c:if>
 	</h2>
 	<form:form modelAttribute="producto" class="form-horizontal"
 		id="add-producto-form">
 		<div class="container">
 			<div class="form-group has-feedback">
+				
 				<div id="nombre-producto col-md-12">
-					<label for="nombre">
+					<label id="nombre2" for="nombre">
 						<h3>Nombre:</h3>
-					</label> <input type="text" id="nombre" name="nombre" class="form-control" value="${producto.nombre}"><br>
+					</label> <input required type="text" id="nombre" name="nombre" class="form-control" value="${producto.nombre}"><br>
 				</div>
 				<div id="imagen-producto col-md-12">
-					<label for="imagen">
+					<label id="imagen2" for="imagen">
 						<h3>Imagen (URL):</h3>
 						     				<c:if
 						test="${producto.imagen!=null}"> 
 						<img src="${producto.imagen }" class="img-responsive"/>
 				</c:if> 
-					</label> <input type="text" id="imagen" name="imagen" class="form-control" value="${producto.imagen}"><br>
+					</label> <input required type="text" id="imagen" name="imagen" class="form-control" value="${producto.imagen}"><br>
 
 
 
 				</div>
 				<div id="precio-producto" class="form-group col-md-12">
-					<label for="precio">
+					<label id="precio2" for="precio">
 						<h3>Precio:</h3>
 					</label>
-					<div class="input-group">
-						<input type="number" id="precio" class="form-control" id="precio"
+					<div id="precio" class="input-group">
+						<input required type="number" id="precio" class="form-control" id="precio"
 							name="precio" placeholder="0" min=0 step="any" value="${producto.precio}">
 						<div class="input-group-addon">&#8364</div>
 					</div>
 				</div>
 				<div id="marca-producto col-md-12">
-					<label for="marca">
+					<label id="marca2" for="marca">
 						<h3>Marca:</h3>
-					</label> <input type="text" id="marca" name="marca" class="form-control" value="${producto.marca}"><br>
+					</label> <input required type="text" id="marca" name="marca" class="form-control" value="${producto.marca}"><br>
 				</div>
 				<div id="descripcion-producto col-md-12">
-					<label for="descripcion">
+					<label id="descripcion2" for="descripcion">
 						<h3>Descripción:</h3>
 					</label>
-					<textarea class="form-control" name="descripcion" rows="3" value="${producto.descripcion}"></textarea>
+					<textarea class="form-control" id="descripcion" name="descripcion" rows="3" value="${producto.descripcion}"></textarea>
 					<br>
 				</div>
-				<div id="estado-producto">
+				
+				<c:if test="${auth == 'nutricionista'}">
+					<div id="estado-producto">
 					<h3>Estado:</h3>
 					<div class="radio-inline">
 						<label> <input type="radio" name="estado" id="pendiente"
@@ -75,7 +81,22 @@
 						</label>
 					</div>
 				</div>
-
+						</c:if>
+					<c:if test="${auth == 'vendedor'}">
+							<input checked type="radio" name="estado" id="pendiente"
+							value="PENDIENTE"> PENDIENTE
+					</c:if>	
+				
+				<c:if test="${auth == 'nutricionista'}">
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+				
+				<script>
+				$("#nombre2").hide();$("#nombre").hide();
+				$("#imagen").hide();$("#imagen2").hide();
+				$("#marca").hide();$("#marca2").hide();
+				$("#descripcion").hide();$("#descripcion2").hide();
+				$("#precio").hide();$("#precio2").hide();
+				</script>
 				<div id="motivo-producto col-md-12">
 					<label for="motivo">
 						<h3>Motivo:</h3>
@@ -83,7 +104,7 @@
 					<textarea class="form-control" rows="3" name="motivo" value="${producto.motivo}"></textarea>
 					<br>
 				</div>
-
+				
 				<div id="promocionado-producto">
 					<h3>Promocionado:</h3>
 					<div class="radio-inline">
@@ -109,6 +130,7 @@
 					<input type="text" id="tienda" name="tienda" class="hidden" value="${tiendaId}"><br>
 				</div>
 			</div>
+			</c:if>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<c:choose>
@@ -127,7 +149,6 @@
 
 	</form:form>
 	<script type="text/javascript">
-console.log(${tiendaId})
 var intolerancias = new Array();
 var intoleranciasSeleccionadas = new Array();
 var intoleranciasSeleccionadasNombres = new Array();
