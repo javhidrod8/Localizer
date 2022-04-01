@@ -54,6 +54,7 @@ class UserController {
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
 		else {
+
 			this.userService.saveUser(user);
 			return "redirect:/users/" + user.getUsername();
 		}

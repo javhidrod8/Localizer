@@ -94,7 +94,8 @@ class UserControllerTests {
 				.with(csrf())
 				.param("username", "jose1")
 				.param("password", "password123"))
-				.andExpect(status().is3xxRedirection());
+				.andExpect(status().is3xxRedirection())
+				.andExpect(view().name("redirect:/users/jose1"));
 	}
 
 	@WithMockUser(value = "spring")
@@ -111,6 +112,7 @@ class UserControllerTests {
 				.andExpect(model().attributeHasFieldErrors("user", "username"))
 				.andExpect(model().attributeHasFieldErrors("user", "password"))
 				.andExpect(view().name("users/createOrUpdateUserForm"));
+				
 	}
 
 //	@WithMockUser(value = "spring")
@@ -166,7 +168,7 @@ class UserControllerTests {
 							.param("lastName", "Fran")
 							.param("username", "george1")
 							.param("password", "pass123"))
-				.andExpect(status().isOk())
+				.andExpect(status().is3xxRedirection())
 				.andExpect(view().name("redirect:/users/"+this.george.getUsername()));
 	}
 
