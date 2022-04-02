@@ -75,7 +75,7 @@
 				 </sec:authorize>
 				 
 				 <sec:authorize access="hasAuthority('nutricionista')">  
-				 <petclinic:menuItem active="${name eq 'productosPorVerificar'}" url="/productosPorVerificar"
+				 <petclinic:menuItem active="${name eq 'productosPorVerificar'}" url="/productos/verificar"
 					title="productosPorVerificar">
 					<span>Productos Por Verificar</span>
 				</petclinic:menuItem>
