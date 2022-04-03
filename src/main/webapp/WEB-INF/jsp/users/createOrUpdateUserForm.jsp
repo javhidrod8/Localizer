@@ -16,17 +16,18 @@
             <petclinic:inputField label="Last Name" name="lastName"/>
             <petclinic:inputField label="Username" name="username"/>
             <petclinic:inputField label="Password" name="password"/>
-            
-            <div class="row">
+        </div>
+     
+     <form:form modelAttribute="authorities" class="form-horizontal" id="add-user-form">       
         <label class="col-sm-2 control-label">Rol</label>
 
         <div class="col-sm-10">
-            	<select class="form-control" name="rol">
-    			<option value="cliente">Cliente</option>
-    			<option value="vendedor">Vendedor</option>
-    			<option value="nutricionista">Nutricionista</option>
-			</select></div></div>
-        </div>
+        	<form:select path="authority">
+        		<form:option value="cliente">Cliente</form:option>
+        		<form:option value="vendedor">Vendedor</form:option>
+        	</form:select>
+		</div>
+        
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
@@ -39,5 +40,6 @@
                 </c:choose>
             </div>
         </div>
+    </form:form>
     </form:form>
 </petclinic:layout>
