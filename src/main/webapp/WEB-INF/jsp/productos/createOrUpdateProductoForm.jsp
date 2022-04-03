@@ -67,7 +67,7 @@
 					<div id="descripcion-producto col-md-12">
 						<label id="descripcion2" for="descripcion"
 							style="pointer-events: none" readonly>
-							<h3>Descripción:</h3>
+							<h3>Descripci&oacuten:</h3>
 						</label>
 						<textarea class="form-control" id="descripcion" name="descripcion"
 							rows="3" style="pointer-events: none" readonly>${producto.descripcion}</textarea>
