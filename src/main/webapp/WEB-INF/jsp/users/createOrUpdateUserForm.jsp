@@ -22,7 +22,10 @@
         <label class="col-sm-2 control-label">Rol</label>
 
         <div class="col-sm-10">
-        	<petclinic:inputField label="Authority" name="authority"/>
+        	<form:select path="authority">
+        		<form:option value="cliente">Cliente</form:option>
+        		<form:option value="vendedor">Vendedor</form:option>
+        	</form:select>
 		</div>
         
         <div class="form-group">
