@@ -233,7 +233,7 @@
 					</div>
 					<div id="descripcion-producto col-md-12">
 						<label id="descripcion2" for="descripcion" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>
-							<h3>Descripción:</h3>
+							<h3>Descripci&oacuten:</h3>
 						</label>
 						<textarea class="form-control" id="descripcion" name="descripcion"
 							rows="3" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>${producto.descripcion}</textarea>
