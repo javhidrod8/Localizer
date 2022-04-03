@@ -54,6 +54,8 @@
 		<div class="col-md-10" id="productos"></div>
 	</div>
 	<script type="text/javascript">
+	
+
     var productos = new Array();
 
 	
@@ -70,6 +72,7 @@
 		    productoDetails.marca = "${producto.marca}";
 		    productoDetails.imagen = "${producto.imagen}";
 		    productoDetails.estado = "${producto.estado}";
+		    productoDetails.tienda = "${producto.tienda.id}";
 		    productoDetails.intolerancias = new Array();
 		    <c:forEach items="${producto.intolerancia}" var="intolerancia">
 		    	productoDetails.intolerancias.push("${intolerancia}");
@@ -182,6 +185,7 @@
 		img.id = "productoImg";
     
  		var url = document.createElement("a");
+ 		url.className="producto-img";
  		url.href="${fn:escapeXml(productoUrl)}"+producto.id;
  		url.appendChild(img);
     	thumbnail.appendChild(url);
@@ -198,7 +202,33 @@
 
     	caption.innerHTML+="<p> Marca: "+producto.marca+"</p>"
     	caption.innerHTML+="<h3>"+producto.precio+"<span class='glyphicon glyphicon-euro' aria-hidden='true'></span></h3>";
-    	caption.innerHTML+="<button class='btn btn-default btn-sm'>Resevar</button>";
+    	
+    	
+    	urlVer = document.createElement("a");
+    	button="<button class='btn btn-default btn-sm'>Ver</button>";
+ 		urlVer.href="${fn:escapeXml(productoUrl)}"+producto.id;
+ 		urlVer.innerHTML = button;
+ 		urlVer.className = "edit-btn";
+ 		caption.appendChild(urlVer);
+ 		
+    	<c:if test="${auth == 'vendedor'&&producto.tienda==tiendaId}">
+	    	urlVer = document.createElement("a");
+	    	button="<button class='btn btn-default btn-sm'>Editar</button>";
+	 		urlVer.href="${fn:escapeXml(tiendaUrl)}"+producto.tienda+"/producto/"+producto.id+"/edit";
+	 		urlVer.innerHTML = button;
+	 		urlVer.className = "edit-btn";
+	 		caption.appendChild(urlVer);
+ 		</c:if>
+ 		<c:if test="${auth == 'nutricionista'}">
+	    	urlVerificar = document.createElement("a");
+	    	button="<button class='btn btn-default btn-sm'>Ver</button>";
+	 		urlVerificar.href="${fn:escapeXml(tiendaUrl)}"+producto.tienda+"/producto/"+producto.id+"/edit";
+	 		urlVerificar.innerHTML = button;
+	 		urlVerificar.className = "edit-btn";
+	 		caption.appendChild(urlVerificar);
+ 		</c:if>
+
+ 		
     	thumbnail.appendChild(caption);
     	prodDiv.appendChild(thumbnail);
 		document.getElementById('productos').appendChild(prodDiv);
