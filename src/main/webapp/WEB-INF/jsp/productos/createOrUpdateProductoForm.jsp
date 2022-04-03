@@ -67,7 +67,7 @@
 					<div id="descripcion-producto col-md-12">
 						<label id="descripcion2" for="descripcion"
 							style="pointer-events: none" readonly>
-							<h3>Descripción:</h3>
+							<h3>DescripciÃ³n:</h3>
 						</label>
 						<textarea class="form-control" id="descripcion" name="descripcion"
 							rows="3" style="pointer-events: none" readonly>${producto.descripcion}</textarea>
@@ -96,14 +96,14 @@
 							<div class="radio-inline">
 								<label> <input type="radio" name="estado" id="aceptado"
 									value="ACEPTADO"
-									<c:if test="${producto.estado=='ACEPTADO'}">checked</c:if>>
+									<c:if test="${producto.estado=='ACEPTADO'}"></c:if>>
 									ACEPTAR
 								</label>
 							</div>
 							<div class="radio-inline">
 								<label> <input type="radio" name="estado" id="rechazado"
 									value="RECHAZADO"
-									<c:if test="${producto.estado=='RECHAZADO'}">checked</c:if>>
+									<c:if test="${producto.estado=='RECHAZADO'}"></c:if>>
 									RECHAZAR
 								</label>
 							</div>
@@ -180,7 +180,7 @@
 					<div class="col-sm-offset-2 col-sm-10">
 						<c:choose>
 							<c:when test="${producto['new']}">
-								<button class="btn btn-default" type="submit">Añadir
+								<button class="btn btn-default" type="submit">AÃ±adir
 									Producto</button>
 							</c:when>
 							<c:otherwise>
@@ -233,7 +233,7 @@
 					</div>
 					<div id="descripcion-producto col-md-12">
 						<label id="descripcion2" for="descripcion" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>
-							<h3>Descripción:</h3>
+							<h3>DescripciÃ³n:</h3>
 						</label>
 						<textarea class="form-control" id="descripcion" name="descripcion"
 							rows="3" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>${producto.descripcion}</textarea>
@@ -329,7 +329,7 @@
 					<div class="col-sm-offset-2 col-sm-10">
 						<c:choose>
 							<c:when test="${producto['new']}">
-								<button class="btn btn-default" type="submit">Añadir
+								<button class="btn btn-default" type="submit">AÃ±adir
 									Producto</button>
 							</c:when>
 							<c:otherwise>
@@ -351,7 +351,7 @@
 
 
 
-<c:if test="${producto.estado=='PENDIENTE'&&auth == 'nutricionista'}">
+<c:if test="${auth == 'nutricionista'}">
 
 	<script type="text/javascript">
 var intolerancias = new Array();
