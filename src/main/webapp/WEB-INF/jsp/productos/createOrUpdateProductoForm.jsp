@@ -55,7 +55,7 @@
 					<label id="descripcion2" for="descripcion">
 						<h3>Descripción:</h3>
 					</label>
-					<textarea class="form-control" id="descripcion" name="descripcion" rows="3" value="${producto.descripcion}"></textarea>
+					<textarea class="form-control" id="descripcion" name="descripcion" rows="3">${producto.descripcion}</textarea>
 					<br>
 				</div>
 				
@@ -93,7 +93,7 @@
 					<label for="motivo">
 						<h3>Motivo:</h3>
 					</label>
-					<textarea class="form-control" rows="3" name="motivo" value="${producto.motivo}"></textarea>
+					<textarea class="form-control" rows="3" name="motivo">${producto.motivo}</textarea>
 					<br>
 				</div>
 				
