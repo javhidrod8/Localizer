@@ -8,25 +8,9 @@
 	<spring:url value="/producto/" var="productoUrl"></spring:url>
 	<spring:url value="/productos/search/" var="searchUrl"></spring:url>
 	<spring:url value="/tienda/" var="tiendaUrl"></spring:url>
-	<h2>Productos</h2>
+	<h2>Productos por verificar</h2>
 	<br>
 
-	<script>
-		function Buscar(){
-		  var text = $("#busqueda").val();
-		  location.href = "${fn:escapeXml(searchUrl)}"+text;
-		}
-</script>
-	<div class="row">
-			<div class="col-sm-11">
-				<input id="busqueda" type="text" class="form-control"
-					placeholder="Busqueda de productos...">
-			</div>
-			<div class="col-sm-1">
-				<button class="btn btn-default" onClick="Buscar()">Buscar</button>
-			</div>
-
-	</div>
 	<div class="row" style="margin-top: 2%">
 		<div class="col-md-12" id="productos"></div>
 	</div>
