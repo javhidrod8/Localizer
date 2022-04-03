@@ -1,18 +1,18 @@
 package org.springframework.samples.localizer.web;
 
 import java.util.Map;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties.View;
 import org.springframework.samples.localizer.model.Authorities;
+import org.springframework.samples.localizer.model.Tienda;
 import org.springframework.samples.localizer.model.User;
 import org.springframework.samples.localizer.service.AuthoritiesService;
 import org.springframework.samples.localizer.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -133,20 +133,32 @@ class UserController {
 	}
 */
 
-	@GetMapping("/users/{username}/edit")
-	public String initUpdateUserForm(@PathVariable("username") String username, Map<String, Object> model) {
+	@GetMapping("/users/edit")
+	public String initUpdateUserForm(Map<String, Object> model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		org.springframework.security.core.userdetails.User userSession = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+		String username = userSession.getUsername();
 		User user = this.userService.findUser(username);
 		model.put("user", user);
 		Boolean isNew = false;
 		model.put("isNew", isNew);
+		Authorities auth = new Authorities();
+		model.put("authorities", auth);
+		Integer tiendaId = user.getTienda().getId();
+		model.put("tiendaId", tiendaId);
 		return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping("/users/{username}/edit")
-	public String processUpdateUserForm(@Valid User user, BindingResult result,
-			@PathVariable("username") String username,  Model model) {
+	@PostMapping("/users/edit")
+	public String processUpdateUserForm(@Valid User user, BindingResult result,  Map<String, Object> model) {
 		if (result.hasErrors()) {
-			model.addAttribute(user);
+			model.put("user", user);
+			Boolean isNew = false;
+			model.put("isNew", isNew);
+			Authorities auth = new Authorities();
+			model.put("authorities", auth);
+			Integer tiendaId = user.getTienda().getId();
+			model.put("tiendaId", tiendaId);
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
 		else {

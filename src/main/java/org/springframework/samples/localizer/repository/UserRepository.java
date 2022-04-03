@@ -13,7 +13,7 @@ import org.springframework.samples.localizer.model.User;
 
 public interface UserRepository extends CrudRepository<User, String>{
 	
-	@Query("select u from User u where u.username = ?1")
+	@Query("select u from User u where u.username like ?1")
 	User findUserByUsername(String s) throws DataAccessException; 
 
 }

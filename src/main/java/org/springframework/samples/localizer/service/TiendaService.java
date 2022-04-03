@@ -35,8 +35,7 @@ public class TiendaService {
 
 	@Transactional
     public void saveTienda(Tienda tienda) throws DataAccessException {
-        Tienda t = new Tienda(tienda);
-		tiendaRepository.save(t); 
+		tiendaRepository.save(tienda); 
 
     }
 
