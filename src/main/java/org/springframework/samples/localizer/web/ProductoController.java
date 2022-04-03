@@ -59,6 +59,10 @@ public class ProductoController {
 	public ModelAndView showProduct(@PathVariable("productoId") int productoId) {
 		ModelAndView mav = new ModelAndView("productos/productoDetails");
 		mav.addObject(this.productoService.findProductoById(productoId));
+		Collection<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
+		Collection<Preferencias> preferencias = this.productoService.findAllPreferencias();
+		mav.addObject("intolerancias", intolerancias);
+		mav.addObject("preferencias", preferencias);
 		return mav;
 	}
 
@@ -193,9 +197,6 @@ public class ProductoController {
 	@PostMapping(value = "/tienda/{tiendaId}/producto/{productoId}/edit")
 	public String processUpdateProductoForm(@Valid Producto producto, BindingResult result,
 			@PathVariable("productoId") int productoId,@PathVariable("tiendaId") int tiendaId, ModelMap model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
-		String auth = currentPrincipalName.iterator().next().toString().trim();
 		if (result.hasErrors()) {
 			model.put("tiendaId", tiendaId);
 			Boolean isNew = false;
@@ -203,42 +204,9 @@ public class ProductoController {
 			model.put("producto", producto);
 			return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
 		} else {
-			if (auth.equals("nutricionista")) {
-				producto.setEstado(Estado.ACEPTADO);
-			}
 			producto.setId(productoId);
 			this.productoService.saveProducto(producto);
 			return "redirect:/producto/"+producto.getId();
-		}
-	}
-
-	@GetMapping(value = "/tienda/{tiendaId}/producto/{productoId}/rechazar")
-	public String initRechazarProductoForm(@PathVariable("productoId") int productoId, @PathVariable("tiendaId") int tiendaId, ModelMap model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
-		String auth = currentPrincipalName.iterator().next().toString().trim();
-		model.put("auth", auth);
-		if (auth.equals("nutricionista")) {
-			model.put("tiendaId", tiendaId);
-			Producto producto = this.productoService.findProductoById(productoId);
-			model.put("producto", producto);
-			return VIEWS_PRODUCTO_RECHAZAR_FORM;
-		} else {
-			return VIEWS_ERROR_AUTH;
-		}
-	}
-
-	@PostMapping(value = "/tienda/{tiendaId}/producto/{productoId}/rechazar")
-	public String processRechazarProductoForm(@Valid Producto producto, BindingResult result,
-			@PathVariable("productoId") int productoId, @PathVariable("tiendaId") int tiendaId, ModelMap model) {
-		if (result.hasErrors()) {
-			model.put("tiendaId", tiendaId);
-			model.put("producto", producto);
-			return VIEWS_PRODUCTO_RECHAZAR_FORM;
-		} else {
-			producto.setId(productoId);
-			this.productoService.saveProducto(producto);
-			return "redirect:/producto/{productoId}";
 		}
 	}
 

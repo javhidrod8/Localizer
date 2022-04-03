@@ -6,7 +6,10 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties.View;
+import org.springframework.samples.localizer.model.Authorities;
 import org.springframework.samples.localizer.model.User;
+import org.springframework.samples.localizer.service.AuthoritiesService;
 import org.springframework.samples.localizer.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,10 +28,12 @@ class UserController {
 	private static final String VIEWS_USER_CREATE_OR_UPDATE_FORM = "users/createOrUpdateUserForm";
 
 	private final UserService userService;
+	private final AuthoritiesService authoritiesService;
 
 	@Autowired
-	public UserController(UserService userService) {
+	public UserController(UserService userService, AuthoritiesService authoritiesService) {
 		this.userService = userService;
+		this.authoritiesService = authoritiesService;
 	}
 
 	@InitBinder
@@ -39,23 +44,32 @@ class UserController {
 	@GetMapping("/users/new")
 	public String initCreationForm(Map<String, Object> model) {
 		User user = new User();
+		Authorities auth = new Authorities();
 		model.put("user", user);
+		model.put("authorities", auth);
 		Boolean isNew = true;
 		model.put("isNew", isNew);
 		return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping("/users/new")
-	public String processCreationForm(@Valid User user, BindingResult result, Model model) {
+	public String processCreationForm(@Valid User user,@Valid Authorities auth, BindingResult result, Map<String, Object> model) {
 		
-		System.out.println("");
 		if (result.hasErrors()) {
-			model.addAttribute(user);
+			model.put("user",user);
+			model.put("authorities", auth);
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-
+			
+			String username = user.getUsername();
+			String auth1 = auth.getAuthority();
+			System.out.println("=========================="+model.get("user").toString()+"====================");
+			System.out.println("=========================="+model.get("authorities").toString()+"====================");
+			System.out.println("=========================="+username+"====================");
+			System.out.println("=========================="+auth1+"==========================");
 			this.userService.saveUser(user);
+			this.authoritiesService.saveAuthorities(username, auth1);
 			return "redirect:/users/" + user.getUsername();
 		}
 	}
