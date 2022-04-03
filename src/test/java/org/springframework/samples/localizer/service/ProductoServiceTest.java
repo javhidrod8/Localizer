@@ -105,7 +105,7 @@ public class ProductoServiceTest {
 
 		Tienda tienda = new Tienda();
 		tienda.setCalle("Sevilla");
-		tienda.setCodigoPostal(89);
+		tienda.setCodigoPostal("89");
 		tienda.setDescripcion("Todo lo que necesitas");
 		tienda.setId(2);
 		tienda.setHorario("8:00-14:00");
@@ -113,7 +113,7 @@ public class ProductoServiceTest {
 		tienda.setNombre("Polvillo");
 		tienda.setProductos(null);
 		tienda.setProvincia("Sevilla");
-		tienda.setTelefono(654654654);
+		tienda.setTelefono("654654654");
 		this.tiendaService.saveTienda(tienda);
 
 		Producto producto1 = new Producto();

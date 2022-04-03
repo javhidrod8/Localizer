@@ -68,14 +68,14 @@ public class TiendaControllerTests {
     	this.tienda = new Tienda();
         tienda.setId(TEST_TIENDA_ID);
         tienda.setCalle("Sevilla");
-		tienda.setCodigoPostal(41011);
+		tienda.setCodigoPostal("41011");
 		tienda.setDescripcion("Amasando pan desde 1990");
 		tienda.setHorario("8:00-14:00");
 		tienda.setImagen(".....");
 		tienda.setNombre("Panaderia Paqui");
 	    tienda.setProductos(null);
 	    tienda.setProvincia("Sevilla");
-	    tienda.setTelefono(955444765);  
+	    tienda.setTelefono("955444765");  
 
         BDDMockito.given(this.tiendaService.findTiendaById(TEST_TIENDA_ID))
         .willReturn(this.tienda);

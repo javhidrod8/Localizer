@@ -41,7 +41,6 @@ public class User{
 	@OneToOne(optional=true)
 	private Tienda tienda;
 
-	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Authorities> authorities;
 
@@ -106,6 +105,5 @@ public class User{
 		return "User [username=" + username + ", password=" + password + ", enabled=" + enabled + ", firstName="
 				+ firstName + ", lastName=" + lastName + ", tienda=" + tienda + ", authorities=" + authorities + "]";
 	}
-	
 	
 }

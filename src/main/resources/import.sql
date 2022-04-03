@@ -1,41 +1,3 @@
--- One admin user, named admin1 with passwor 4dm1n and authority admin
-INSERT INTO users(username,password,enabled) VALUES ('admin1','4dm1n',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
--- Un usuario cliente, llamado cliente1 con la contraseña cli1
-INSERT INTO users(username,password,enabled) VALUES ('cliente1','cli1',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (4,'cliente1','cliente');
--- Un usuario cliente, llamado cliente2 con la contraseña cli2
-INSERT INTO users(username,password,enabled) VALUES ('cliente2','cli2',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (5,'cliente2','cliente');
--- Un usuario vendedor, llamado vendedor1 con la contraseña vend1
-INSERT INTO users(username,password,enabled) VALUES ('vendedor1','vend1',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (6,'vendedor1','vendedor');
--- Un usuario vendedor, llamado vendedor2 con la contraseña vend2
-INSERT INTO users(username,password,enabled) VALUES ('vendedor2','vend2',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (7,'vendedor2','vendedor');
--- Un usuario nutricionista, llamado nutricionista1 con la contraseña nut1
-INSERT INTO users(username,password,enabled) VALUES ('nutricionista1','nut1',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (8,'nutricionista1','nutricionista');
-
-
--- Tolerancias
-INSERT INTO intolerancias(nombre) VALUES ('GLUTEN');
-INSERT INTO intolerancias(nombre) VALUES ('LACTEOS');
-INSERT INTO intolerancias(nombre) VALUES ('FRUCTOSA');
-INSERT INTO intolerancias(nombre) VALUES ('SACAROSA');
-INSERT INTO intolerancias(nombre) VALUES ('SULFITOS');
-INSERT INTO intolerancias(nombre) VALUES ('HUEVOS');
-INSERT INTO intolerancias(nombre) VALUES ('PESCADO');
-INSERT INTO intolerancias(nombre) VALUES ('CRUSTACEO');
-INSERT INTO intolerancias(nombre) VALUES ('MIEL');
-INSERT INTO intolerancias(nombre) VALUES ('SOJA');
-INSERT INTO intolerancias(nombre) VALUES ('CASCARA');
-INSERT INTO intolerancias(nombre) VALUES ('APIO');
-INSERT INTO intolerancias(nombre) VALUES ('MOSTAZA');
-INSERT INTO intolerancias(nombre) VALUES ('SESAMO');
-INSERT INTO intolerancias(nombre) VALUES ('ALTRAMUCES');
-INSERT INTO intolerancias(nombre) VALUES ('MOLUSCOS');
-
 -- Creacion de tienda y producto
 INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono,imagen,horario) VALUES ('Calle Mainomiedes, 9', '41009', 'Tienda de alimentacion', 'Alimentacion Carmen', 'Sevilla', '647654945','https://fra1.digitaloceanspaces.com/places/uploads/place/image/file/258238/2021-04-05.jpg','Lunes a Viernes de 10:00 a 20:00');
 INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono,imagen,horario) VALUES ('Calle Francos, 12, 6', '41009', 'Tienda de alimentacion', 'Taste of America', 'Sevilla', '955286486','https://fra1.digitaloceanspaces.com/places/uploads/place/image/file/258238/2021-04-05.jpg','Lunes a Viernes de 10:00 a 20:00');
@@ -107,6 +69,46 @@ INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, p
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Aguacate - Avoax - 700 g', 'https://es.openfoodfacts.org/images/products/20462062/front_es.10.200.jpg', 'Avoax', 'Aguacate', 1.31, 2, true, 0, '', 10);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Aceite de coco virgen extra - Nat Sanno - 450 g', 'https://es.openfoodfacts.org/images/products/843/654/219/3474/front_es.26.200.jpg', 'Nat Sanno', 'Aceite de coco virgen extra', 3.05, 2, true, 0, '', 10);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Mermelada de frambuesas - La Vieja Fabrica', 'https://es.openfoodfacts.org/images/products/841/013/402/3646/front_es.19.200.jpg', 'La Vieja Fabrica', 'Mermelada de frambuesas', 2.69, 2, true, 0, '', 10);
+
+
+-- One admin user, named admin1 with passwor 4dm1n and authority admin
+INSERT INTO users(username,password,enabled) VALUES ('admin1','4dm1n',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
+-- Un usuario cliente, llamado cliente1 con la contraseña cli1
+INSERT INTO users(username,password,enabled) VALUES ('cliente1','cli1',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (4,'cliente1','cliente');
+-- Un usuario cliente, llamado cliente2 con la contraseña cli2
+INSERT INTO users(username,password,enabled) VALUES ('cliente2','cli2',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (5,'cliente2','cliente');
+-- Un usuario vendedor, llamado vendedor1 con la contraseña vend1
+INSERT INTO users(username,password,enabled) VALUES ('vendedor1','vend1',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (6,'vendedor1','vendedor');
+-- Un usuario vendedor, llamado vendedor2 con la contraseña vend2
+INSERT INTO users(username,password,enabled) VALUES ('vendedor2','vend2',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (7,'vendedor2','vendedor');
+-- Un usuario nutricionista, llamado nutricionista1 con la contraseña nut1
+INSERT INTO users(username,password,enabled) VALUES ('nutricionista1','nut1',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (8,'nutricionista1','nutricionista');
+
+
+-- Tolerancias
+INSERT INTO intolerancias(nombre) VALUES ('GLUTEN');
+INSERT INTO intolerancias(nombre) VALUES ('LACTEOS');
+INSERT INTO intolerancias(nombre) VALUES ('FRUCTOSA');
+INSERT INTO intolerancias(nombre) VALUES ('SACAROSA');
+INSERT INTO intolerancias(nombre) VALUES ('SULFITOS');
+INSERT INTO intolerancias(nombre) VALUES ('HUEVOS');
+INSERT INTO intolerancias(nombre) VALUES ('PESCADO');
+INSERT INTO intolerancias(nombre) VALUES ('CRUSTACEO');
+INSERT INTO intolerancias(nombre) VALUES ('MIEL');
+INSERT INTO intolerancias(nombre) VALUES ('SOJA');
+INSERT INTO intolerancias(nombre) VALUES ('CASCARA');
+INSERT INTO intolerancias(nombre) VALUES ('APIO');
+INSERT INTO intolerancias(nombre) VALUES ('MOSTAZA');
+INSERT INTO intolerancias(nombre) VALUES ('SESAMO');
+INSERT INTO intolerancias(nombre) VALUES ('ALTRAMUCES');
+INSERT INTO intolerancias(nombre) VALUES ('MOLUSCOS');
+
 
 
 --Tienda 1

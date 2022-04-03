@@ -32,10 +32,10 @@ public class Tienda extends BaseEntity{
 	private String provincia;
   
 	@Column(name = "codigo_postal")
-	private Integer codigoPostal;
+	private String codigoPostal;
 	
 	@Column(name = "telefono")
-	private Integer telefono;
+	private String telefono;
 	
 	@Column(name = "imagen")
 	@NotEmpty
@@ -51,16 +51,6 @@ public class Tienda extends BaseEntity{
 	@OneToOne(optional=true)
 	private User user;
 
-	public Tienda(Tienda tienda) {
-		this.calle=tienda.getCalle();
-		this.codigoPostal=tienda.getCodigoPostal();
-		this.descripcion=tienda.getDescripcion();
-		this.horario=tienda.getHorario();
-		this.imagen=tienda.getImagen();
-		this.nombre=tienda.getNombre();
-		this.provincia=tienda.getProvincia();
-		this.telefono=tienda.getTelefono();
-	}
 
 	public Tienda() {
 		// TODO Auto-generated constructor stub
@@ -70,7 +60,7 @@ public class Tienda extends BaseEntity{
 	public String toString() {
 		return "Tienda [nombre=" + nombre + ", descripcion=" + descripcion + ", calle=" + calle + ", provincia="
 				+ provincia + ", codigoPostal=" + codigoPostal + ", telefono=" + telefono + ", imagen=" + imagen
-				+ ", horario=" + horario + ", productos=" + productos + "]";
+				+ ", horario=" + horario + ", productos=" + productos + ", user=" + user + "]";
 	}
 
 	public String getNombre() {
@@ -105,19 +95,19 @@ public class Tienda extends BaseEntity{
 		this.provincia = provincia;
 	}
 
-	public Integer getCodigoPostal() {
+	public String getCodigoPostal() {
 		return codigoPostal;
 	}
 
-	public void setCodigoPostal(Integer codigoPostal) {
+	public void setCodigoPostal(String codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
 
-	public Integer getTelefono() {
+	public String getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(Integer telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 

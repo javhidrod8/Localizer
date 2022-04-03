@@ -68,7 +68,7 @@
 				</petclinic:menuItem>
 
 				 <sec:authorize access="hasAuthority('vendedor')">  
-				 <petclinic:menuItem active="${name eq 'tiendaVendedor'}" url="/tienda{tiendaId}"
+				 <petclinic:menuItem active="${name eq 'tiendaVendedor'}" url="/tiendas/miTienda"
 					title="tiendaVendedor">
 					<span>Mi tienda</span>
 				</petclinic:menuItem>
