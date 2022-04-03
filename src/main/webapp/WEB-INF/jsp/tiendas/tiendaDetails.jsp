@@ -63,6 +63,16 @@
 					</a>
 				</dd>
 				</sec:authorize>
+				<sec:authorize access="hasAuthority('vendedor')">
+				<dd>				
+					<spring:url value="/tienda/{tiendaId}/delete" var="tiendaDeleteUrl">
+						<spring:param name="tiendaId" value="${tienda.id}" />
+					</spring:url>	
+					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
+						<button>Eliminar tienda</button>
+					</a>
+				</dd>
+				</sec:authorize>
 				  <sec:authorize access="hasAuthority('admin')">
 				<dd>				
 					<spring:url value="/tienda/{tiendaId}/edit" var="tiendaEditUrl">
@@ -83,6 +93,8 @@
 						<a href="${fn:escapeXml(tiendaEditUrl)}">
 							<button>Editar tienda</button>
 						</a>
+							</dd>
+						<dd>
 						<spring:url value="/tienda/{tiendaId}/productos/new" var="tiendaUrl">
 							<spring:param name="tiendaId" value="${tienda.id}" />
 						</spring:url>	

@@ -68,10 +68,22 @@
 				</petclinic:menuItem>
 
 				 <sec:authorize access="hasAuthority('vendedor')">  
-				 <petclinic:menuItem active="${name eq 'tiendaVendedor'}" url="/tienda{tiendaId}"
+				 <petclinic:menuItem active="${name eq 'tiendaVendedor'}" url="/tienda/{tiendaId}"
 					title="tiendaVendedor">
+<%-- 					<sec:authentication var="tienda" property="tienda.id" /> --%>
+<%-- 					<spring:param name="tiendaId" value="${tienda.id}" /> --%>
 					<span>Mi tienda</span>
 				</petclinic:menuItem>
+				 </sec:authorize>
+				 
+				  <sec:authorize access="hasAuthority('vendedor')">  
+<%-- 				  	<sec:authentication var="tienda" property="tienda" /> --%>
+<%-- 				  <c:if test="${tienda == null}"> --%>
+				 <petclinic:menuItem active="${name eq 'tiendaVendedor'}" url="/tiendas/new"
+					title="tiendaVendedor">
+					<span>Crear Tienda</span>
+				</petclinic:menuItem>
+<%-- 				</c:if> --%>
 				 </sec:authorize>
 				 
 				 <sec:authorize access="hasAuthority('nutricionista')">  
