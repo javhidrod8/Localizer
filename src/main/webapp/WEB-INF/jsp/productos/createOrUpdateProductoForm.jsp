@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 
@@ -11,134 +11,348 @@
 
 	<h2>
 		<c:if test="${producto['new']}">Nuevo </c:if>
-		Producto <c:if test="${auth == 'nutricionista'}">:
-					<c:out value="${producto.nombre}"></c:out></c:if>
+		Producto
 	</h2>
+
+
 	<form:form modelAttribute="producto" class="form-horizontal"
 		id="add-producto-form">
 		<div class="container">
-			<div class="form-group has-feedback">
-				
-				<div id="nombre-producto col-md-12">
-					<label id="nombre2" for="nombre">
-						<h3>Nombre:</h3>
-					</label> <input required type="text" id="nombre" name="nombre" class="form-control" value="${producto.nombre}"><br>
-				</div>
-				<div id="imagen-producto col-md-12">
-					<label id="imagen2" for="imagen">
-						<h3>Imagen (URL):</h3>
-						     				<c:if
-						test="${producto.imagen!=null}"> 
-						<img src="${producto.imagen }" class="img-responsive"/>
-				</c:if> 
-					</label> <input required type="text" id="imagen" name="imagen" class="form-control" value="${producto.imagen}"><br>
+			<div id="tienda-producto col-md-12">
+				<input type="text" id="tienda" name="tienda" class="hidden"
+					value="${tiendaId}"><br>
+			</div>
+			<c:if test="${auth == 'nutricionista'}">
+				<div id="form-nutricionista" class="form-group has-feedback">
 
-
-
-				</div>
-				<div id="precio-producto" class="form-group col-md-12">
-					<label id="precio2" for="precio">
-						<h3>Precio:</h3>
-					</label>
-					<div id="precio" class="input-group">
-						<input required type="number" id="precio" class="form-control" id="precio"
-							name="precio" placeholder="0" min=0 step="any" value="${producto.precio}">
-						<div class="input-group-addon">&#8364</div>
+					<div id="nombre-producto col-md-12">
+						<label id="nombre2" for="nombre" style="pointer-events: none">
+							<h3>Nombre:</h3>
+						</label> <input required type="text" id="nombre" name="nombre"
+							class="form-control" value="${producto.nombre}" readonly
+							style="pointer-events: none"><br>
 					</div>
-				</div>
-				<div id="marca-producto col-md-12">
-					<label id="marca2" for="marca">
-						<h3>Marca:</h3>
-					</label> <input required type="text" id="marca" name="marca" class="form-control" value="${producto.marca}"><br>
-				</div>
-				<div id="descripcion-producto col-md-12">
-					<label id="descripcion2" for="descripcion">
-						<h3>Descripción:</h3>
-					</label>
-					<textarea class="form-control" id="descripcion" name="descripcion" rows="3">${producto.descripcion}</textarea>
-					<br>
-				</div>
-				
-				<c:if test="${auth == 'nutricionista'}">
+					<div id="imagen-producto col-md-12">
+						<label id="imagen2" for="imagen" style="pointer-events: none">
+							<h3>Imagen (URL):</h3> <c:if test="${producto.imagen!=null}">
+								<img src="${producto.imagen }" class="img-responsive" />
+							</c:if>
+						</label> <input required type="text" id="imagen" name="imagen"
+							style="pointer-events: none" readonly class="form-control"
+							value="${producto.imagen}"><br>
+
+
+
+					</div>
+					<div id="precio-producto" class="form-group col-md-12">
+						<label id="precio2" for="precio" style="pointer-events: none"
+							readonly>
+							<h3>Precio:</h3>
+						</label>
+						<div id="precio" class="input-group">
+							<input required type="number" class="form-control"
+								id="precio-num" name="precio" placeholder="0" min=0 step="any"
+								value="${producto.precio}" style="pointer-events: none" readonly>
+							<div class="input-group-addon">&#8364</div>
+						</div>
+					</div>
+					<div id="marca-producto col-md-12">
+						<label id="marca2" for="marca" style="pointer-events: none"
+							readonly>
+							<h3>Marca:</h3>
+						</label> <input required type="text" id="marca" name="marca"
+							style="pointer-events: none" readonly class="form-control"
+							value="${producto.marca}"><br>
+					</div>
+					<div id="descripcion-producto col-md-12">
+						<label id="descripcion2" for="descripcion"
+							style="pointer-events: none" readonly>
+							<h3>Descripción:</h3>
+						</label>
+						<textarea class="form-control" id="descripcion" name="descripcion"
+							rows="3" style="pointer-events: none" readonly>${producto.descripcion}</textarea>
+						<br>
+					</div>
+					<div id="intolerancias-producto">
+						<h3>Intolerancias</h3>
+					</div>
+
+					<div id="preferencias-producto">
+						<h3>Preferencias</h3>
+					</div>
+
+
 					<div id="estado-producto">
-					<h3>Estado:</h3>
-					<div class="radio-inline">
-						<label> <input type="radio" name="estado" id="pendiente"
-							value="PENDIENTE" 						     				
-							<c:if test="${producto.estado=='PENDIENTE'}">checked</c:if> > PENDIENTE
-						</label>
-					</div>
-					<div class="radio-inline">
-						<label> <input type="radio" name="estado" id="aceptado"
-							value="ACEPTADO"
-							<c:if test="${producto.estado=='ACEPTADO'}">checked</c:if> > ACEPTADO
-						</label>
-					</div>
-					<div class="radio-inline">
-						<label> <input type="radio" name="estado" id="rechazado"
-							value="RECHAZADO"
-							<c:if test="${producto.estado=='RECHAZADO'}">checked</c:if> > RECHAZADO
-						</label>
-					</div>
-				</div>
+
+						<c:if test="${producto.estado=='PENDIENTE'}">
+							<h3>Validar:</h3>
+							<div class="radio-inline">
+								<label class="hidden"> <input type="radio" name="estado"
+									id="pendiente" value="PENDIENTE"
+									<c:if test="${producto.estado=='PENDIENTE'}">checked</c:if>>
+									PENDIENTE
+								</label>
+							</div>
+							<div class="radio-inline">
+								<label> <input type="radio" name="estado" id="aceptado"
+									value="ACEPTADO"
+									<c:if test="${producto.estado=='ACEPTADO'}">checked</c:if>>
+									ACEPTAR
+								</label>
+							</div>
+							<div class="radio-inline">
+								<label> <input type="radio" name="estado" id="rechazado"
+									value="RECHAZADO"
+									<c:if test="${producto.estado=='RECHAZADO'}">checked</c:if>>
+									RECHAZAR
+								</label>
+							</div>
+							<div id="motivo-producto" class="col-md-12">
+								<label for="motivo">
+									<h3>Motivo:</h3>
+								</label>
+								<textarea class="form-control" rows="3" name="motivo">${producto.motivo}</textarea>
+								<br>
+							</div>
 						</c:if>
-					<c:if test="${auth == 'vendedor'}">
-							<input checked type="radio" name="estado" id="pendiente"
-							value="PENDIENTE"> PENDIENTE
-					</c:if>	
-				
-				
-				<div id="vendedor">
-				<div id="motivo-producto col-md-12">
-					<label for="motivo">
-						<h3>Motivo:</h3>
-					</label>
-					<textarea class="form-control" rows="3" name="motivo">${producto.motivo}</textarea>
-					<br>
+
+						<c:if test="${producto.estado=='ACEPTADO'}">
+							<h3>Producto Aceptado</h3>
+							<div class="radio-inline hidden">
+								<label> <input type="radio" name="estado" id="aceptado"
+									value="ACEPTADO"
+									<c:if test="${producto.estado=='ACEPTADO'}">checked</c:if>>
+									ACEPTAR
+								</label>
+								<div id="motivo-producto col-md-12" class="hidden">
+									<label for="motivo">
+										<h3>Motivo:</h3>
+									</label>
+									<textarea class="form-control" rows="3" name="motivo" readOnly
+										style="pointer-events: none">${producto.motivo}</textarea>
+									<br>
+								</div>
+							</div>
+						</c:if>
+
+						<c:if test="${producto.estado=='RECHAZADO'}">
+							<h2>Producto Rechazado</h2>
+							<div class="radio-inline hidden">
+								<label> <input type="radio" name="estado" id="rechazado"
+									value="RECHAZADO" checked> RECHAZADO
+								</label>
+							</div>
+							<div id="motivo-producto col-md-12">
+								<label for="motivo">
+									<h3>Motivo:</h3>
+								</label>
+								<textarea class="form-control" rows="3" name="motivo" readOnly
+									style="pointer-events: none">${producto.motivo}</textarea>
+								<br>
+							</div>
+						</c:if>
+					</div>
+
 				</div>
-				
-				<div id="promocionado-producto">
+
+				<div id="promocionado-producto" class="hidden">
 					<h3>Promocionado:</h3>
 					<div class="radio-inline">
-						<label> <input type="radio" name="promocionado"
-							id="no" value="TRUE" <c:if test="${producto.promocionado}">checked</c:if>> SI
+						<c:if test="${producto.promocionado}">
+							<label style="pointer-events: none"> <input type="radio"
+								name="promocionado" id="no" value="TRUE" readOnly
+								style="pointer-events: none" checked>SI
+							</label>
+						</c:if>
+						<c:if test="${!producto.promocionado}">
+							<label style="pointer-events: none"> <input type="radio"
+								name="promocionado" id="no" value="FALSE" readOnly
+								style="pointer-events: none" checked>NO
+							</label>
+						</c:if>
+					</div>
+				</div>
+
+
+
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<c:choose>
+							<c:when test="${producto['new']}">
+								<button class="btn btn-default" type="submit">Añadir
+									Producto</button>
+							</c:when>
+							<c:otherwise>
+								<button class="btn btn-default" type="submit">Actualizar
+									Producto</button>
+							</c:otherwise>
+						</c:choose>
+					</div>
+
+				</div>
+			</c:if>
+
+
+			<c:if test="${auth == 'vendedor'}">
+				<div id="form-vendedor" class="form-group has-feedback">
+
+					<div id="nombre-producto col-md-12">
+						<label id="nombre2" for="nombre" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>
+							<h3>Nombre:</h3>
+						</label> <input required type="text" id="nombre" name="nombre"
+							class="form-control" value="${producto.nombre}" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>><br>
+					</div>
+					<div id="imagen-producto col-md-12">
+						<label id="imagen2" for="imagen" style="pointer-events: none">
+							<h3>Imagen (URL):</h3> <c:if test="${producto.imagen!=null}">
+								<img src="${producto.imagen }" class="img-responsive" />
+							</c:if>
+						</label> <input required type="text" id="imagen" name="imagen"
+							class="form-control" value="${producto.imagen}" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>><br>
+
+
+
+					</div>
+					<div id="precio-producto" class="form-group col-md-12">
+						<label id="precio2" for="precio">
+							<h3>Precio:</h3>
+						</label>
+						<div id="precio" class="input-group">
+							<input required type="number" class="form-control"
+								id="precio-num" name="precio" placeholder="0" min=0 step="any"
+								value="${producto.precio}">
+							<div class="input-group-addon">&#8364</div>
+						</div>
+					</div>
+					<div id="marca-producto col-md-12">
+						<label id="marca2" for="marca"<c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>
+							<h3>Marca:</h3>
+						</label> <input required type="text" id="marca" name="marca"
+							class="form-control" value="${producto.marca}" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>><br>
+					</div>
+					<div id="descripcion-producto col-md-12">
+						<label id="descripcion2" for="descripcion" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>
+							<h3>Descripción:</h3>
+						</label>
+						<textarea class="form-control" id="descripcion" name="descripcion"
+							rows="3" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>${producto.descripcion}</textarea>
+						<br>
+					</div>
+					<div id="estado-producto">
+
+						<c:if test="${producto.estado=='PENDIENTE'}">
+							<h2>Producto Sin Validar</h2>
+							<div class="radio-inline">
+								<label class="hidden"> <input type="radio" name="estado"
+									id="pendiente" value="PENDIENTE" checked readOnly
+									style="pointer-events: none" class="hidden">
+								</label>
+							</div>
+						</c:if>
+
+						<c:if test="${producto.estado=='ACEPTADO'}">
+							<h2>Producto Aceptado</h2>
+							<div class="radio-inline hidden">
+								<label> <input type="radio" name="estado" id="aceptado"
+									value="ACEPTADO"
+									<c:if test="${producto.estado=='ACEPTADO'}">checked</c:if>>
+									ACEPTAR
+								</label>
+							</div>
+						</c:if>
+
+						<c:if test="${producto.estado=='RECHAZADO'}">
+							<h2>Producto Rechazado</h2>
+							<div class="radio-inline hidden">
+								<label> <input type="radio" name="estado" id="rechazado"
+									value="RECHAZADO" checked> RECHAZADO
+								</label>
+							</div>
+							<div id="motivo-producto col-md-12">
+								<label for="motivo">
+									<h3>Motivo:</h3>
+								</label>
+								<textarea class="form-control" rows="3" name="motivo" readOnly
+									style="pointer-events: none">${producto.motivo}</textarea>
+								<br>
+							</div>
+						</c:if>
+					</div>
+
+
+
+				</div>
+
+				<div id="intolerancias-producto">
+					<c:if test="${producto.estado=='ACEPTADO'}">
+					<h3>Intolerancias</h3>
+					<c:forEach items="${producto.intolerancia}" var="intolerancia">
+					<p>${intolerancia.nombre}</p>
+					</c:forEach>
+					
+					</c:if>
+					
+				</div>
+				
+				<div id="preferencias-producto">
+					<c:if test="${producto.estado=='ACEPTADO'}">
+					<h3>Preferencia</h3>
+					<p>${producto.preferencia}</p>
+					</c:if>
+				</div>
+
+
+				<div id="promocionado-producto" class="hidden">
+					<h3>Promocionar:</h3>
+					<div class="radio-inline">
+
+						<label style="pointer-events: none"> <input type="radio"
+							name="promocionado" id="no" value="TRUE" readOnly
+							style="pointer-events: none"
+							<c:if test="${producto.promocionado}">checked</c:if>>SI
 						</label>
 					</div>
 					<div class="radio-inline">
-						<label> <input type="radio" name="promocionado"
-							id="si" value="FALSE" <c:if test="${!producto.promocionado}">checked</c:if>> NO
+						<label style="pointer-events: none"> <input type="radio"
+							name="promocionado" id="no" value="FALSE" readOnly
+							style="pointer-events: none"
+							<c:if test="${!producto.promocionado}"> checked</c:if>>NO
 						</label>
 					</div>
 				</div>
-				<div id="intolerancias-producto">
-					<h3>Intolerancias</h3>
-				</div>
 
-				<div id="preferencias-producto">
-					<h3>Preferencias</h3>
+
+
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<c:choose>
+							<c:when test="${producto['new']}">
+								<button class="btn btn-default" type="submit">Añadir
+									Producto</button>
+							</c:when>
+							<c:otherwise>
+								<button class="btn btn-default" type="submit">Actualizar
+									Producto</button>
+							</c:otherwise>
+						</c:choose>
+					</div>
+
 				</div>
-				
-				<div id="marca-producto col-md-12">
-					<input type="text" id="tienda" name="tienda" class="hidden" value="${tiendaId}"><br>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<c:choose>
-						<c:when test="${producto['new']}">
-							<button class="btn btn-default" type="submit">Añadir
-								Producto</button>
-						</c:when>
-						<c:otherwise>
-							<button class="btn btn-default" type="submit">Actualizar
-								Producto</button>
-						</c:otherwise>
-					</c:choose>
-				</div>
-			</div></div>
+			</c:if>
+
+
+
 		</div>
-
 	</form:form>
+
+
+
+
+
+<c:if test="${producto.estado=='PENDIENTE'&&auth == 'nutricionista'}">
+
 	<script type="text/javascript">
 var intolerancias = new Array();
 var intoleranciasSeleccionadas = new Array();
@@ -204,24 +418,24 @@ preferencias.forEach((preferencia, i) => {
 
    });
 </script>
+</c:if>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<c:if test="${auth == 'nutricionista'}">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		
 	<script>
-	$("#nombre2").hide();$("#nombre").hide();
-	$("#imagen").hide();$("#imagen2").hide();
-	$("#marca").hide();$("#marca2").hide();
-	$("#descripcion").hide();$("#descripcion2").hide();
-	$("#precio").hide();$("#precio2").hide();
+		$("#motivo-producto").hide();
+		$("#rechazado").change(function() {
+	    if(this.checked) {
+	    	console.log("rechazado");
+	    	$("#motivo-producto").show();
+	    }
+	});
+		$("#aceptado").change(function() {
+		    if(this.checked) {
+		    	console.log("rechazado");
+		    	$("#motivo-producto").hide();
+		    }
+		});
 	</script>
-</c:if>
-<c:if test="${auth == 'vendedor'}">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		
-	<script>
-	$("#vendedor").hide();
-	</script>
-</c:if>
 </petclinic:layout>
 
