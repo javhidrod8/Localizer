@@ -60,6 +60,6 @@ public class UserService {
 	
 	@Transactional
 	public User findUserByUsername(String username) throws DataAccessException {
-		return this.userRepository.findByUsername(username);
+		return this.userRepository.findUserByUsername(username);
 	}
 }

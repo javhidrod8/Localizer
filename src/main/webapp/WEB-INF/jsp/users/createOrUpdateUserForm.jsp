@@ -14,31 +14,71 @@
 	<form:form modelAttribute="user" class="form-horizontal"
 		id="add-user-form">
 		<div class="form-group has-feedback">
-			<petclinic:inputField label="First Name" name="firstName" />
-			<petclinic:inputField label="Last Name" name="lastName" />
-			<petclinic:inputField label="Username" name="username" />
-			<petclinic:inputField label="Password" name="password" />
-			
+			<div id="nombre-usuario" class="col-md-12">
+				<label for="nombre">
+					<h3>Nombre:</h3>
+				</label> <input type="text" id="nombre" name="firstName"
+					class="form-control"><br>
+			</div>
+			<div id="apellidos-usuario" class="col-md-12">
+				<label for="apellidos">
+					<h3>Apellidos:</h3>
+				</label> <input type="text" id="apellidos" name="lastName"
+					class="form-control"><br>
+			</div>
+			<div id="username-usuario" class="col-md-12">
+				<label for="username">
+					<h3>Usuario:</h3>
+				</label> <input type="text" id="user" name="username" class="form-control"><br>
+			</div>
+			<div id="password-usuario" class="col-md-12">
+				<label for="password">
+					<h3>Password:</h3>
+				</label> <input type="password" id="password" name="password"
+					class="form-control"><br>
+			</div>
 		</div>
 
 		<form:form modelAttribute="authorities" class="form-horizontal"
 			id="add-user-form">
-			<c:if test="${isNew}">
-				<label class="col-sm-2 control-label">Rol</label>
-
-				<div class="col-sm-10">
-					<form:select path="authority">
-						<form:option value="cliente">Cliente</form:option>
-						<form:option value="vendedor">Vendedor</form:option>
-					</form:select>
-				</div>
-			</c:if>
-			<div id="marca-producto col-md-12">
-				<input type="text" id="tienda" name="tienda" class="hidden"
-					value="${tiendaId}"><br>
-			</div>
+			<c:choose>
+				<c:when test="${isNew}">
+					<div id="authority">
+						<h3>Rol:</h3>
+						<div class="radio-inline">
+							<label> <input type="radio" name="authority" id="cliente"
+								value="cliente" checked> CLIENTE
+							</label>
+						</div>
+						<div class="radio-inline">
+							<label> <input type="radio" name="authority"
+								id="vendedor" value="vendedor"> VENDEDOR
+							</label>
+						</div>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div id="authority">
+						<h3>Rol:</h3>
+						<c:if test="${auth == 'cliente'}">
+							<div class="radio-inline">
+								<label> <input type="radio" name="authority"
+									id="cliente" value="cliente" checked> CLIENTE
+								</label>
+							</div>
+						</c:if>
+						<c:if test="${auth == 'vendedor'}">
+							<div class="radio-inline">
+								<label> <input type="radio" name="authority"
+									id="vendedor" value="vendedor" checked> VENDEDOR
+								</label>
+							</div>
+						</c:if>
+					</div>
+				</c:otherwise>
+			</c:choose>
 			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
+				<div class="col-sm-12" id="usuario-boton">
 					<c:choose>
 						<c:when test="${isNew}">
 							<button class="btn btn-default" type="submit">Añadir
