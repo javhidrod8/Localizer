@@ -83,7 +83,15 @@
 						<a href="${fn:escapeXml(tiendaEditUrl)}">
 							<button>Editar tienda</button>
 						</a>
+						<spring:url value="/tienda/{tiendaId}/productos/new" var="tiendaUrl">
+							<spring:param name="tiendaId" value="${tienda.id}" />
+						</spring:url>	
+						<a href="${fn:escapeXml(tiendaUrl)}">
+							<button>Nuevo Producto</button>
+						</a>
 					</dd>
+
+					
 <%-- 					</c:if> --%>
 
 				</sec:authorize>

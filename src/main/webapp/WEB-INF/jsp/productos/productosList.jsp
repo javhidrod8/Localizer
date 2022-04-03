@@ -40,9 +40,12 @@
 			</div>
 			<div id="preferencias">
 				<h3>Preferencias</h3>
+				<input class="form-check-input" type="radio" name = "preferencia" checked> NINGUNA </br></input>
 				<c:forEach items="${preferencias}" var="preferencia">
-					<input class="form-check-input" type="checkbox" id="${preferencia}" />
-					<c:out value="${preferencia}"></c:out>
+					<c:if	test="${preferencia != 'TODO'}"> 
+					<input class="form-check-input" type="radio" name = "preferencia" id="${preferencia}" />	
+					
+					<c:out value="${preferencia}"></c:out></c:if>
 					</br>
 				</c:forEach>
 				</br>

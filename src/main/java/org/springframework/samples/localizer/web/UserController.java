@@ -5,7 +5,11 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties.View;
+import org.springframework.samples.localizer.model.Authorities;
 import org.springframework.samples.localizer.model.User;
+import org.springframework.samples.localizer.service.AuthoritiesService;
 import org.springframework.samples.localizer.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,9 +28,12 @@ class UserController {
 	private static final String VIEWS_USER_CREATE_OR_UPDATE_FORM = "users/createOrUpdateUserForm";
 
 	private final UserService userService;
+	private final AuthoritiesService authoritiesService;
 
-	public UserController(UserService userService) {
+	@Autowired
+	public UserController(UserService userService, AuthoritiesService authoritiesService) {
 		this.userService = userService;
+		this.authoritiesService = authoritiesService;
 	}
 
 	@InitBinder
@@ -37,19 +44,32 @@ class UserController {
 	@GetMapping("/users/new")
 	public String initCreationForm(Map<String, Object> model) {
 		User user = new User();
+		Authorities auth = new Authorities();
 		model.put("user", user);
+		model.put("authorities", auth);
 		Boolean isNew = true;
 		model.put("isNew", isNew);
 		return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping("/users/new")
-	public String processCreationForm(@Valid User user, BindingResult result) {
+	public String processCreationForm(@Valid User user,@Valid Authorities auth, BindingResult result, Map<String, Object> model) {
+		
 		if (result.hasErrors()) {
+			model.put("user",user);
+			model.put("authorities", auth);
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
 		else {
+			
+			String username = user.getUsername();
+			String auth1 = auth.getAuthority();
+			System.out.println("=========================="+model.get("user").toString()+"====================");
+			System.out.println("=========================="+model.get("authorities").toString()+"====================");
+			System.out.println("=========================="+username+"====================");
+			System.out.println("=========================="+auth1+"==========================");
 			this.userService.saveUser(user);
+			this.authoritiesService.saveAuthorities(username, auth1);
 			return "redirect:/users/" + user.getUsername();
 		}
 	}
@@ -114,22 +134,24 @@ class UserController {
 */
 
 	@GetMapping("/users/{username}/edit")
-	public String initUpdateUserForm(@PathVariable("username") String username, Model model) {
-		Optional<User> user = this.userService.findUser(username);
-		model.addAttribute(user);
+	public String initUpdateUserForm(@PathVariable("username") String username, Map<String, Object> model) {
+		User user = this.userService.findUser(username);
+		model.put("user", user);
+		Boolean isNew = false;
+		model.put("isNew", isNew);
 		return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping("/users/{username}/edit")
 	public String processUpdateUserForm(@Valid User user, BindingResult result,
-			@PathVariable("username") String username) {
+			@PathVariable("username") String username,  Model model) {
 		if (result.hasErrors()) {
+			model.addAttribute(user);
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			user.setUsername(username);
 			this.userService.saveUser(user);
-			return "redirect:/users/{username}";
+			return "redirect:/users/" + user.getUsername();
 		}
 	}
 
@@ -137,7 +159,7 @@ class UserController {
 	@GetMapping("/users/{username}")
 	public ModelAndView showUser(@PathVariable("username") String username) {
 		ModelAndView mav = new ModelAndView("users/userDetails");
-		Optional<User> user = this.userService.findUser(username);
+		User user = this.userService.findUser(username);
 		mav.addObject(user);
 		return mav;
 	}
