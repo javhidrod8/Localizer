@@ -22,5 +22,15 @@ public class ReservaService {
 	public void saveReserva(Reserva reserva) throws DataAccessException {
 		this.reservaRepository.save(reserva);
 	}
+	
+	@Transactional
+	public Reserva findReservaById(int id) throws DataAccessException {
+		return reservaRepository.findReservaById(id);
+	}
+	
+	@Transactional
+	public void deleteReserva(Reserva reserva) throws DataAccessException {
+		this.reservaRepository.delete(reserva);
+	}
 
 }

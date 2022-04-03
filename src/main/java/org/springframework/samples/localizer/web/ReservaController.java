@@ -30,6 +30,7 @@ public class ReservaController {
 	
 	private static final String VIEWS_ERROR_TIENDAID = "reservas/createOrUpdateReservaForm";
 	private static final String VIEWS_FORM_RESERVAS = "reservas/createOrUpdateReservaForm";
+	private static final String VIEWS_LIST_RESERVAS = "reservas/reservasList";
 	private static final String VIEWS_ERROR_AUTH = "productos/createOrUpdateProductoForm";
 	private final ReservaService reservaService;
 	private final ProductoService productoService;
@@ -60,7 +61,7 @@ public class ReservaController {
 			if(tienda.getId().equals(tiendaId)) {
 				User userSession = (User) authentication.getPrincipal();
 				String username = userSession.getUsername();
-				org.springframework.samples.localizer.model.User user = this.userService.findUserByUsername(username);
+				org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
 				Reserva reserva = new Reserva();
 				reserva.setUser(user);
 				model.put("reserva", reserva);
@@ -89,5 +90,24 @@ public class ReservaController {
 			return "redirect:/tienda/" + tienda.getId();
 		}
 	}
+	
+	@GetMapping(value = "/reserva/{reservaId}/delete")
+    public String deleteReserva(@PathVariable("reservaId") int reservaId, ModelMap model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		String auth = currentPrincipalName.iterator().next().toString().trim();
+		model.put("auth", auth);
+		User currentUser = (User) authentication.getPrincipal();
+		String username = currentUser.getUsername();
+		Reserva reserva = this.reservaService.findReservaById(reservaId);
+		Integer tiendaId = reserva.getTienda().getId();
+		org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
+		if ((auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId)) || auth.equals("admin")) {
+			this.reservaService.deleteReserva(reserva);
+			return VIEWS_LIST_RESERVAS;
+		}else {
+			return VIEWS_ERROR_AUTH;
+		}
+    }
 
 }
