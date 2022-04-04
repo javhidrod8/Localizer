@@ -10,15 +10,18 @@ import javax.validation.constraints.NotNull;
 public class Reserva extends BaseEntity{
 	
 	@OneToOne
+	@NotNull
 	private Tienda tienda;
 	
 	@OneToOne
+	@NotNull
 	private Producto producto;
 	
 	@NotNull
 	private Integer cantidad;
 	
 	@OneToOne
+	@NotNull
 	private User user;
 	
 	private String comentario;
