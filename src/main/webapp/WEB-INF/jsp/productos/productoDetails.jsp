@@ -84,21 +84,20 @@
 				<c:forEach items="${intolerancias}" var="intolerancia">
 					<input class="form-check-input" type="checkbox" id="${intolerancia}" />
 					<c:out value="${intolerancia}"></c:out>
-					</br>
-					</br>
+					<br>
 				</c:forEach>
 			</div>
 			<div id="preferencias">
 				<h3>Preferencias</h3>
-				<input class="form-check-input" type="radio" name = "preferencia" checked> NINGUNA </br></input>
+				<input class="form-check-input" type="radio" name = "preferencia" checked> NINGUNA <br></input>
 				<c:forEach items="${preferencias}" var="preferencia">
 					<c:if	test="${preferencia != 'TODO' && preferencia != null}"> 
 					<input class="form-check-input" type="radio" name = "preferencia" id="${preferencia}" />	
 					
 					<c:out value="${preferencia}"></c:out></c:if>
-					</br>
+					<br>
 				</c:forEach>
-				</br>
+				<br>
 			</div>
 		</div>
 		<div class="col-md-10" id="productos"></div>
@@ -122,13 +121,15 @@
         var preferencias = new Array();
 		<c:forEach items="${producto.tienda.productos}" var="producto"> 
 			<c:if test="${producto.estado == 'ACEPTADO'||miTienda}">
-		    productoDetails = new Object();
-		    productoDetails.id =  "${producto.id}"; 
-		    productoDetails.nombre = "${producto.nombre}";
-		    productoDetails.precio = "${producto.precio}";
-		    productoDetails.marca = "${producto.marca}";
-		    productoDetails.imagen = "${producto.imagen}";
-		    productoDetails.tiendaid = "${producto.tienda.id}";
+			 productoDetails = new Object();
+			    productoDetails.id =  "${producto.id}"; 
+			    productoDetails.nombre = "${producto.nombre}";
+			    productoDetails.precio = "${producto.precio}";
+			    productoDetails.marca = "${producto.marca}";
+			    productoDetails.imagen = "${producto.imagen}";
+			    productoDetails.estado = "${producto.estado}";
+			    productoDetails.tienda = "${producto.tienda.id}";
+			    productoDetails.intolerancias = new Array();
 		    productoDetails.intolerancias = new Array();
 		    <c:forEach items="${producto.intolerancia}" var="intolerancia">
 		    	productoDetails.intolerancias.push("${intolerancia}");
@@ -152,7 +153,7 @@
 		//var selectedIntolerancias = new Array();	
 
 		var button = document.createElement('button');
-		button.className="btn btn-default";
+		button.className="btn btn-default btn-md";
 	  	prodHtml = "";
 	  	button.innerHTML = "Filtrar";
 	  	button.onclick = function(){
@@ -224,43 +225,60 @@
 		  document.getElementById('preferencias').appendChild(button);
 		
 	
-	function printProducto(producto){
-		
-		var prodDiv = document.createElement('div'); 
-		prodDiv.className = "col-sm-6 col-md-4";
-		prodDiv.id = "producto"; 
-    
-    	var thumbnail = document.createElement('div');
-    	thumbnail.className = "thumbnail";
-    	thumbnail.id ="productThumbnail";
-		
-		var img = document.createElement('img');
-		img.src = producto.imagen;
-		img.alt = producto.nombre;
-		img.id = "productoImg";
-    
- 		var url = document.createElement("a");
- 		url.href="${fn:escapeXml(productoUrl)}"+producto.id;
- 		url.appendChild(img);
-    	thumbnail.appendChild(url);
+		function printProducto(producto){
+				
+				var prodDiv = document.createElement('div'); 
+				prodDiv.className = "col-sm-6 col-md-4";
+				prodDiv.id = "producto"; 
+		    
+		    	var thumbnail = document.createElement('div');
+		    	thumbnail.className = "thumbnail";
+		    	thumbnail.id ="productThumbnail";
+				
+				var img = document.createElement('img');
+				img.src = producto.imagen;
+				img.alt = producto.nombre;
+				img.id = "productoImg";
+		    
+		 		var url = document.createElement("a");
+		 		url.href="${fn:escapeXml(productoUrl)}"+producto.id;
+		 		url.className="producto-tienda-img";
+		 		url.appendChild(img);
+		    	thumbnail.appendChild(url);
 
-    
-    	var caption = document.createElement('div'); 
-		caption.className = "caption";
-		caption.id = "productoInfo";
-		if(producto.nombre.length>=30){
-	    	caption.innerHTML+="<h3>"+producto.nombre.substring(0,30)+"...</h3>";
-		}else{
-	    	caption.innerHTML+="<h3>"+producto.nombre+"</h3>";
-		}
+		    	
+		    	var caption = document.createElement('div');
+				caption.className = "caption";
+				caption.id = "productoInfo";
+				if(producto.nombre.length>=30){
+			    	caption.innerHTML+="<h3>"+producto.nombre.substring(0,30)+"...</h3>";
+				}else{
+			    	caption.innerHTML+="<h3>"+producto.nombre+"</h3>";
+				}
+				
 
-    	caption.innerHTML+="<p> Marca: "+producto.marca+"</p>"
-    	caption.innerHTML+="<h3>"+producto.precio+"<span class='glyphicon glyphicon-euro' aria-hidden='true'></span></h3>";
-    	caption.innerHTML+="<a href='/tienda/"+producto.tiendaid+"/producto/"+producto.id+"/reservar'><button class='btn btn-default btn-sm'>Reservar</button></br></br></a>";
-    	thumbnail.appendChild(caption);
-    	prodDiv.appendChild(thumbnail);
-		document.getElementById('productos').appendChild(prodDiv);
-	};
+		    	caption.innerHTML+="<p> Marca: "+producto.marca+"</p>";
+		    	caption.innerHTML+="<h3>"+producto.precio+"<span class='glyphicon glyphicon-euro' aria-hidden='true'></span></h3>";
+		    	<c:if test="${!miTienda}">
+		    	caption.innerHTML+="<a href='/tienda/"+producto.tiendaid+"/producto/"+producto.id+"/reservar'><button class='btn btn-default btn-sm'>Reservar</button></br></br></a>";
+
+		    	</c:if>
+		    	
+
+		    	<c:if test="${miTienda}">
+		    	var url = document.createElement("a");
+		 		url.href="${fn:escapeXml(productoEditarUrl)}"+producto.id+"/edit";
+		    	button = document.createElement("button");
+		    	button.className = 'btn btn-default btn-sm';   	
+				button.innerHTML="Editar";
+		 		url.appendChild(button);
+		    	caption.appendChild(url);
+				</c:if>
+
+		    	thumbnail.appendChild(caption);
+		    	prodDiv.appendChild(thumbnail);
+				document.getElementById('productos').appendChild(prodDiv);
+			};
 
 	function onlyUnique(value, index, self) {
 		  return self.indexOf(value) === index;

@@ -34,8 +34,7 @@
 					<input class="form-check-input" type="checkbox"
 						id="${intolerancia}" />
 					<c:out value="${intolerancia}"></c:out>
-					</br>
-					</br>
+					<br>
 				</c:forEach>
 			</div>
 			<div id="preferencias">
