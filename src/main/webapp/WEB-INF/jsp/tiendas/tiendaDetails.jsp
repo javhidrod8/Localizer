@@ -59,7 +59,17 @@
 						<spring:param name="tiendaId" value="${tienda.id}" />
 					</spring:url>	
 					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
-						<button>Eliminar tienda</button>
+						<<button class = "btn btn-default">Eliminar tienda</button>
+					</a>
+				</dd>
+				</sec:authorize>
+				<sec:authorize access="hasAuthority('vendedor')">
+				<dd>				
+					<spring:url value="/tienda/{tiendaId}/delete" var="tiendaDeleteUrl">
+						<spring:param name="tiendaId" value="${tienda.id}" />
+					</spring:url>	
+					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
+						<button class = "btn btn-default">Eliminar tienda</button>
 					</a>
 				</dd>
 				</sec:authorize>
@@ -69,7 +79,7 @@
 						<spring:param name="tiendaId" value="${tienda.id}" />
 					</spring:url>	
 					<a href="${fn:escapeXml(tiendaEditUrl)}">
-						<button>Editar tienda</button>
+						<button class = "btn btn-default">Editar tienda</button>
 					</a>
 				</dd>
 				</sec:authorize>
@@ -81,13 +91,13 @@
 							<spring:param name="tiendaId" value="${tienda.id}" />
 						</spring:url>	
 						<a href="${fn:escapeXml(tiendaEditUrl)}">
-							<button>Editar tienda</button>
+							<button class = "btn btn-default">Editar tienda</button>
 						</a>
 						<spring:url value="/tienda/{tiendaId}/productos/new" var="tiendaUrl">
 							<spring:param name="tiendaId" value="${tienda.id}" />
 						</spring:url>	
 						<a href="${fn:escapeXml(tiendaUrl)}">
-							<button>Nuevo Producto</button>
+							<button class = "btn btn-default">Nuevo Producto</button>
 						</a>
 					</dd>
 
@@ -154,6 +164,7 @@
 		    productoDetails.precio = "${producto.precio}";
 		    productoDetails.marca = "${producto.marca}";
 		    productoDetails.imagen = "${producto.imagen}";
+		    productoDetails.tiendaid = "${producto.tienda.id}";
 		    productoDetails.intolerancias = new Array();
 		    <c:forEach items="${producto.intolerancia}" var="intolerancia">
 		    	productoDetails.intolerancias.push("${intolerancia}");
@@ -280,7 +291,7 @@
 
     	caption.innerHTML+="<p> Marca: "+producto.marca+"</p>"
     	caption.innerHTML+="<h3>"+producto.precio+"<span class='glyphicon glyphicon-euro' aria-hidden='true'></span></h3>";
-    	caption.innerHTML+="<button class='btn btn-default btn-sm'>Resevar</button>";
+    	caption.innerHTML+="<a href='/tienda/"+producto.tiendaid+"/producto/"+producto.id+"/reservar'><button class='btn btn-default'>Reservar</button></br></br></a>";
     	thumbnail.appendChild(caption);
     	prodDiv.appendChild(thumbnail);
 		document.getElementById('productos').appendChild(prodDiv);
