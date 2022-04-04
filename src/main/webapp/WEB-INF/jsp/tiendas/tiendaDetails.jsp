@@ -57,26 +57,27 @@
 					</dd>
 					<br>
 					<sec:authorize access="hasAuthority('admin')">
-				<dd>				
+					<dd>				
 					<spring:url value="/tienda/{tiendaId}/delete" var="tiendaDeleteUrl">
 						<spring:param name="tiendaId" value="${tienda.id}" />
 					</spring:url>	
 					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
-						<<button class = "btn btn-default">Eliminar tienda</button>
+						<<button class = "btn btn-default btn-sm">Eliminar tienda</button>
 					</a>
-				</dd>
-				</sec:authorize>
+					</dd>
+					</sec:authorize>
 				<sec:authorize access="hasAuthority('vendedor')">
 				<dd>				
 					<spring:url value="/tienda/{tiendaId}/delete" var="tiendaDeleteUrl">
 						<spring:param name="tiendaId" value="${tienda.id}" />
 					</spring:url>	
 					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
-						<button class = "btn btn-default">Eliminar tienda</button>
+						<button class = "btn btn-default btn-sm">Eliminar tienda</button>
 
 					</a>
 				</dd>
 				</sec:authorize>
+
 				  <sec:authorize access="hasAuthority('admin')">
 				<dd>				
 					<spring:url value="/tienda/{tiendaId}/edit" var="tiendaEditUrl">
@@ -310,7 +311,8 @@
     	caption.innerHTML+="<p> Marca: "+producto.marca+"</p>";
     	caption.innerHTML+="<h3>"+producto.precio+"<span class='glyphicon glyphicon-euro' aria-hidden='true'></span></h3>";
     	<c:if test="${!miTienda}">
-    		caption.innerHTML+="<button class='btn btn-default btn-sm'>Resevar</button>";
+    	caption.innerHTML+="<a href='/tienda/"+producto.tiendaid+"/producto/"+producto.id+"/reservar'><button class='btn btn-default btn-sm'>Reservar</button></br></br></a>";
+
     	</c:if>
     	
     	var url = document.createElement("a");
@@ -341,7 +343,6 @@
     		caption.appendChild(check);
     	}	
 
-    	caption.innerHTML+="<a href='/tienda/"+producto.tiendaid+"/producto/"+producto.id+"/reservar'><button class='btn btn-default'>Reservar</button></br></br></a>";
     	thumbnail.appendChild(caption);
     	prodDiv.appendChild(thumbnail);
 		document.getElementById('productos').appendChild(prodDiv);
