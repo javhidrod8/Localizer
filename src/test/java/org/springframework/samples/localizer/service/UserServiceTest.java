@@ -26,11 +26,17 @@ class UserServiceTest {
 	@Test
 	void shouldFindUserByUserName() {
 		
+		User usuario = this.userService.findUser("admin1");
+		
+		assertThat(usuario.getUsername()).isEqualTo("admin1");
+	}
+
+	@Test
+	public void shouldInsertUser() {
+
 		User user = new User();
 		Authorities au = new Authorities();
 		Set<Authorities> aus = new HashSet<Authorities>(); 
-		
-		
 		user.setUsername("pruebador");
 		user.setPassword("Contrasen4");
 		user.setFirstName("Test");
@@ -43,22 +49,6 @@ class UserServiceTest {
 		
 		this.userService.saveUser(user);
 		this.auService.saveAuthorities(au);
-		
-		User usuario = this.userService.findUser("pruebador");
-		
-		assertThat(usuario.getUsername()).isEqualTo(user.getUsername());
-	}
-
-	@Test
-	public void shouldInsertUser() {
-
-		User user = new User();
-		
-		user.setUsername("pruebador");
-		user.setPassword("Contrasen4");
-		user.setFirstName("Test");
-		user.setLastName("Prueba");
-		user.setTienda(null);
 		String found = user.getUsername();
 
 		this.userService.saveUser(user);

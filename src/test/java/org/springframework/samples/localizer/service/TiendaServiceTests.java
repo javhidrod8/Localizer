@@ -98,7 +98,7 @@ class TiendaServiceTests {
 
 		Tienda tienda = new Tienda();
 		tienda.setCalle("Sevilla");
-		tienda.setCodigoPostal("41002");
+		tienda.setCodigoPostal("40000");
 		tienda.setDescripcion("Amasando pan desde 1990");
 		tienda.setHorario("8:00-14:00");
 		tienda.setImagen(".....");

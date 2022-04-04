@@ -126,7 +126,7 @@ public class ProductoServiceTest {
 	public void findAllProducts() {
 
 		Collection<Producto> productos = this.productoService.findAllProductos();
-		assertThat(productos.size()).isEqualTo(50);
+		assertThat(productos.size()).isEqualTo(51);
 	}
 
 }

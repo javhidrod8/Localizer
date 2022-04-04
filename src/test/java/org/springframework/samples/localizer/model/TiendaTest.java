@@ -101,7 +101,7 @@ class TiendaTest {
 	
 
 	@Test
-	void shouldNotValidateWhenNombreEmpty() {
+	void shouldNotValidateWhenNombreblank() {
 
 		LocaleContextHolder.setLocale(Locale.ENGLISH);
 		Tienda tienda = new Tienda();
@@ -132,10 +132,10 @@ class TiendaTest {
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		ConstraintViolation<Tienda> violation = constraintViolations.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("nombre");
-		assertThat(violation.getMessage()).isEqualTo("must not be empty");
+		assertThat(violation.getMessage()).isEqualTo("must not be blank");
 	}
 	@Test
-	void shouldNotValidateWhenDescriptionEmpty() {
+	void shouldNotValidateWhenDescriptionblank() {
 
 		LocaleContextHolder.setLocale(Locale.ENGLISH);
 		Tienda tienda = new Tienda();
@@ -165,10 +165,10 @@ class TiendaTest {
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		ConstraintViolation<Tienda> violation = constraintViolations.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("descripcion");
-		assertThat(violation.getMessage()).isEqualTo("must not be empty");
+		assertThat(violation.getMessage()).isEqualTo("must not be blank");
 	}
 	@Test
-	void shouldNotValidateWhenCalleEmpty() {
+	void shouldNotValidateWhenCalleblank() {
 
 		LocaleContextHolder.setLocale(Locale.ENGLISH);
 		Tienda tienda = new Tienda();
@@ -199,10 +199,10 @@ class TiendaTest {
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		ConstraintViolation<Tienda> violation = constraintViolations.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("calle");
-		assertThat(violation.getMessage()).isEqualTo("must not be empty");
+		assertThat(violation.getMessage()).isEqualTo("must not be blank");
 	}
 	@Test
-	void shouldNotValidateWhenProvinciaEmpty() {
+	void shouldNotValidateWhenProvinciablank() {
 
 		LocaleContextHolder.setLocale(Locale.ENGLISH);
 		Tienda tienda = new Tienda();
@@ -232,10 +232,10 @@ class TiendaTest {
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		ConstraintViolation<Tienda> violation = constraintViolations.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("provincia");
-		assertThat(violation.getMessage()).isEqualTo("must not be empty");
+		assertThat(violation.getMessage()).isEqualTo("must not be blank");
 	}
 	@Test
-	void shouldNotValidateWhenImagenEmpty() {
+	void shouldNotValidateWhenImagenblank() {
 
 		LocaleContextHolder.setLocale(Locale.ENGLISH);
 		Tienda tienda = new Tienda();
@@ -266,10 +266,10 @@ class TiendaTest {
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		ConstraintViolation<Tienda> violation = constraintViolations.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("imagen");
-		assertThat(violation.getMessage()).isEqualTo("must not be empty");
+		assertThat(violation.getMessage()).isEqualTo("must not be blank");
 	}
 	@Test
-	void shouldNotValidateWhenCodigoPostalEmpty() {
+	void shouldNotValidateWhenCodigoPostalblank() {
 
 		LocaleContextHolder.setLocale(Locale.ENGLISH);
 		Tienda tienda = new Tienda();
@@ -300,10 +300,10 @@ class TiendaTest {
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		ConstraintViolation<Tienda> violation = constraintViolations.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("codigoPostal");
-		assertThat(violation.getMessage()).isEqualTo("must not be empty");
+		assertThat(violation.getMessage()).isEqualTo("must not be blank");
 	}
 //	@Test
-//	void shouldNotValidateWhenTelefonoEmpty() {
+//	void shouldNotValidateWhenTelefonoblank() {
 //
 //		LocaleContextHolder.setLocale(Locale.ENGLISH);
 //		Tienda tienda = new Tienda();
@@ -334,10 +334,10 @@ class TiendaTest {
 //		assertThat(constraintViolations.size()).isEqualTo(1);
 //		ConstraintViolation<Tienda> violation = constraintViolations.iterator().next();
 //		assertThat(violation.getPropertyPath().toString()).isEqualTo("telefono");
-//		assertThat(violation.getMessage()).isEqualTo("must not be empty");
+//		assertThat(violation.getMessage()).isEqualTo("must not be blank");
 //	}
 	@Test
-	void shouldNotValidateWhenHorarioEmpty() {
+	void shouldNotValidateWhenHorarioblank() {
 
 		LocaleContextHolder.setLocale(Locale.ENGLISH);
 		Tienda tienda = new Tienda();
@@ -368,7 +368,7 @@ class TiendaTest {
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		ConstraintViolation<Tienda> violation = constraintViolations.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("horario");
-		assertThat(violation.getMessage()).isEqualTo("must not be empty");
+		assertThat(violation.getMessage()).isEqualTo("must not be blank");
 	}
 
 }

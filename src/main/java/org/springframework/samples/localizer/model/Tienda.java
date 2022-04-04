@@ -35,7 +35,7 @@ public class Tienda extends BaseEntity{
   
 	@Column(name = "codigo_postal")
 	@NotBlank
-	@Pattern(regexp="/^(?:0?[1-9]|[1-4]\\d|5[0-2])\\d{3}$/")
+//	@Pattern(regexp="^(?:0[1-9]|[1-4]\\d|5[0-2])\\d{3}$")
 	private String codigoPostal;
 	
 	@Column(name = "telefono")
