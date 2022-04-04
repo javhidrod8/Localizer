@@ -177,14 +177,14 @@
 
 
 				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
+					<div class="*col-sm-12">
 						<c:choose>
 							<c:when test="${producto['new']}">
-								<button class="btn btn-default" type="submit">Añadir
+								<button class='btn btn-default btn-sm' type="submit">A&ntildeadir
 									Producto</button>
 							</c:when>
 							<c:otherwise>
-								<button class="btn btn-default" type="submit">Actualizar
+								<button class="btn btn-default btn-sm" type="submit">Actualizar
 									Producto</button>
 							</c:otherwise>
 						</c:choose>
@@ -233,14 +233,21 @@
 					</div>
 					<div id="descripcion-producto col-md-12">
 						<label id="descripcion2" for="descripcion" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>
-							<h3>Descripción:</h3>
+							<h3>Descripci&oacuten:</h3>
 						</label>
 						<textarea class="form-control" id="descripcion" name="descripcion"
 							rows="3" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>${producto.descripcion}</textarea>
 						<br>
 					</div>
 					<div id="estado-producto">
-
+						<c:if test="${producto['new']}">
+							<div class="radio-inline">
+								<label class="hidden"> <input type="radio" name="estado"
+									id="pendiente" value="PENDIENTE" checked readOnly
+									style="pointer-events: none" class="hidden">
+								</label>
+							</div>
+						</c:if>
 						<c:if test="${producto.estado=='PENDIENTE'}">
 							<h2>Producto Sin Validar</h2>
 							<div class="radio-inline">
@@ -326,15 +333,15 @@
 
 
 				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
+					<div class="col-sm-12">
 						<c:choose>
 							<c:when test="${producto['new']}">
-								<button class="btn btn-default" type="submit">Añadir
+								<button class="btn btn-default btn-sm" type="submit">A&ntildeadir
 									Producto</button>
 							</c:when>
 							<c:otherwise>
-								<button class="btn btn-default" type="submit">Actualizar
-									Producto</button>
+									<button class="btn btn-default btn-sm" type="submit">Actualizar
+										Producto</button>
 							</c:otherwise>
 						</c:choose>
 					</div>
