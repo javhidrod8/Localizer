@@ -319,9 +319,10 @@
 
     	</c:if>
     	
+
+    	<c:if test="${miTienda}">
     	var url = document.createElement("a");
  		url.href="${fn:escapeXml(productoEditarUrl)}"+producto.id+"/edit";
-    	<c:if test="${miTienda}">
     	button = document.createElement("button");
     	button.className = 'btn btn-default btn-sm';   	
 		button.innerHTML="Editar";
