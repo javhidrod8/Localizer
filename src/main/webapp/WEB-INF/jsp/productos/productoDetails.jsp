@@ -84,21 +84,20 @@
 				<c:forEach items="${intolerancias}" var="intolerancia">
 					<input class="form-check-input" type="checkbox" id="${intolerancia}" />
 					<c:out value="${intolerancia}"></c:out>
-					</br>
-					</br>
+					<br>
 				</c:forEach>
 			</div>
 			<div id="preferencias">
 				<h3>Preferencias</h3>
-				<input class="form-check-input" type="radio" name = "preferencia" checked> NINGUNA </br></input>
+				<input class="form-check-input" type="radio" name = "preferencia" checked> NINGUNA <br></input>
 				<c:forEach items="${preferencias}" var="preferencia">
 					<c:if	test="${preferencia != 'TODO' && preferencia != null}"> 
 					<input class="form-check-input" type="radio" name = "preferencia" id="${preferencia}" />	
 					
 					<c:out value="${preferencia}"></c:out></c:if>
-					</br>
+					<br>
 				</c:forEach>
-				</br>
+				<br>
 			</div>
 		</div>
 		<div class="col-md-10" id="productos"></div>
