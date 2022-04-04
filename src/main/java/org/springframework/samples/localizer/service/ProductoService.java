@@ -62,7 +62,7 @@ public class ProductoService {
 
 	@Transactional
 	public void deleteProducto(Producto producto) throws DataAccessException {
-		productoRepository.delete(producto);
+		productoRepository.deleteById(producto.getId());
 
 	}
 }

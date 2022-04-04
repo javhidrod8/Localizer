@@ -20,7 +20,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer>{
 	@Query("SELECT reserva FROM Reserva reserva WHERE reserva.user.username = ?1")
 	public List<Reserva> findReservaByUser(String username) throws DataAccessException;
 	
-	@Query("select reserva from Reserva reserva where reserva.estado like ?1 and reserva.tienda.id = ?1")
+	@Query("select reserva from Reserva reserva where reserva.estado = ?1 and reserva.tienda.id = ?1")
 	public List<Reserva> findProductosByEstadoAndTienda(Estado estado, Integer tiendaId);
 
 }

@@ -1,3 +1,49 @@
+DELETE FROM producto_intolerancias;
+DELETE FROM productos;
+DELETE FROM tiendas;
+DELETE FROM intolerancias;
+DELETE FROM authorities;
+DELETE FROM users;
+
+
+-- One admin user, named admin1 with passwor 4dm1n and authority admin
+INSERT INTO users(username,password,enabled) VALUES ('admin1','4dm1n',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
+-- Un usuario cliente, llamado cliente1 con la contraseña cli1
+INSERT INTO users(username,password,enabled) VALUES ('cliente1','cli1',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (4,'cliente1','cliente');
+-- Un usuario cliente, llamado cliente2 con la contraseña cli2
+INSERT INTO users(username,password,enabled) VALUES ('cliente2','cli2',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (5,'cliente2','cliente');
+-- Un usuario vendedor, llamado vendedor1 con la contraseña vend1
+INSERT INTO users(username,password,enabled) VALUES ('vendedor1','vend1',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (6,'vendedor1','vendedor');
+-- Un usuario vendedor, llamado vendedor2 con la contraseña vend2
+INSERT INTO users(username,password,enabled) VALUES ('vendedor2','vend2',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (7,'vendedor2','vendedor');
+-- Un usuario nutricionista, llamado nutricionista1 con la contraseña nut1
+INSERT INTO users(username,password,enabled) VALUES ('nutricionista1','nut1',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (8,'nutricionista1','nutricionista');
+
+
+-- Tolerancias
+INSERT INTO intolerancias(nombre) VALUES ('GLUTEN');
+INSERT INTO intolerancias(nombre) VALUES ('LACTEOS');
+INSERT INTO intolerancias(nombre) VALUES ('FRUCTOSA');
+INSERT INTO intolerancias(nombre) VALUES ('SACAROSA');
+INSERT INTO intolerancias(nombre) VALUES ('SULFITOS');
+INSERT INTO intolerancias(nombre) VALUES ('HUEVOS');
+INSERT INTO intolerancias(nombre) VALUES ('PESCADO');
+INSERT INTO intolerancias(nombre) VALUES ('CRUSTACEO');
+INSERT INTO intolerancias(nombre) VALUES ('MIEL');
+INSERT INTO intolerancias(nombre) VALUES ('SOJA');
+INSERT INTO intolerancias(nombre) VALUES ('CASCARA');
+INSERT INTO intolerancias(nombre) VALUES ('APIO');
+INSERT INTO intolerancias(nombre) VALUES ('MOSTAZA');
+INSERT INTO intolerancias(nombre) VALUES ('SESAMO');
+INSERT INTO intolerancias(nombre) VALUES ('ALTRAMUCES');
+INSERT INTO intolerancias(nombre) VALUES ('MOLUSCOS');
+
 -- Creacion de tienda y producto
 INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono,imagen,horario) VALUES ('Calle Mainomiedes, 9', '41009', 'Tienda de alimentacion', 'Alimentacion Carmen', 'Sevilla', '647654945','https://fra1.digitaloceanspaces.com/places/uploads/place/image/file/258238/2021-04-05.jpg','Lunes a Viernes de 10:00 a 20:00');
 INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono,imagen,horario) VALUES ('Calle Francos, 12, 6', '41009', 'Tienda de alimentacion', 'Taste of America', 'Sevilla', '955286486','https://fra1.digitaloceanspaces.com/places/uploads/place/image/file/258238/2021-04-05.jpg','Lunes a Viernes de 10:00 a 20:00');
@@ -14,9 +60,9 @@ INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, p
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Zanahoria fresca, 1kg', 'https://static.carrefour.es/hd_510x_/img_pim_food/235422_00_1.jpg', 'Carrefour', 'Zanahoria, 1kg', 0.65, 0, true, 0, '', 1);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Brócoli fresco, 500g', 'https://static.carrefour.es/hd_510x_/img_pim_food/078932_00_1.jpg', 'Carrefour', 'Brócoli, 500g', 1.19, 0, true, 0, '', 1);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Pasta de semola de trigo duro, Contiene gluten, Forma de espiral, Almacenar en lugar fresco y seco', 'https://m.media-amazon.com/images/I/71yL5t+yI4S._AC_SL1500_.jpg', 'Garofalo', 'Pasta Elicoidale, 500g', 1.79, 0, true, 0, '', 1);
-INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Kinder Bueno, 43g', 'https://es.openfoodfacts.org/images/products/800/050/003/7560/front_es.199.200.jpg', 'Kinder', 'Kinder Bueno', 1.5, 2, true, 0, '', 2);
--- Tienda 2
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Lavazza Café en Grano, Qualità Oro Perfect Symphony, Café Espresso 100% Arábica Redondo y Aromático, Paquete de 1 Kg', 'https://m.media-amazon.com/images/I/61KhzYvBGSL._AC_SL1500_.jpg', 'Lavazza', 'Café en Grano, Qualitá Oro, Café Espresso, 1kg', 14.48, 0, true, 0, '', 1);
+-- Tienda 2
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Kinder Bueno, 43g', 'https://es.openfoodfacts.org/images/products/800/050/003/7560/front_es.199.200.jpg', 'Kinder', 'Kinder Bueno', 1.5, 2, true, 0, '', 2);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Digestive Muesli, 365g', 'https://es.openfoodfacts.org/images/products/841/037/602/6979/front_es.79.200.jpg', 'Gullon', 'Digestive Muesli', 1.25, 2, true, 0, '', 2);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Choco Flakes, 550g', 'https://es.openfoodfacts.org/images/products/843/416/548/2845/front_es.25.200.jpg', 'Cuetara', 'Choco Flakes', 2.5, 2, true, 0, '', 2);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Garofalo Pasta Penne Ziti Rigate Pasta N.70, 500g', 'https://m.media-amazon.com/images/I/81TTsbyloIL._AC_SL1500_.jpg', 'Garofalo', 'Pasta Penne Ziti Rigate Pasta N.70, 500g', 5.96, 0, true, 0, '', 2);
@@ -25,8 +71,8 @@ INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, p
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Sos Arroz Redondo, 1 Kg', 'https://m.media-amazon.com/images/I/71r5m+wvvcL._AC_SL1500_.jpg', 'SOS', 'Arroz Redondo, 1 Kg', 4.98, 0, true, 0, '', 3);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Crunchy, 100g', 'https://es.openfoodfacts.org/images/products/841/007/680/1180/front_es.15.200.jpg', 'Nature Valley', 'Crunchy',3.78, 2, true, 0, '', 3);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Fabada, 435g', 'https://es.openfoodfacts.org/images/products/841/300/006/5504/front_es.18.200.jpg', 'Litoral', 'Fabada', 1.99, 2, true, 0, '', 3);
-INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Filipinos chocolate blanco, 135g', 'https://es.openfoodfacts.org/images/products/841/000/080/4232/front_fr.11.200.jpg', 'Artiach', 'Filipinos chocolate blanco', 1.75, 2, true, 0, '', 3);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Jamon cocido, 115g', 'https://es.openfoodfacts.org/images/products/841/032/000/1816/front_es.26.200.jpg', 'Campofrio', 'Jamon cocido', 3.48, 2, true, 0, '', 3);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Filipinos chocolate blanco, 135g', 'https://es.openfoodfacts.org/images/products/841/000/080/4232/front_fr.11.200.jpg', 'Artiach', 'Filipinos chocolate blanco', 1.75, 2, true, 0, '', 3);
 --Tienda 4
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Spaghetti, 500g', 'https://es.openfoodfacts.org/images/products/20003463/front_en.98.200.jpg', 'Combino', 'Spaghetti', 4.50, 1, true, 0, '', 4);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Bifrutas Tropical, 300ml', 'https://es.openfoodfacts.org/images/products/841/012/889/1169/front_es.38.200.jpg', 'Pascual', 'Bifrutas Tropical',3.23, 0, true, 0, '', 4);
@@ -69,46 +115,6 @@ INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, p
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Aguacate - Avoax - 700 g', 'https://es.openfoodfacts.org/images/products/20462062/front_es.10.200.jpg', 'Avoax', 'Aguacate', 1.31, 2, true, 0, '', 10);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Aceite de coco virgen extra - Nat Sanno - 450 g', 'https://es.openfoodfacts.org/images/products/843/654/219/3474/front_es.26.200.jpg', 'Nat Sanno', 'Aceite de coco virgen extra', 3.05, 2, true, 0, '', 10);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Mermelada de frambuesas - La Vieja Fabrica', 'https://es.openfoodfacts.org/images/products/841/013/402/3646/front_es.19.200.jpg', 'La Vieja Fabrica', 'Mermelada de frambuesas', 2.69, 2, true, 0, '', 10);
-
-
--- One admin user, named admin1 with passwor 4dm1n and authority admin
-INSERT INTO users(username,password,enabled) VALUES ('admin1','4dm1n',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
--- Un usuario cliente, llamado cliente1 con la contraseña cli1
-INSERT INTO users(username,password,enabled) VALUES ('cliente1','cli1',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (4,'cliente1','cliente');
--- Un usuario cliente, llamado cliente2 con la contraseña cli2
-INSERT INTO users(username,password,enabled) VALUES ('cliente2','cli2',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (5,'cliente2','cliente');
--- Un usuario vendedor, llamado vendedor1 con la contraseña vend1
-INSERT INTO users(username,password,enabled,first_name,last_name) VALUES ('vendedor1','vend1',TRUE,'Pepe','Cano');
-INSERT INTO authorities(id,username,authority) VALUES (6,'vendedor1','vendedor');
--- Un usuario vendedor, llamado vendedor2 con la contraseña vend2
-INSERT INTO users(username,password,enabled,first_name,last_name) VALUES ('vendedor2','vend2',TRUE,'José','Lopez');
-INSERT INTO authorities(id,username,authority) VALUES (7,'vendedor2','vendedor');
--- Un usuario nutricionista, llamado nutricionista1 con la contraseña nut1
-INSERT INTO users(username,password,enabled) VALUES ('nutricionista1','nut1',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (8,'nutricionista1','nutricionista');
-
-
--- Tolerancias
-INSERT INTO intolerancias(nombre) VALUES ('GLUTEN');
-INSERT INTO intolerancias(nombre) VALUES ('LACTEOS');
-INSERT INTO intolerancias(nombre) VALUES ('FRUCTOSA');
-INSERT INTO intolerancias(nombre) VALUES ('SACAROSA');
-INSERT INTO intolerancias(nombre) VALUES ('SULFITOS');
-INSERT INTO intolerancias(nombre) VALUES ('HUEVOS');
-INSERT INTO intolerancias(nombre) VALUES ('PESCADO');
-INSERT INTO intolerancias(nombre) VALUES ('CRUSTACEO');
-INSERT INTO intolerancias(nombre) VALUES ('MIEL');
-INSERT INTO intolerancias(nombre) VALUES ('SOJA');
-INSERT INTO intolerancias(nombre) VALUES ('CASCARA');
-INSERT INTO intolerancias(nombre) VALUES ('APIO');
-INSERT INTO intolerancias(nombre) VALUES ('MOSTAZA');
-INSERT INTO intolerancias(nombre) VALUES ('SESAMO');
-INSERT INTO intolerancias(nombre) VALUES ('ALTRAMUCES');
-INSERT INTO intolerancias(nombre) VALUES ('MOLUSCOS');
-
 
 
 --Tienda 1
@@ -213,6 +219,3 @@ INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (44,1);
 --Tienda 10
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (46,2);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (47,2);
-
-
-INSERT INTO reservas(producto_id,tienda_id, cantidad, precio_total,user_username,estado) VALUES (1,1,2,2.00,'cliente1',0);

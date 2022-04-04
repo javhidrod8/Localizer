@@ -15,10 +15,10 @@ public interface TiendaRepository extends JpaRepository<Tienda, Integer> {
 	
 	List<Tienda> findAll() throws DataAccessException;
   
-  @Query("select p from Producto p where p.tienda.id = 1")
-	public List<Producto> findAllProductos();
+  @Query("select p from Producto p where p.tienda.id = ?1")
+	public List<Producto> findAllProductos(Integer id);
 	
 	@Query("select t from Tienda t where t.codigoPostal = ?1")
-	Collection<Tienda> findByCodigoPostal(Integer codigoPostal);
+	Collection<Tienda> findByCodigoPostal(String codigoPostal);
 
 }

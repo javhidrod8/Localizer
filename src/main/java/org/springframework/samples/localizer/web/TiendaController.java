@@ -57,7 +57,7 @@ public class TiendaController {
 	public String productList(ModelMap modelMap, @PathVariable("tiendaId") int tiendaId) {
 		String vista = "tiendas/tiendaDetails";
 		Tienda tienda = this.tiendaService.findTiendaById(tiendaId);
-		Iterable<Producto> productos = this.tiendaService.findProductos();
+		Iterable<Producto> productos = this.tiendaService.findProductos(tiendaId);
 		Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
 		Set<Preferencias> preferencias = new HashSet<Preferencias>();
 		for (Producto p : productos) {
@@ -101,7 +101,8 @@ public class TiendaController {
 					return "redirect:/tiendas/new";
 				}
 			}
-			Iterable<Producto> productos = this.tiendaService.findProductos();
+			Iterable<Producto> productos = this.tiendaService.findProductos(tienda.getId());
+
 			Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
 			Set<Preferencias> preferencias = new HashSet<Preferencias>();
 			for (Producto p : productos) {
@@ -139,7 +140,7 @@ public class TiendaController {
 	}
 
 	@GetMapping(value = "/tiendas/search/{codigoPostal}")
-	public String tiendasByCP(@PathVariable("codigoPostal") Integer codigoPostal, ModelMap modelMap) {
+	public String tiendasByCP(@PathVariable("codigoPostal") String codigoPostal, ModelMap modelMap) {
 		String vista = "tiendas/tiendasList";
 		Iterable<Tienda> tiendas = this.tiendaService.findByCodigoPostal(codigoPostal);
 		modelMap.addAttribute("tiendas", tiendas);
