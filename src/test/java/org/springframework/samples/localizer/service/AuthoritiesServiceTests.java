@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.localizer.model.Authorities;
 import org.springframework.samples.localizer.model.Producto;
 import org.springframework.samples.localizer.model.Tienda;
@@ -33,7 +34,7 @@ class AuthoritiesServiceTests {
 	@Autowired
 	protected AuthoritiesService authoritiesService;
 	private static final Logger LOG = Logger
-			.getLogger("org.springframework.samples.localizer.service.TiendaServiceTests");
+			.getLogger("org.springframework.samples.localizer.service.AuthoritiesServiceTests");
 
 
 	@Test // CASO POSITIVO
@@ -51,5 +52,21 @@ class AuthoritiesServiceTests {
 
 		assertThat(count).isEqualTo(1);
 	}
+	@Test// CASO POSITIVO
+	void shouldSaveAuthorities() {
+		
+		this.authoritiesService.saveAuthorities("cliente1","vendedor");
+		
+	}
+	
+	@Test
+	void shouldNotSaveAuthorities() {
+		Assertions.assertThrows(DataAccessException.class, () -> {
+			this.authoritiesService.saveAuthorities("clien","vendedor");
+		});
+		
+		
+	}
+
 
 }

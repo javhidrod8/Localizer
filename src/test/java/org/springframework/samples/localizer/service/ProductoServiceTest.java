@@ -118,7 +118,7 @@ public class ProductoServiceTest {
 		
 		this.productoService.deleteProducto(producto1);
 		Producto p = this.productoService.findProductoById(51);
-		assertThat(p.getId()).isNull();
+		assertThat(p).isNull();
 	}
 	
 	@Test
