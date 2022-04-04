@@ -62,6 +62,18 @@
 						<spring:param name="tiendaId" value="${tienda.id}" />
 					</spring:url>	
 					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
+						<<button class = "btn btn-default">Eliminar tienda</button>
+					</a>
+				</dd>
+				</sec:authorize>
+				<sec:authorize access="hasAuthority('vendedor')">
+				<dd>				
+					<spring:url value="/tienda/{tiendaId}/delete" var="tiendaDeleteUrl">
+						<spring:param name="tiendaId" value="${tienda.id}" />
+					</spring:url>	
+					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
+						<button class = "btn btn-default">Eliminar tienda</button>
+
 					</a>
 				</dd>
 				</sec:authorize>
@@ -84,13 +96,17 @@
 							<spring:param name="tiendaId" value="${tienda.id}" />
 						</spring:url>	
 						<a href="${fn:escapeXml(tiendaEditUrl)}">
+
 							<button class='btn btn-default btn-sm'>Editar tienda</button>
+
 						</a>
 						<spring:url value="/tienda/{tiendaId}/productos/new" var="tiendaUrl">
 							<spring:param name="tiendaId" value="${tienda.id}" />
 						</spring:url>	
 						<a href="${fn:escapeXml(tiendaUrl)}">
+
 							<button class='btn btn-default btn-sm'>Nuevo Producto</button>
+
 						</a>
 					</dd>
 					</c:if>
@@ -163,6 +179,7 @@
 		    productoDetails.marca = "${producto.marca}";
 		    productoDetails.imagen = "${producto.imagen}";
 		    productoDetails.estado = "${producto.estado}";
+		    productoDetails.tiendaid = "${producto.tienda.id}";
 		    productoDetails.intolerancias = new Array();
 		    <c:forEach items="${producto.intolerancia}" var="intolerancia">
 		    	productoDetails.intolerancias.push("${intolerancia}");
@@ -322,9 +339,9 @@
     		check.className="fa fa-clock-o";
     		check.style.cssText+="margin-left: 2%";
     		caption.appendChild(check);
-    	}
-		
-		
+    	}	
+
+    	caption.innerHTML+="<a href='/tienda/"+producto.tiendaid+"/producto/"+producto.id+"/reservar'><button class='btn btn-default'>Reservar</button></br></br></a>";
     	thumbnail.appendChild(caption);
     	prodDiv.appendChild(thumbnail);
 		document.getElementById('productos').appendChild(prodDiv);
@@ -338,7 +355,7 @@
 </c:if>
 <c:if test="${tienda.id == null}">
 <div class="col-md-12">
-<h3>No tienes todavía ninguna tienda</h3>
+<h3>No tienes todavï¿½a ninguna tienda</h3>
 <p>Puedes crear una haciendo click en:</p> 
 <br>
 </div>
