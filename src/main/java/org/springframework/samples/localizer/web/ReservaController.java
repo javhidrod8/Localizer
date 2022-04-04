@@ -1,11 +1,13 @@
 package org.springframework.samples.localizer.web;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.localizer.model.Estado;
 import org.springframework.samples.localizer.model.Producto;
 import org.springframework.samples.localizer.model.Reserva;
 import org.springframework.samples.localizer.model.Tienda;
@@ -28,10 +30,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class ReservaController {
 	
-	private static final String VIEWS_ERROR_TIENDAID = "reservas/createOrUpdateReservaForm";
+	private static final String VIEWS_ERROR_TIENDAID = "";
 	private static final String VIEWS_FORM_RESERVAS = "reservas/createOrUpdateReservaForm";
 	private static final String VIEWS_LIST_RESERVAS = "reservas/reservasList";
-	private static final String VIEWS_ERROR_AUTH = "productos/createOrUpdateProductoForm";
+	private static final String VIEWS_ERROR_AUTH = "reservas/createOrUpdateReservaForm";
 	private final ReservaService reservaService;
 	private final ProductoService productoService;
 	private final UserService userService;
@@ -91,23 +93,86 @@ public class ReservaController {
 		}
 	}
 	
-	@GetMapping(value = "/reserva/{reservaId}/delete")
-    public String deleteReserva(@PathVariable("reservaId") int reservaId, ModelMap model) {
+	/*@GetMapping(value = "tienda/{tiendaId}/reservas/verificar")
+    public String verificarReserva(@PathVariable("tiendaId") int tiendaId, ModelMap model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
 		User currentUser = (User) authentication.getPrincipal();
 		String username = currentUser.getUsername();
-		Reserva reserva = this.reservaService.findReservaById(reservaId);
-		Integer tiendaId = reserva.getTienda().getId();
 		org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
 		if ((auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId)) || auth.equals("admin")) {
-			this.reservaService.deleteReserva(reserva);
-			return VIEWS_LIST_RESERVAS;
+			List<Reserva> reservas = this.reservaService.findReservaByEstadoAndTienda(Estado.PENDIENTE, tiendaId);
+			model.addAttribute("reservas", reservas);
+			return "reservas/reservasVerificar";
 		}else {
 			return VIEWS_ERROR_AUTH;
 		}
     }
+	
+	@GetMapping(value = "users/{username}/reservas/cancelar")
+    public String cancelarReservaCliente(@PathVariable("username") String username, ModelMap model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		String auth = currentPrincipalName.iterator().next().toString().trim();
+		model.put("auth", auth);
+		User currentUser = (User) authentication.getPrincipal();
+		String currentUsername = currentUser.getUsername();
+		org.springframework.samples.localizer.model.User user = this.userService.findUser(currentUsername);
+		if (((auth.equals("vendedor") || auth.equals("cliente")) && user.getUsername().equals(username)) || auth.equals("admin")) {
+			List<Reserva> reservas = this.reservaService.findReservaByEstadoAndTienda(Estado.PENDIENTE, tiendaId);
+			model.addAttribute("reservas", reservas);
+			return "reservas/reservasVerificar";
+		}else {
+			return VIEWS_ERROR_AUTH;
+		}
+    }*/
+	
+	@GetMapping(value = "/tienda/{tiendaId}/reservas")
+	public String reservaList(@PathVariable("tiendaId") Integer tiendaId, Map<String, Object> model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		String auth = currentPrincipalName.iterator().next().toString().trim();
+		model.put("auth", auth);
+		User currentUser = (User) authentication.getPrincipal();
+		String username = currentUser.getUsername();
+		org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
+		Boolean cond = (auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId)) || auth.equals("admin");
+		if(cond) {
+			List<Reserva> reservas = this.reservaService.findReservaByTienda(tiendaId);
+			model.put("reservas", reservas);
+			return VIEWS_LIST_RESERVAS;
+		} else {
+			return VIEWS_ERROR_AUTH;
+		}
+	}
+	
+	@GetMapping(value = "/users/{username}/reservas")
+	public String reservaListUsername(@PathVariable("username") String username, Map<String, Object> model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		String auth = currentPrincipalName.iterator().next().toString().trim();
+		model.put("auth", auth);
+		User currentUser = (User) authentication.getPrincipal();
+		String currentUsername = currentUser.getUsername();
+		org.springframework.samples.localizer.model.User user = this.userService.findUser(currentUsername);
+		Boolean cond = (((auth.equals("vendedor") || auth.equals("cliente")) && user.getUsername().equals(username)) || auth.equals("admin"));
+		if(cond) {
+			List<Reserva> reservas = this.reservaService.findReservaByUser(username);
+			model.put("reservas", reservas);
+			return VIEWS_LIST_RESERVAS;
+		} else {
+			return VIEWS_ERROR_AUTH;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
