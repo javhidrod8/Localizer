@@ -23,64 +23,152 @@ public class UserTest {
 		
 		@Test
 		void shouldValidate() {
-			Producto producto = new Producto();
-			Tienda tienda = new Tienda();
+		
 			User u = new User();
 			Set<Authorities> aus = new HashSet<Authorities>();
 			Authorities au = new Authorities();
 			au.setAuthority("cliente");
 			
+			u.setUsername("paco1");
 			u.setFirstName("paco");
 			u.setLastName("me");
 			u.setPassword("1234");
 			u.setEnabled(true);
 			au.setUser(u);
+			aus.add(au);
 			u.setAuthorities(aus);
+			u.setTienda(null);
 			
 			Validator validator = createValidator();
-			Set<ConstraintViolation<Producto>> constraintViolations = validator.validate(producto);
+			Set<ConstraintViolation<User>> constraintViolations = validator.validate(u);
 			
 			assertThat(constraintViolations.size()).isEqualTo(0);
-			
-			assertThat(producto.isNew()).isEqualTo(true);
-		
-			
+			assertThat(u.isEnabled()).isEqualTo(true);
+			assertThat(u.getTienda()).isEqualTo(null);
+			assertThat(u.getAuthorities()).isEqualTo(aus);
 
 			
 		}
+		@Test
+		void shouldNotValidateWhenUsernameBlank() {
+			LocaleContextHolder.setLocale(Locale.ENGLISH);
 		
-//		@Test
-//		void shouldNotValidateWhenPrecioNegative() {
-//			LocaleContextHolder.setLocale(Locale.ENGLISH);
-//			Producto producto = new Producto();
-//			Tienda tienda = new Tienda();
-//			
-//			producto.setId(2);
-//			producto.setNombre("Tomate frito");
-//			producto.setMarca("Orlando");
-//			producto.setPrecio(-2.00);
-//			producto.setMarca("Orlando");
-//			producto.setDescripcion("Tomate frito para cocinar");
-//			producto.setEstado(Estado.PENDIENTE);
-//			producto.setPromocionado(false);
-//			producto.setImagen("....");
-//			producto.setMotivo("");
-//			producto.setIntolerancia(new HashSet<>());
-//			producto.setPreferencia(Preferencias.TODO);
-//			producto.setTienda(tienda);
-//			producto.toString();
-//			
-//			Validator validator = createValidator();
-//			Set<ConstraintViolation<Producto>> constraintViolations = validator.validate(producto);
-//			
-//			assertThat(constraintViolations.size()).isEqualTo(1);
-//			assertThat(producto.getPrecio()).isEqualTo(-2.00);
-//			ConstraintViolation<Producto> violation = constraintViolations.iterator().next();
-//			assertThat(violation.getPropertyPath().toString()).isEqualTo("precio");
-//			assertThat(violation.getMessage()).isEqualTo("must be greater than 0");
-//			
-//		}
-//		
+			User u = new User();
+			Set<Authorities> aus = new HashSet<Authorities>();
+			Authorities au = new Authorities();
+			au.setAuthority("cliente");
+			
+			u.setUsername("");
+			u.setFirstName("paco");
+			u.setLastName("me");
+			u.setPassword("1234");
+			u.setEnabled(true);
+			au.setUser(u);
+			aus.add(au);
+			u.setAuthorities(aus);
+			u.setTienda(null);
+			
+			Validator validator = createValidator();
+			Set<ConstraintViolation<User>> constraintViolations = validator.validate(u);
+			
+			assertThat(constraintViolations.size()).isEqualTo(1);
+			assertThat(u.getUsername()).isEqualTo("");
+			ConstraintViolation<User> violation = constraintViolations.iterator().next();
+			assertThat(violation.getPropertyPath().toString()).isEqualTo("username");
+			assertThat(violation.getMessage()).isEqualTo("must not be blank");
+
+			
+		}
+		@Test
+		void shouldNotValidateWhenFirstNameBlank() {
+			LocaleContextHolder.setLocale(Locale.ENGLISH);
+		
+			User u = new User();
+			Set<Authorities> aus = new HashSet<Authorities>();
+			Authorities au = new Authorities();
+			au.setAuthority("cliente");
+			
+			u.setUsername("paco1");
+			u.setFirstName("");
+			u.setLastName("me");
+			u.setPassword("1234");
+			u.setEnabled(true);
+			au.setUser(u);
+			aus.add(au);
+			u.setAuthorities(aus);
+			u.setTienda(null);
+			
+			Validator validator = createValidator();
+			Set<ConstraintViolation<User>> constraintViolations = validator.validate(u);
+			
+			assertThat(constraintViolations.size()).isEqualTo(1);
+			assertThat(u.getFirstName()).isEqualTo("");
+			ConstraintViolation<User> violation = constraintViolations.iterator().next();
+			assertThat(violation.getPropertyPath().toString()).isEqualTo("firstName");
+			assertThat(violation.getMessage()).isEqualTo("must not be blank");
+			
+		}
+		@Test
+		void shouldNotValidateWhenLastNameBlank() {
+			LocaleContextHolder.setLocale(Locale.ENGLISH);
+		
+			User u = new User();
+			Set<Authorities> aus = new HashSet<Authorities>();
+			Authorities au = new Authorities();
+			au.setAuthority("cliente");
+			
+			u.setUsername("paco1");
+			u.setFirstName("paco");
+			u.setLastName("");
+			u.setPassword("1234");
+			u.setEnabled(true);
+			au.setUser(u);
+			aus.add(au);
+			u.setAuthorities(aus);
+			u.setTienda(null);
+			
+			Validator validator = createValidator();
+			Set<ConstraintViolation<User>> constraintViolations = validator.validate(u);
+			
+			assertThat(constraintViolations.size()).isEqualTo(1);
+			assertThat(u.getLastName()).isEqualTo("");
+			ConstraintViolation<User> violation = constraintViolations.iterator().next();
+			assertThat(violation.getPropertyPath().toString()).isEqualTo("lastName");
+			assertThat(violation.getMessage()).isEqualTo("must not be blank");
+			
+		}
+		
+		@Test
+		void shouldNotValidateWhenPasswordBlank() {
+			LocaleContextHolder.setLocale(Locale.ENGLISH);
+		
+			User u = new User();
+			Set<Authorities> aus = new HashSet<Authorities>();
+			Authorities au = new Authorities();
+			au.setAuthority("cliente");
+			
+			u.setUsername("paco1");
+			u.setFirstName("paco");
+			u.setLastName("me");
+			u.setPassword("");
+			u.setEnabled(true);
+			au.setUser(u);
+			aus.add(au);
+			u.setAuthorities(aus);
+			u.setTienda(null);
+			
+			Validator validator = createValidator();
+			Set<ConstraintViolation<User>> constraintViolations = validator.validate(u);
+			
+			assertThat(constraintViolations.size()).isEqualTo(1);
+			assertThat(u.getPassword()).isEqualTo("");
+			ConstraintViolation<User> violation = constraintViolations.iterator().next();
+			assertThat(violation.getPropertyPath().toString()).isEqualTo("password");
+			assertThat(violation.getMessage()).isEqualTo("must not be blank");
+			
+		}
+		
+		
 		
 
 }

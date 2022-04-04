@@ -30,11 +30,10 @@ public class IntoleranciasServiceTest {
 
 	private static final Logger LOG = Logger
 			.getLogger("org.springframework.samples.localizer.service.IntoleranciasServiceTests");
-	Intolerancias intolerancias = new Intolerancias();
 
 	@Test
 	// Encontrar todas las intolerancias
-	public void findAllProducts() {
+	public void shouldFindAllProducts() {
 
 		Collection<Intolerancias> into = this.intoleranciasService.findAllIntolerancias();
 		assertThat(into.size()).isEqualTo(16);

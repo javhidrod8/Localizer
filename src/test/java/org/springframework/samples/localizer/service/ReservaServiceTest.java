@@ -38,7 +38,7 @@ public class ReservaServiceTest {
 
 
 	private static final Logger LOG = Logger
-			.getLogger("org.springframework.samples.localizer.service.ProductoServiceTests");
+			.getLogger("org.springframework.samples.localizer.service.ReservaServiceTests");
 
 	
 
