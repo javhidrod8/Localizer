@@ -62,22 +62,27 @@
 						<spring:param name="tiendaId" value="${tienda.id}" />
 					</spring:url>	
 					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
-						<<button class = "btn btn-default btn-sm">Eliminar tienda</button>
+						<button class = "btn btn-default btn-sm">Eliminar tienda</button>
 					</a>
 					</dd>
 					</sec:authorize>
-				<sec:authorize access="hasAuthority('vendedor')">
+					<c:if test="${miTienda}">
+					<sec:authorize access="hasAuthority('vendedor')">
 				<dd>				
 					<spring:url value="/tienda/{tiendaId}/delete" var="tiendaDeleteUrl">
 						<spring:param name="tiendaId" value="${tienda.id}" />
 					</spring:url>	
 					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
 						<button class = "btn btn-default btn-sm">Eliminar tienda</button>
+						<br>
 
 					</a>
 				</dd>
+				<br>
 				</sec:authorize>
-
+					
+					</c:if>
+				
 				  <sec:authorize access="hasAuthority('admin')">
 				<dd>				
 					<spring:url value="/tienda/{tiendaId}/edit" var="tiendaEditUrl">
@@ -134,13 +139,12 @@
 				<c:forEach items="${intolerancias}" var="intolerancia">
 					<input class="form-check-input" type="checkbox" id="${intolerancia}" />
 					<c:out value="${intolerancia}"></c:out>
-					</br>
-					</br>
+					<br>
 				</c:forEach>
 			</div>
 			<div id="preferencias">
 				<h3>Preferencias</h3>
-				<input class="form-check-input" type="radio" name = "preferencia" checked> NINGUNA</input>
+				<input class="form-check-input" type="radio" name = "preferencia" checked> NINGUNA</input><br>
 				<c:forEach items="${preferencias}" var="preferencia">
 					<c:if	test="${preferencia != 'TODO' && preferencia != null}"> 
 					<input class="form-check-input" type="radio" name = "preferencia" id="${preferencia}" />
@@ -315,9 +319,10 @@
 
     	</c:if>
     	
+
+    	<c:if test="${miTienda}">
     	var url = document.createElement("a");
  		url.href="${fn:escapeXml(productoEditarUrl)}"+producto.id+"/edit";
-    	<c:if test="${miTienda}">
     	button = document.createElement("button");
     	button.className = 'btn btn-default btn-sm';   	
 		button.innerHTML="Editar";
