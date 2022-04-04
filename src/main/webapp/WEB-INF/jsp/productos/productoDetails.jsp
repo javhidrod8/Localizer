@@ -38,23 +38,26 @@
 				<spring:param name="tiendaId" value="${producto.tienda.id}" />
 			</spring:url>
 			<a href="${fn:escapeXml(tiendaUrl)}">
-				<button class = "btn btn-default">Ver tienda</button>
+				<button class='btn btn-default btn-sm'>Ver tienda</button>
 			</a>
 			<spring:url value="/tienda/{tiendaId}/producto/{productoId}/reservar" var="reservaUrl">
                 <spring:param name="tiendaId" value="${producto.tienda.id}"/>
                 <spring:param name="productoId" value="${producto.id}"/>
             </spring:url>
             <a href="${fn:escapeXml(reservaUrl)}">
-                <button class = "btn btn-default">Reservar</button></br></br>
+                <button class = "btn btn-default btn-sm">Reservar</button></br></br>
             </a>
+
 			 <sec:authorize access="hasAuthority('nutricionista')"> 
 			 <spring:url value="/tienda/{tiendaId}/producto/{productoId}/edit" var="productoUrl">
 				<spring:param name="tiendaId" value="${producto.tienda.id}" />
 				<spring:param name="productoId" value="${producto.id}" />
 			</spring:url>
+			<c:if test="${producto.estado!='ACEPTADO'}">
 			<a href="${fn:escapeXml(productoUrl)}">
-			<button button class = "btn btn-default">Verificar producto</button>
+				<button class='btn btn-default btn-sm'>Verificar producto</button>
 			</a>
+			</c:if>
 			 </sec:authorize>
 			 <sec:authorize access="hasAuthority('vendedor')"> 
 			 <spring:url value="/tienda/{tiendaId}/producto/{productoId}/edit" var="productoUrl">
@@ -62,7 +65,9 @@
 				<spring:param name="productoId" value="${producto.id}" />
 			</spring:url>
 			<a href="${fn:escapeXml(productoUrl)}">
-			<button button class = "btn btn-default">Editar producto</button>
+
+				<button class='btn btn-default btn-sm'>Editar producto</button>
+
 			</a>
 			 </sec:authorize>
 
@@ -87,8 +92,10 @@
 				<h3>Preferencias</h3>
 				<input class="form-check-input" type="radio" name = "preferencia" checked> NINGUNA </br></input>
 				<c:forEach items="${preferencias}" var="preferencia">
+					<c:if	test="${preferencia != 'TODO' && preferencia != null}"> 
 					<input class="form-check-input" type="radio" name = "preferencia" id="${preferencia}" />	
-					<c:out value="${preferencia}"></c:out>
+					
+					<c:out value="${preferencia}"></c:out></c:if>
 					</br>
 				</c:forEach>
 				</br>
@@ -114,6 +121,7 @@
     	var intolerancias = new Array();
         var preferencias = new Array();
 		<c:forEach items="${producto.tienda.productos}" var="producto"> 
+			<c:if test="${producto.estado == 'ACEPTADO'||miTienda}">
 		    productoDetails = new Object();
 		    productoDetails.id =  "${producto.id}"; 
 		    productoDetails.nombre = "${producto.nombre}";
@@ -130,6 +138,7 @@
 		    productoDetails.preferencia = "${producto.preferencia}";
 		    preferencias.push(productoDetails.preferencia);/*2 - quitar cuando esten los checkbox*/
 		    productos.push(productoDetails);
+		    </c:if>
 		</c:forEach> 
 		productos.forEach(producto=> printProducto(producto));
 		
@@ -247,7 +256,7 @@
 
     	caption.innerHTML+="<p> Marca: "+producto.marca+"</p>"
     	caption.innerHTML+="<h3>"+producto.precio+"<span class='glyphicon glyphicon-euro' aria-hidden='true'></span></h3>";
-    	caption.innerHTML+="<a href='/tienda/"+producto.tiendaid+"/producto/"+producto.id+"/reservar'><button class='btn btn-default'>Reservar</button></br></br></a>";
+    	caption.innerHTML+="<a href='/tienda/"+producto.tiendaid+"/producto/"+producto.id+"/reservar'><button class='btn btn-default btn-sm'>Reservar</button></br></br></a>";
     	thumbnail.appendChild(caption);
     	prodDiv.appendChild(thumbnail);
 		document.getElementById('productos').appendChild(prodDiv);

@@ -6,42 +6,43 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-import com.sun.istack.NotNull;
 
-import lombok.Data;
 
 @Entity
 @Table(name = "users")
 public class User{
 	@Id
-	@NotEmpty
+	@NotBlank
 	String username;
 	
-	@NotEmpty
+	@NotBlank
 	String password;
 	
+	@NotNull
 	boolean enabled;
 	
 	
 
 	@Column(name = "first_name")
-	@NotEmpty
+	@NotBlank
 	protected String firstName;
 
 	@Column(name = "last_name")
-	@NotEmpty
+	@NotBlank
 	protected String lastName;
 	
 	@OneToOne(optional=true)
 	private Tienda tienda;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@NotEmpty
 	private Set<Authorities> authorities;
 
 	public String getUsername() {

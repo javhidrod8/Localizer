@@ -9,41 +9,46 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "tiendas")
 public class Tienda extends BaseEntity{
 	
 	@Column(name = "nombre")
-	@NotEmpty
+	@NotBlank
 	private String nombre;
 	
 	@Column(name = "descripcion")
-	@NotEmpty
+	@NotBlank
 	private String descripcion;
 	
 	@Column(name = "calle")
-	@NotEmpty
+	@NotBlank
 	private String calle;
 	
 	@Column(name = "provincia")
-	@NotEmpty
+	@NotBlank
 	private String provincia;
   
 	@Column(name = "codigo_postal")
-	@NotEmpty
+	@NotBlank
+	@Pattern(regexp="/^(?:0?[1-9]|[1-4]\\d|5[0-2])\\d{3}$/")
 	private String codigoPostal;
 	
 	@Column(name = "telefono")
+	@NotBlank
+	@Pattern(regexp="^(?:(?:\\+?[0-9]{2,4})?[ ]?[6789][0-9 ]{8,13})$")
 	private String telefono;
 	
 	@Column(name = "imagen")
-	@NotEmpty
+	@NotBlank
 	private String imagen;
 	
 	@Column(name = "horario")
-	@NotEmpty
+	@NotBlank
 	private String horario;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tienda", fetch = FetchType.EAGER)
