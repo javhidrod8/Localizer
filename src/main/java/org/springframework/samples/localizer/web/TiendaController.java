@@ -72,10 +72,13 @@ public class TiendaController {
 			User userSession = (User) authentication.getPrincipal();
 			String username = userSession.getUsername();
 			org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
-			Integer idTiendaUser = user.getTienda().getId();
-			if (idTiendaUser.equals(tiendaId)) {
-				miTienda = true;
+			if (user.getTienda() != null) {
+				Integer idTiendaUser = user.getTienda().getId();
+				if (idTiendaUser.equals(tiendaId)) {
+					miTienda = true;
+				}
 			}
+			
 		}
 		modelMap.addAttribute("tienda", tienda);
 		modelMap.addAttribute("productos", productos);
