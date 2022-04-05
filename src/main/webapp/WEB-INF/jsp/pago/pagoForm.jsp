@@ -16,11 +16,12 @@
 	</div>
 	<br>
 	<div>
+	            <spring:url value="/resources/images/localizer-logo.png" htmlEscape="true" var="tiendasImagen"/>
 			<script src="https://checkout.stripe.com/checkout.js"
 			class="stripe-button" data-key="${stripePublicKey}"
-			data-name="The NosoSailing"
-			data-description="Online course about integrating Stripe"
-			data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+			data-name="Localizer"
+			data-description="Suscripción mensual a Localizer"
+			data-image="${tiendasImagen}"
 			data-locale="auto" data-currency="eur">
 			
 			</script>
