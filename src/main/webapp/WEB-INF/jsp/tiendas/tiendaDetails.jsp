@@ -314,11 +314,11 @@
 
     	caption.innerHTML+="<p> Marca: "+producto.marca+"</p>";
     	caption.innerHTML+="<h3>"+producto.precio+"<span class='glyphicon glyphicon-euro' aria-hidden='true'></span></h3>";
-    	<c:if test="${!miTienda}">
-    	<sec:authorize access="isAuthenticated()">
-    	caption.innerHTML+="<a href='/tienda/"+producto.tiendaid+"/producto/"+producto.id+"/reservar'><button class='btn btn-default btn-sm'>Reservar</button></br></br></a>";
-		</sec:authorize>
-    	</c:if>
+//     	<c:if test="${!miTienda}">
+//     	<sec:authorize access="isAuthenticated()">
+//     	caption.innerHTML+="<a href='/tienda/"+producto.tiendaid+"/producto/"+producto.id+"/reservar'><button class='btn btn-default btn-sm'>Reservar</button></br></br></a>";
+// 		</sec:authorize>
+//     	</c:if>
     	
 
     	<c:if test="${miTienda}">
