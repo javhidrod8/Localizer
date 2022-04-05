@@ -1,158 +1,57 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-body {
-  font-family: Arial;
-  font-size: 17px;
-  padding: 8px;
-}
+<%@ page session="false" trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-* {
-  box-sizing: border-box;
-}
 
-.row {
-  display: -ms-flexbox; /* IE10 */
-  display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
-  flex-wrap: wrap;
-  margin: 0 -16px;
-}
 
-.col-25 {
-  -ms-flex: 25%; /* IE10 */
-  flex: 25%;
-}
+<petclinic:layout pageName="productos">
 
-.col-50 {
-  -ms-flex: 50%; /* IE10 */
-  flex: 50%;
-}
+	<h2>Realizar pago</h2>
+	
+ <form method="post"  action="/pay">
+                <div class="container">
+					<div id="precio" class="form-group col-md-12">
+						<label id="precio2" for="precio" style="pointer-events: none"
+							readonly>
+							<h3>Precio:</h3>
+						</label>
+						<div id="precio" class="input-group">
+							<input required type="number" class="form-control"
+								id="precio-num" name="price" placeholder="0" min=0 step="any"
+								value="12" style="pointer-events: none" readonly>
+							<div class="input-group-addon">&#8364</div>
+						</div>
+					</div>
 
-.col-75 {
-  -ms-flex: 75%; /* IE10 */
-  flex: 75%;
-}
+                    <input type="text" id="euro" name="currency" placeholder="EUR" required value="EUR" readonly style="pointer-events: none" class="hidden">
+                    <div id="pago" class="col-md-12">
+						<label id="pago2" for="pago" style="pointer-events: none">
+							<h3>Método de pago:</h3>
+						</label> <input required type="text" id="method" name="method"
+							class="form-control" value="Paypal" readonly
+							style="pointer-events: none"><br>
+					</div>
+                    <input type="text" id="intent" name="intent" value="sale" readonly style="pointer-events: none" class="hidden">
+        
+                    <div id="descripcion" class="input-group">
+                    
+                     <div id="descripcion" class="col-md-12">
+						<label id="descripcion2" for="descripcion" style="pointer-events: none">
+							<h3>Descripción:</h3>
+						</label> <input required type="text" id="description" name="description"
+							class="form-control" value="Cuota mensual" readonly
+							style="pointer-events: none"><br>
+					</div>
+					<br>
+					<div class="col-md-12"><br><input type="submit" value="Continuar con el pago" class="btn btn-default"></div>
+					
+                </div>  </div>
 
-.col-25,
-.col-50,
-.col-75 {
-  padding: 0 16px;
-}
-
-.container {
-  background-color: #f2f2f2;
-  padding: 5px 20px 15px 20px;
-  border: 1px solid lightgrey;
-  border-radius: 3px;
-}
-
-input[type=text] {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-label {
-  margin-bottom: 10px;
-  display: block;
-}
-
-.icon-container {
-  margin-bottom: 20px;
-  padding: 7px 0;
-  font-size: 24px;
-}
-
-.btn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px;
-  margin: 10px 0;
-  border: none;
-  width: 100%;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 17px;
-}
-
-.btn:hover {
-  background-color: #45a049;
-}
-
-a {
-  color: #2196F3;
-}
-
-hr {
-  border: 1px solid lightgrey;
-}
-
-span.price {
-  float: right;
-  color: grey;
-}
-
-/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
-@media (max-width: 800px) {
-  .row {
-    flex-direction: column-reverse;
-  }
-  .col-25 {
-    margin-bottom: 20px;
-  }
-}
-
-    </style>
-</head>
-<body>
-<div class="row">
-    <div class="col-75">
-        <div class="container">
-            <form method="post"  action="/pay">
-                <div class="col-50">
-                    <h3>Payment</h3>
-                    <label>Accepted Cards</label>
-                    <div class="icon-container">
-                        <i class="fa fa-cc-visa" style="color:navy;"></i>
-                        <i class="fa fa-cc-amex" style="color:blue;"></i>
-                        <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                        <i class="fa fa-cc-discover" style="color:orange;"></i>
-                    </div>
-                    <label for="price">Total</label>
-                    <input type="text" id="price" name="price" value="10">
-                    <label for="currency">Currency</label>
-                    <input type="text" id="currency" name="currency" placeholder="Enter Currency">
-                    <label for="method">Payment Method</label>
-                    <input type="text" id="method" name="method" placeholder="Payment Method">
-                    <label for="intent">Intent</label>
-                    <input type="text" id="intent" name="intent" value="sale">
-                    <label for="description">Payment Description</label>
-                    <input type="text" id="description" name="description" placeholder="Payment Description">
-
-                </div>
-
-                <input type="submit" value="Continue to checkout" class="btn">
+                
             </form>
-        </div>
-    </div>
-    <div class="col-25">
-        <div class="container">
-            <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>4</b></span></h4>
-            <p><a href="#">Product 1</a> <span class="price">$1</span></p>
-            <p><a href="#">Product 2</a> <span class="price">$4</span></p>
-            <p><a href="#">Product 3</a> <span class="price">$3</span></p>
-            <p><a href="#">Product 4</a> <span class="price">$2</span></p>
-            <hr>
-            <p>Total <span class="price" style="color:black"><b>$10</b></span></p>
-        </div>
-    </div>
-</div>
 
-</body>
-</html>
+</petclinic:layout>
+
