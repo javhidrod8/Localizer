@@ -42,11 +42,12 @@ public class ProductoController {
 	private static final String VIEWS_PRODUCTO_RECHAZAR_FORM = "productos/rechazarProductoForm";
 	private final ProductoService productoService;
 	private final IntoleranciasService intoleranciasService;
-    private final TiendaService tiendaService;
-    private final UserService userService;
+	private final TiendaService tiendaService;
+	private final UserService userService;
 
 	@Autowired
-	public ProductoController(ProductoService productoService, IntoleranciasService intoleranciasService, TiendaService tiendaService,UserService userService) {
+	public ProductoController(ProductoService productoService, IntoleranciasService intoleranciasService,
+			TiendaService tiendaService, UserService userService) {
 		this.productoService = productoService;
 		this.intoleranciasService = intoleranciasService;
 		this.tiendaService = tiendaService;
@@ -150,8 +151,8 @@ public class ProductoController {
 	}
 
 	@PostMapping(value = "/tienda/{tiendaId}/productos/new")
-	public String processCreationProductoForm(@PathVariable("tiendaId") Integer tiendaId, @Valid Producto producto, BindingResult result,
-			Map<String, Object> model) {
+	public String processCreationProductoForm(@PathVariable("tiendaId") Integer tiendaId, @Valid Producto producto,
+			BindingResult result, Map<String, Object> model) {
 		if (result.hasErrors()) {
 			model.put("tiendaId", tiendaId);
 			Boolean isNew = true;
@@ -168,9 +169,10 @@ public class ProductoController {
 
 		}
 	}
-  
+
 	@GetMapping(value = "/tienda/{tiendaId}/producto/{productoId}/edit")
-	public String initUpdateProductoForm(@PathVariable("tiendaId") Integer tiendaId,@PathVariable("productoId") int productoId, ModelMap model) {
+	public String initUpdateProductoForm(@PathVariable("tiendaId") Integer tiendaId,
+			@PathVariable("productoId") int productoId, ModelMap model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
@@ -199,7 +201,7 @@ public class ProductoController {
 
 	@PostMapping(value = "/tienda/{tiendaId}/producto/{productoId}/edit")
 	public String processUpdateProductoForm(@Valid Producto producto, BindingResult result,
-			@PathVariable("productoId") int productoId,@PathVariable("tiendaId") int tiendaId, ModelMap model) {
+			@PathVariable("productoId") int productoId, @PathVariable("tiendaId") int tiendaId, ModelMap model) {
 		if (result.hasErrors()) {
 			model.put("tiendaId", tiendaId);
 			Boolean isNew = false;
@@ -209,27 +211,27 @@ public class ProductoController {
 		} else {
 			producto.setId(productoId);
 			this.productoService.saveProducto(producto);
-			return "redirect:/producto/"+producto.getId();
+			return "redirect:/producto/" + producto.getId();
 		}
 	}
 
-  	@RequestMapping(value = "/tienda/{tiendaId}/producto/{productoId}/delete")
-	public String deleteProducto(@PathVariable("productoId") final int productoId,@PathVariable("tiendaId") final int tiendaId, final ModelMap model) {
-  		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	@RequestMapping(value = "/tienda/{tiendaId}/producto/{productoId}/delete")
+	public String deleteProducto(@PathVariable("productoId") final int productoId,
+			@PathVariable("tiendaId") final int tiendaId, final ModelMap model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
-		
+
 		User currentUser = (User) authentication.getPrincipal();
 		String username = currentUser.getUsername();
 		org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
 		if ((auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId)) || auth.equals("admin")) {
 			model.put("tiendaId", tiendaId);
 			Producto producto = this.productoService.findProductoById(productoId);
-			Integer id = producto.getTienda().getId();
-			this.productoService.deleteProducto(producto.getId());
-			return "redirect:/tienda/"+id;
-		}else {
+			this.productoService.deleteProducto(producto);
+			return "redirect:/tienda/" + tiendaId;
+		} else {
 			return VIEWS_ERROR_AUTH;
 		}
 	}

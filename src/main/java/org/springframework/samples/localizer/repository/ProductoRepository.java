@@ -23,7 +23,4 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 
 	@Query("select p from Producto p where p.estado like ?1")
 	public Collection<Producto> findProductosByEstado(Estado estado);
-	
-	@Query("delete from producto_intolerancias p where p.producto_id = ?1")
-	public void deleteProductoById(Integer id);
 }
