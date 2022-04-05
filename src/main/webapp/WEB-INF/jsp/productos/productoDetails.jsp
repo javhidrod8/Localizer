@@ -10,9 +10,10 @@
 <petclinic:layout pageName="productos">
 
 	<div class="row">
-		<div class="col-md-6">
-			<img height="200px" width=auto
-				src="<c:out value="${producto.imagen}"/>" style="margin: 0px 50px" />
+		<div class="col-md-6"> <div class="producto-imagen-div">
+			<img class="producto-imagen"
+				src="<c:out value='${producto.imagen}'/>"/>
+		</div>
 		</div>
 		<div class="col-md-6">
 			<h2><b><c:out value="${producto.nombre}" /></b></h2>
@@ -78,12 +79,12 @@
 			 </sec:authorize>
 
 		</div>
-		
-	</div></br></br>
+	</div>
 
-			<h3>Productos de esta tienda:</h3>
+			
 			<br> <br>
 			<div class="row" style="margin-top: 2%">
+			<h3>Productos de esta tienda:</h3>
 		<div class="col-md-2">
 			<div id="intolerancias">
 				<h3>Intolerancias</h3>
