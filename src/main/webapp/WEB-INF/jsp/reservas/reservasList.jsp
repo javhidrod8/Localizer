@@ -11,42 +11,53 @@
 	<table id="reservaTable" class="table table-striped">
         <thead>
         <tr>
+            <th>Imagen</th>
             <th>Producto</th>
-            <th style="width: 100px;">Cantidad</th>
-            <th style="width: 200px;"></th>
+            <th>Precio</th>
+            <th>Marca</th>
+            <th>Cantidad</th>
+            <th>Tienda</th>
+            <th>Comentario</th>
+            <th>Acción</th>
+
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${reserva}" var="reserva">
+        <c:forEach items="${reservas}" var="reserva">
             <tr>
-            
-            
-                <td>
-                	<div>
+          	<td>
+
 		        		<spring:url value="/productos/{productoId}" var="productoUrl">
 		        			<spring:param name="productoId" value="${reserva.producto.id}"/>
 		        		</spring:url>
 		        		<a href="${fn:escapeXml(productoUrl)}">
-		        			<img height="200px" width="auto" src="<c:out value="${reserva.producto.imagen}"/>" style="margin:0px 50px"/>
+		        			<img height="30px" width="auto" src="<c:out value="${reserva.producto.imagen}"/>" style="margin:0px 50px"/>
 		        		</a>
-		        		<br><br>
-		                <font size="+1">
+</td>
+		   <td>
+
 		                    <spring:url value="/productos/{productoId}" var="productoUrl">
 		                        <spring:param name="productoId" value="${reserva.producto.id}"/>
 		                    </spring:url>
 		                    <a href="${fn:escapeXml(productoUrl)}">
 		                    	<c:out value="${reserva.producto.nombre}"/>
 							</a>
-		                </font>
-		                <br>
-		                <font size="+1">
-		                    <c:out value="${reserva.producto.precio}"/>
-		                    &#8364, marca 
-		                </font>
-		                <font size="+1">
+		                
+
+                </td>
+                
+           <td>
+
+		                    <c:out value="${reserva.producto.precio}"/>&#8364
+
+
+                </td>
+                
+           <td>
+
 		                    <c:out value="${reserva.producto.marca}"/>
-		                </font>
-		        	</div>
+
+
                 </td>
                 
                 
@@ -54,6 +65,13 @@
                 <td>
                     <c:out value="${reserva.cantidad}"/>
                 </td>
+               <td>
+                    <c:out value="${reserva.tienda.nombre}"/>
+                </td>
+               <td>
+                    <c:out value="${reserva.comentario}"/>
+                </td>
+
                 
                 
                 
@@ -68,6 +86,7 @@
                 
                 
             </tr>
+            
         </c:forEach>
         </tbody>
     </table>
