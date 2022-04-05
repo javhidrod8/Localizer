@@ -11,28 +11,41 @@
 
 	<h2>Reserva</h2>
 
-	<form:form modelAttribute="reserva" class="form-horizontal"
-		id="add-reserva-form">
-		<div class="container">
-			<div class="form-group has-feedback">
+    <form:form modelAttribute="reserva" class="form-horizontal" id="add-tienda-form">
+        <div class="form-group has-feedback">
+            <petclinic:inputField label="Cantidad" name="cantidad"/>
+            <petclinic:inputField label="Comentario" name="comentario"/>
+<%--              <input type="hidden" name="user" value="${reserva.user}"/> --%>
+        </div>
+        <div class="form-group">
+                        <button class="btn btn-default" type="submit">Reservar</button>
+        </div>
+    </form:form>
+
+
+
+<%-- 	<form:form modelAttribute="reserva" class="form-horizontal" --%>
+<%-- 		id="add-reserva-form"> --%>
+<!-- 		<div class="container"> -->
+<!-- 			<div class="form-group has-feedback"> -->
 				
-				<div id="cantidad-reserva col-md-12">
-					<label id="cantidad2" for="cantidad">
-						<h3>Cantidad:</h3>
-					</label> <input required type="text" id="cantidad" name="cantidad" class="form-control" value="${reserva.cantidad}"><br>
-				</div>
+<!-- 				<div id="cantidad-reserva col-md-12"> -->
+<!-- 					<label id="cantidad2" for="cantidad"> -->
+<!-- 						<h3>Cantidad:</h3> -->
+<%-- 					</label> <input required type="text" id="cantidad" name="cantidad" class="form-control" value="${reserva.cantidad}"><br> --%>
+<!-- 				</div> -->
 				
-				<div id="comentario-reserva col-md-12">
-					<label id="comentario2" for="comentario">
-						<h3>Comentario:</h3>
-					</label> <input required type="text" id="comentario" name="comentario" class="form-control" value="${reserva.comentario}"><br>
-				</div>
+<!-- 				<div id="comentario-reserva col-md-12"> -->
+<!-- 					<label id="comentario2" for="comentario"> -->
+<!-- 						<h3>Comentario:</h3> -->
+<%-- 					</label> <input required type="text" id="comentario" name="comentario" class="form-control" value="${reserva.comentario}"><br> --%>
+<!-- 				</div> -->
 				
-				<button class="btn btn-default" type="submit">Realizar Reserva</button>
+<!-- 				<button class="btn btn-default" type="submit">Realizar Reserva</button> -->
 				
-			</div>
-		</div>
-	</form:form>
+<!-- 			</div> -->
+<!-- 		</div> -->
+<%-- 	</form:form> --%>
 	
 </petclinic:layout>
 

@@ -55,7 +55,6 @@
 					<dd>
 						<c:out value="${tienda.telefono}" />
 					</dd>
-					<br>
 					<sec:authorize access="hasAuthority('admin')">
 					<dd>				
 					<spring:url value="/tienda/{tiendaId}/delete" var="tiendaDeleteUrl">
@@ -64,49 +63,19 @@
 					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
 						<button class = "btn btn-default btn-sm">Eliminar tienda</button>
 					</a>
-					</dd>
-					</sec:authorize>
-					<c:if test="${miTienda}">
-					<sec:authorize access="hasAuthority('vendedor')">
-				<dd>				
-					<spring:url value="/tienda/{tiendaId}/delete" var="tiendaDeleteUrl">
+					<spring:url value="/tienda/{tiendaId}/reservas" var="tiendaReservasUrl">
 						<spring:param name="tiendaId" value="${tienda.id}" />
 					</spring:url>	
-					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
-						<button class = "btn btn-default btn-sm">Eliminar tienda</button>
-						<br>
-
+					<a href="${fn:escapeXml(tiendaReservasUrl)}">
+						<button class='btn btn-default btn-sm'>Ver Reservas</button>
 					</a>
-				</dd>
-				<br>
-				</sec:authorize>
-					
-					</c:if>
-				
-				  <sec:authorize access="hasAuthority('admin')">
-				<dd>				
 					<spring:url value="/tienda/{tiendaId}/edit" var="tiendaEditUrl">
 						<spring:param name="tiendaId" value="${tienda.id}" />
 					</spring:url>	
 					<a href="${fn:escapeXml(tiendaEditUrl)}">
 						<button class='btn btn-default btn-sm'>Editar tienda</button>
 					</a>
-				</dd>
-				</sec:authorize>
-				 <sec:authorize access="hasAuthority('vendedor')">
-<%-- 			        <sec:authentication var="user" property="name" /> --%>
-<%-- 					<c:if test="${username == user}"> --%>
-					<c:if test="${miTienda}">
-					<dd>				
-						<spring:url value="/tienda/{tiendaId}/edit" var="tiendaEditUrl">
-							<spring:param name="tiendaId" value="${tienda.id}" />
-						</spring:url>	
-						<a href="${fn:escapeXml(tiendaEditUrl)}">
-
-							<button class='btn btn-default btn-sm'>Editar tienda</button>
-
-						</a>
-						<spring:url value="/tienda/{tiendaId}/productos/new" var="tiendaUrl">
+					<spring:url value="/tienda/{tiendaId}/productos/new" var="tiendaUrl">
 							<spring:param name="tiendaId" value="${tienda.id}" />
 						</spring:url>	
 						<a href="${fn:escapeXml(tiendaUrl)}">
@@ -114,13 +83,40 @@
 							<button class='btn btn-default btn-sm'>Nuevo Producto</button>
 
 						</a>
-					</dd>
+					</dd>				
+					</sec:authorize>
+					<sec:authorize access="hasAuthority('vendedor')">
+					<c:if test="${miTienda}">
+					<dd>				
+					<spring:url value="/tienda/{tiendaId}/delete" var="tiendaDeleteUrl">
+						<spring:param name="tiendaId" value="${tienda.id}" />
+					</spring:url>	
+					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
+						<button class = "btn btn-default btn-sm">Eliminar tienda</button>
+					</a>
+					<spring:url value="/tienda/{tiendaId}/reservas" var="tiendaReservasUrl">
+						<spring:param name="tiendaId" value="${tienda.id}" />
+					</spring:url>	
+					<a href="${fn:escapeXml(tiendaReservasUrl)}">
+						<button class='btn btn-default btn-sm'>Ver Reservas</button>
+					</a>
+					<spring:url value="/tienda/{tiendaId}/edit" var="tiendaEditUrl">
+						<spring:param name="tiendaId" value="${tienda.id}" />
+					</spring:url>	
+					<a href="${fn:escapeXml(tiendaEditUrl)}">
+						<button class='btn btn-default btn-sm'>Editar tienda</button>
+					</a>
+					<spring:url value="/tienda/{tiendaId}/productos/new" var="tiendaUrl">
+							<spring:param name="tiendaId" value="${tienda.id}" />
+						</spring:url>	
+						<a href="${fn:escapeXml(tiendaUrl)}">
+
+							<button class='btn btn-default btn-sm'>Nuevo Producto</button>
+
+						</a>
+					</dd>				
 					</c:if>
-
-					
-<%-- 					</c:if> --%>
-
-				</sec:authorize>
+					</sec:authorize>
 				</dl>
 			</div>
 

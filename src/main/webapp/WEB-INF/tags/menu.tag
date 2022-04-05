@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
@@ -80,9 +81,17 @@
 					<span>Productos Por Verificar</span>
 				</petclinic:menuItem>
 				 </sec:authorize>
-
-
-
+				 
+				 <sec:authorize access="hasAuthority('cliente')">
+				  <spring:url value="/users/{username}/reservas" var="historialUrl">
+				  		<sec:authentication property="principal" var= "user"/>
+						<spring:param name="username" value="${user.username}" />
+					</spring:url>	
+				 <petclinic:menuItem active="${name eq 'historialReservas'}" url="${fn:escapeXml(historialUrl)}"
+					title="historialReservas">
+					<span>Mis Reservas</span>
+				</petclinic:menuItem>
+				 </sec:authorize>
 </ul>
 
 

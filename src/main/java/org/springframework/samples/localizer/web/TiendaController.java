@@ -96,11 +96,6 @@ public class TiendaController {
 			String username = userSession.getUsername();
 			org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
 			Tienda tienda = user.getTienda();
-			if(tienda == null) {
-				if (auth.equals("vendedor") || auth.equals("admin")) {
-					return "redirect:/tiendas/new";
-				}
-			}
 			Iterable<Producto> productos = this.tiendaService.findProductos();
 			Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
 			Set<Preferencias> preferencias = new HashSet<Preferencias>();
