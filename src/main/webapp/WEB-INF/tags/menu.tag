@@ -3,6 +3,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 <%@ attribute name="name" required="true" rtexprvalue="true"
 	description="Name of the active menu: home, owners, vets or error"%>
@@ -56,7 +57,7 @@
 					<span>Inicio</span>
 				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'products'}" url="/productos"
+				<petclinic:menuItem active="${name eq 'productos'}" url="/productos"
 					title="productos">
 					<!-- <span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
 					<span>Productos</span>
@@ -78,6 +79,17 @@
 				 <petclinic:menuItem active="${name eq 'productosPorVerificar'}" url="/productos/verificar"
 					title="productosPorVerificar">
 					<span>Productos Por Verificar</span>
+				</petclinic:menuItem>
+				 </sec:authorize>
+				 <sec:authorize access="hasAuthority('cliente')">
+				 <spring:url value="/users/{clienteName}/reservas" var="reservasUrl">
+               	 	<spring:param name="clienteName"> <sec:authentication property="name"/></spring:param>
+            	</spring:url>
+				 
+				 
+				 	<petclinic:menuItem active="${name eq 'reservasList'}" url="${fn:escapeXml(reservasUrl)}"
+					title="reservas">
+					<span>Mis Reservas</span>
 				</petclinic:menuItem>
 				 </sec:authorize>
 
@@ -138,8 +150,5 @@
 				</sec:authorize>
 			</ul>
 		</div>
-
-
-
 	</div>
 </nav>
