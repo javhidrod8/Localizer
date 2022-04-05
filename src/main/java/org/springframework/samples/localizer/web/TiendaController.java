@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class TiendaController {
 	private static final String VIEWS_TIENDA_CREATE_OR_UPDATE_FORM = "tiendas/createOrUpdateTiendaForm";
-	private static final String VIEWS_ERROR_AUTH = "productos/createOrUpdateProductoForm";
+	private static final String VIEWS_ERROR_AUTH = "errores/errorAuth";
 	private final TiendaService tiendaService;
 	private final UserService userService;
 
@@ -78,7 +78,7 @@ public class TiendaController {
 					miTienda = true;
 				}
 			}
-			
+
 		}
 		modelMap.addAttribute("tienda", tienda);
 		modelMap.addAttribute("productos", productos);
@@ -94,13 +94,15 @@ public class TiendaController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
-		if(auth.equals("vendedor")) {
+		if (auth.equals("vendedor") || auth.equals("admin")) {
 			User userSession = (User) authentication.getPrincipal();
 			String username = userSession.getUsername();
 			org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
 			Tienda tienda = user.getTienda();
-			if(tienda == null) {
-				if (auth.equals("vendedor") || auth.equals("admin")) {
+			if (tienda == null) {
+				if (auth.equals("vendedor") ) {
+					return "redirect:/checkout";
+				} else if(auth.equals("admin")) {
 					return "redirect:/tiendas/new";
 				}
 			}
@@ -121,7 +123,7 @@ public class TiendaController {
 		} else {
 			return VIEWS_ERROR_AUTH;
 		}
-		
+
 	}
 
 	@GetMapping("/tiendas/new")
@@ -178,7 +180,10 @@ public class TiendaController {
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
-		if (auth.equals("vendedor") || auth.equals("admin")) {
+		User currentUser = (User) authentication.getPrincipal();
+		String username = currentUser.getUsername();
+		org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
+		if ((auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId)) || auth.equals("admin")) {
 			Tienda tienda = this.tiendaService.findTiendaById(tiendaId);
 			Boolean isNew = false;
 			model.put("isNew", isNew);
@@ -204,7 +209,7 @@ public class TiendaController {
 	}
 
 	@GetMapping(value = "/tienda/{tiendaId}/delete")
-    public String deleteTienda(@PathVariable("tiendaId") int tiendaId, ModelMap model) {
+	public String deleteTienda(@PathVariable("tiendaId") int tiendaId, ModelMap model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
@@ -218,11 +223,10 @@ public class TiendaController {
 			this.userService.saveUser(user);
 			this.tiendaService.deleteTienda(tienda);
 			return "redirect:/";
-		}else {
+		} else {
 			return VIEWS_ERROR_AUTH;
 		}
-		
-		
-    }
+
+	}
 
 }

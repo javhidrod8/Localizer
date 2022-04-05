@@ -7,4 +7,5 @@ import org.springframework.samples.localizer.model.Authorities;
 
 public interface AuthoritiesRepository extends  CrudRepository<Authorities, String>{
 	
+
 }

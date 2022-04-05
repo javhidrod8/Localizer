@@ -5,8 +5,6 @@
 <petclinic:layout pageName="error">
 
 	<h2>Ha ocurrido un error inesperado en la aplicación</h2>
-	<spring:url value="/resources/images/tiendas.png" htmlEscape="true"
-		var="tiendasImagen" />
-	<img class="tiendas img-responsive" src="${tiendasImagen}" />
-
+	<p>Contacte con soporte.</p>
+	
 </petclinic:layout>

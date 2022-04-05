@@ -5,8 +5,6 @@
 <petclinic:layout pageName="error">
 
 	<h2>Su petición no pudo ser encontrada</h2>
-	<spring:url value="/resources/images/tiendas.png" htmlEscape="true"
-		var="tiendasImagen" />
-	<img class="tiendas img-responsive" src="${tiendasImagen}" />
+	<p>Contacte con soporte.</p>
 
 </petclinic:layout>

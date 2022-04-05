@@ -82,8 +82,8 @@
 				</petclinic:menuItem>
 				 </sec:authorize>
 				 <sec:authorize access="hasAuthority('cliente')">
-				 <spring:url value="/users/{name}/reservas" var="reservasUrl">
-               	 	<spring:param name="name"> <sec:authentication property="name"/></spring:param>
+				 <spring:url value="/users/{clienteName}/reservas" var="reservasUrl">
+               	 	<spring:param name="clienteName"> <sec:authentication property="name"/></spring:param>
             	</spring:url>
 				 
 				 
@@ -150,8 +150,5 @@
 				</sec:authorize>
 			</ul>
 		</div>
-
-
-
 	</div>
 </nav>

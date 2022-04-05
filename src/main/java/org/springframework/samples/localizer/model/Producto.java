@@ -28,7 +28,6 @@ public class Producto extends BaseEntity {
 	@NotBlank
 	private String marca;
 
-	@NotBlank
 	private String descripcion;
 
 	@NotNull
@@ -54,7 +53,6 @@ public class Producto extends BaseEntity {
 	@JoinTable(name = "producto_intolerancias", joinColumns = @JoinColumn(name = "producto_id"), inverseJoinColumns = @JoinColumn(name = "intolerancias_id"))
 	private Set<Intolerancias> intolerancia;
 
-	@NotNull
 	private Preferencias preferencia;
 
 	@ManyToOne

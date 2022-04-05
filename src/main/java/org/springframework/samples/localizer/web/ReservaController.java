@@ -71,6 +71,8 @@ public class ReservaController {
 				org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
 				Reserva reserva = new Reserva();
 				reserva.setUser(user);
+				reserva.setProducto(producto);
+				reserva.setTienda(tienda);
 				model.put("reserva", reserva);
 				return VIEWS_FORM_RESERVAS;
 			} else {
@@ -87,6 +89,7 @@ public class ReservaController {
 			@PathVariable("tiendaId") int tiendaId, @Valid Reserva reserva, BindingResult result,
 			Map<String, Object> model) {
 		if (result.hasErrors()) {
+			System.out.println(result);
 			model.put("reserva", reserva);
 			return VIEWS_FORM_RESERVAS;
 		} else {
@@ -94,6 +97,7 @@ public class ReservaController {
 			Tienda tienda = producto.getTienda();
 			reserva.setProducto(producto);
 			reserva.setTienda(tienda);
+			System.out.println("SALE EN ELSE");
 			this.reservaService.saveReserva(reserva);
 			return "redirect:/tienda/" + tienda.getId();
 		}

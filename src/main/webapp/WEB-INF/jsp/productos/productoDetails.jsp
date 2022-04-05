@@ -50,9 +50,9 @@
                 <spring:param name="tiendaId" value="${producto.tienda.id}"/>
                 <spring:param name="productoId" value="${producto.id}"/>
             </spring:url>
-            <a href="${fn:escapeXml(reservaUrl)}">
-                <button class = "btn btn-default btn-sm">Reservar</button></br></br>
-            </a>
+<%--             <a href="${fn:escapeXml(reservaUrl)}"> --%>
+<!--                 <button class = "btn btn-default btn-sm">Reservar</button></br></br> -->
+<!--             </a> -->
 			</sec:authorize>
 			 <sec:authorize access="hasAuthority('nutricionista')"> 
 			 <spring:url value="/tienda/{tiendaId}/producto/{productoId}/edit" var="productoUrl">
@@ -265,12 +265,12 @@
 
 		    	caption.innerHTML+="<p> Marca: "+producto.marca+"</p>";
 		    	caption.innerHTML+="<h3>"+producto.precio+"<span class='glyphicon glyphicon-euro' aria-hidden='true'></span></h3>";
-		    	<sec:authorize access="isAuthenticated()">
-		    	<c:if test="${!miTienda}">
-		    	caption.innerHTML+="<a href='/tienda/"+producto.tiendaid+"/producto/"+producto.id+"/reservar'><button class='btn btn-default btn-sm'>Reservar</button></br></br></a>";
+// 		    	<sec:authorize access="isAuthenticated()">
+// 		    	<c:if test="${!miTienda}">
+// 		    	caption.innerHTML+="<a href='/tienda/"+producto.tiendaid+"/producto/"+producto.id+"/reservar'><button class='btn btn-default btn-sm'>Reservar</button></br></br></a>";
 
-		    	</c:if>
-		    	</sec:authorize>
+// 		    	</c:if>
+// 		    	</sec:authorize>
 
 		    	<c:if test="${miTienda}">
 		    	var url = document.createElement("a");
