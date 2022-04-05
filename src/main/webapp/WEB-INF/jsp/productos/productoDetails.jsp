@@ -15,7 +15,7 @@
 				src="<c:out value="${producto.imagen}"/>" style="margin: 0px 50px" />
 		</div>
 		<div class="col-md-6">
-			<b><c:out value="${producto.nombre}" /></b><br> <br>
+			<h2><b><c:out value="${producto.nombre}" /></b></h2>
 			<h2>
 				<c:out value="${producto.precio}" />
 				&#8364
@@ -26,20 +26,26 @@
 					<i class="fa-solid fa-x" style="margin-left: 2%"></i>
 				</c:if>
 			</h2>
+			<c:if test="${not empty producto.descripcion}">
+			<h3>Descripción:</h3>${producto.descripcion }<br>
+			</c:if>
+			
 			<c:if test="${not empty producto.intolerancia  }">
-			Intolerancias: <c:forEach items="${producto.intolerancia}" var="intolerancia">
-			<c:out	value="${intolerancia.nombre} " />
+			<h3>Intolerancias:</h3> <ul><c:forEach items="${producto.intolerancia}" var="intolerancia">
+			<li><c:out	value="${intolerancia.nombre} " /></li>
 			</c:forEach>
+			</ul>
 			</c:if>
 			<c:if test="${not empty producto.preferencia}">
-			</br></br>Preferencias: <c:out	value="${producto.preferencia} " />
-			</c:if></br></br>
+			<h3>Preferencias:</h3><ul><li><c:out	value="${producto.preferencia} " /></li></ul>
+			</c:if><br>
 			<spring:url value="/tienda/{tiendaId}" var="tiendaUrl">
 				<spring:param name="tiendaId" value="${producto.tienda.id}" />
 			</spring:url>
 			<a href="${fn:escapeXml(tiendaUrl)}">
 				<button class='btn btn-default btn-sm'>Ver tienda</button>
 			</a>
+			<sec:authorize access="isAuthenticated()">
 			<spring:url value="/tienda/{tiendaId}/producto/{productoId}/reservar" var="reservaUrl">
                 <spring:param name="tiendaId" value="${producto.tienda.id}"/>
                 <spring:param name="productoId" value="${producto.id}"/>
@@ -47,7 +53,7 @@
             <a href="${fn:escapeXml(reservaUrl)}">
                 <button class = "btn btn-default btn-sm">Reservar</button></br></br>
             </a>
-
+			</sec:authorize>
 			 <sec:authorize access="hasAuthority('nutricionista')"> 
 			 <spring:url value="/tienda/{tiendaId}/producto/{productoId}/edit" var="productoUrl">
 				<spring:param name="tiendaId" value="${producto.tienda.id}" />
@@ -259,11 +265,12 @@
 
 		    	caption.innerHTML+="<p> Marca: "+producto.marca+"</p>";
 		    	caption.innerHTML+="<h3>"+producto.precio+"<span class='glyphicon glyphicon-euro' aria-hidden='true'></span></h3>";
+		    	<sec:authorize access="isAuthenticated()">
 		    	<c:if test="${!miTienda}">
 		    	caption.innerHTML+="<a href='/tienda/"+producto.tiendaid+"/producto/"+producto.id+"/reservar'><button class='btn btn-default btn-sm'>Reservar</button></br></br></a>";
 
 		    	</c:if>
-		    	
+		    	</sec:authorize>
 
 		    	<c:if test="${miTienda}">
 		    	var url = document.createElement("a");
