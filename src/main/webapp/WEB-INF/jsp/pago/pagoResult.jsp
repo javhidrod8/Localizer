@@ -1,30 +1,21 @@
+<%@ page session="false" trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Resultado</title>
-</head>
-<body>
-	<c:if test="'${error}'" <h3 style='color: red;'>${error}</h3></c:if>
-	<c:else>
-		<div>
-		<h3 style='color: green;'>Pago realizado con exito</h3>
-		<div>
-			Id.: <span>${id}</span>
-		</div>
-		<div>
-			Estado: <span>${status}</span>
-		</div>
-		<div>
-			Charge id.: <span>${chargeId}</span>
-		</div>
-		<div>
-			Balance transaction id.: <span>${balance_transaction}</span>
-		</div>
-		</div>
-	</c:else>
-	<a href='/tiendas/new'>Ir al inicio</a>
-</body>
-</html>
+	<meta charset="ISO-8859-1">
+<petclinic:layout pageName="pago-tarjeta">
+<h3>Resultado</h3>
+
+<c:if test="${error}"> <h3 style="color: red;">${error}</h3></c:if>
+    <c:if test="${!error}">
+        <div>
+        <h3 style='color: green;'>Pago realizado con exito</h3>
+    </c:if>
+    <a href='/tiendas/new'><button class="btn-default btn btn-md">Crear mi tienda</button></a>
+   
+</petclinic:layout>

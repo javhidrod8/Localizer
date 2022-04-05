@@ -13,7 +13,7 @@ public class CheckoutController {
 
     @RequestMapping("/checkout")
     public String checkout(Model model) {
-        model.addAttribute("amount", 50); // in cents
+        model.addAttribute("amount", 12); // in cents
         model.addAttribute("stripePublicKey", stripePublicKey);
         model.addAttribute("currency", ChargeRequest.Currency.EUR);
         return "pago/pagoForm";
