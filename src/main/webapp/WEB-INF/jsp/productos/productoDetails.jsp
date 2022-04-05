@@ -10,10 +10,10 @@
 <petclinic:layout pageName="productos">
 
 	<div class="row">
-		<div class="col-md-6"> <div class="producto-imagen-div">
-			<img class="producto-imagen"
-				src="<c:out value='${producto.imagen}'/>"/>
-		</div>
+		<div class="col-md-3 col-md-offset-3">
+			<img 
+				src="<c:out value='${producto.imagen}'/>" class="img-responsive"
+				alt="Responsive image" />
 		</div>
 		<div class="col-md-6">
 			<h2><b><c:out value="${producto.nombre}" /></b></h2>
