@@ -7,7 +7,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 
-<petclinic:layout pageName="tiendas">
+<petclinic:layout pageName="tienda">
 
 
 	<c:if test="${tienda.id != null || tienda.id == '' }">
@@ -150,9 +150,9 @@
 					<input class="form-check-input" type="radio" name = "preferencia" id="${preferencia}" />
 					<c:out value="${preferencia}"></c:out>
 					</c:if>
-					</br>
+					<br>
 				</c:forEach>
-				</br>
+				<br>
 			</div>
 		</div>
 		<div class="col-md-10" id="productos"></div>
@@ -327,6 +327,15 @@
     	button = document.createElement("button");
     	button.className = 'btn btn-default btn-sm';   	
 		button.innerHTML="Editar";
+ 		url.appendChild(button);
+    	caption.appendChild(url);
+		</c:if>
+    	<c:if test="${miTienda}">
+    	var url = document.createElement("a");
+ 		url.href="${fn:escapeXml(productoEditarUrl)}"+producto.id+"/delete";
+    	button = document.createElement("button");
+    	button.className = 'btn btn-default btn-sm btn-delete';   	
+		button.innerHTML="Borrar";
  		url.appendChild(button);
     	caption.appendChild(url);
 		</c:if>
