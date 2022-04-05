@@ -64,10 +64,6 @@ class UserController {
 			
 			String username = user.getUsername();
 			String auth1 = auth.getAuthority();
-			System.out.println("=========================="+model.get("user").toString()+"====================");
-			System.out.println("=========================="+model.get("authorities").toString()+"====================");
-			System.out.println("=========================="+username+"====================");
-			System.out.println("=========================="+auth1+"==========================");
 			this.userService.saveUser(user);
 			this.authoritiesService.saveAuthorities(username, auth1);
 			return "redirect:/users/" + user.getUsername();
