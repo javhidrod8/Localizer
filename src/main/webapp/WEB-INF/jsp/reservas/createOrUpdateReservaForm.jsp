@@ -10,7 +10,14 @@
 <petclinic:layout pageName="reservas">
 
 	<h2>Reserva</h2>
-
+	<script>
+	reserva = "${reserva}";
+	productoId="${productoId}";
+	auth="${auth}";
+	console.log(reserva);
+	console.log(productoId);
+	console.log(auth);
+	</script>
 	<form:form modelAttribute="reserva" class="form-horizontal"
 		id="add-reserva-form">
 		<div class="container">
@@ -28,6 +35,23 @@
 					</label> <input required type="text" id="comentario" name="comentario" class="form-control" value="${reserva.comentario}"><br>
 				</div>
 				
+				<div id="tienda-reserva col-md-12">
+					<label id="tienda2" for="tienda">
+						<h3>Tienda:</h3>
+					</label> <input required type="text" id="tienda" name="tienda" class="form-control" value="${tiendaId}"><br>
+				</div>
+				
+				<div id="user-reserva col-md-12">
+					<label id="user2" for="user">
+						<h3>User:</h3>
+					</label> <input required type="text" id="user" name="user" class="form-control" value="${reserva.user}"><br>
+				</div>
+				
+				<div id="producto-reserva col-md-12">
+					<label id="producto2" for="producto">
+						<h3>Producto:</h3>
+					</label> <input required type="text" id="producto" name="producto" class="form-control" value="${productoId}"><br>
+				</div>
 				<button class="btn btn-default" type="submit">Realizar Reserva</button>
 				
 			</div>
