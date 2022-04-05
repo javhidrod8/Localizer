@@ -71,28 +71,34 @@ public class ProductoController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
-		User currentUser = (User) authentication.getPrincipal();
-		String username = currentUser.getUsername();
-		org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
-		if (auth.equals("admin")) {
-			mav.addObject("miTienda", true);
-		} else {
-			if (auth.equals("vendedor")) {
-				Tienda t = user.getTienda();
-				if (t.getId() != null) {
-					if (t.getId() == producto.getTienda().getId()) {
-						mav.addObject("miTienda", true);
+		if (authentication.getPrincipal() != "anonymousUser") {
+			User currentUser = (User) authentication.getPrincipal();
+			String username = currentUser.getUsername();
+			org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
+			if (auth.equals("admin")) {
+				mav.addObject("miTienda", true);
+			} else {
+				if (auth.equals("vendedor")) {
+					Tienda t = user.getTienda();
+					if (t != null) {
+						if (t.getId().equals(producto.getTienda().getId())) {
+							mav.addObject("miTienda", true);
+						} else {
+							mav.addObject("miTienda", false);
+						}
+					} else {
+						mav.addObject("miTienda", false);
 					}
+				} else {
 					mav.addObject("miTienda", false);
 				}
-				mav.addObject("miTienda", false);
-			} else {
-				mav.addObject("miTienda", false);
 			}
+		} else {
+			mav.addObject("miTienda", false);
 		}
 		return mav;
-	}
 
+	}
 	@GetMapping(value = "/productos/search")
 	public String productListSearchEmpty(ModelMap modelMap) {
 		String vista = "productos/productosList";
