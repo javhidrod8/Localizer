@@ -59,14 +59,37 @@ public class ProductoController {
 		dataBinder.setDisallowedFields("id");
 	}
 
-	@GetMapping("/producto/{productoId}")
+	@GetMapping("producto/{productoId}")
 	public ModelAndView showProduct(@PathVariable("productoId") int productoId) {
 		ModelAndView mav = new ModelAndView("productos/productoDetails");
-		mav.addObject(this.productoService.findProductoById(productoId));
+		Producto producto = this.productoService.findProductoById(productoId);
+		mav.addObject(producto);
 		Collection<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
 		Collection<Preferencias> preferencias = this.productoService.findAllPreferencias();
 		mav.addObject("intolerancias", intolerancias);
 		mav.addObject("preferencias", preferencias);
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		String auth = currentPrincipalName.iterator().next().toString().trim();
+		User currentUser = (User) authentication.getPrincipal();
+		String username = currentUser.getUsername();
+		org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
+		if (auth.equals("admin")) {
+			mav.addObject("miTienda", true);
+		} else {
+			if (auth.equals("vendedor")) {
+				Tienda t = user.getTienda();
+				if (t.getId() != null) {
+					if (t.getId() == producto.getTienda().getId()) {
+						mav.addObject("miTienda", true);
+					}
+					mav.addObject("miTienda", false);
+				}
+				mav.addObject("miTienda", false);
+			} else {
+				mav.addObject("miTienda", false);
+			}
+		}
 		return mav;
 	}
 
@@ -222,7 +245,6 @@ public class ProductoController {
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
-
 		User currentUser = (User) authentication.getPrincipal();
 		String username = currentUser.getUsername();
 		org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
