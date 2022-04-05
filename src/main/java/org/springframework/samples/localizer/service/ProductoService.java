@@ -61,8 +61,9 @@ public class ProductoService {
 	}
 
 	@Transactional
-	public void deleteProducto(Producto producto) throws DataAccessException {
-		productoRepository.delete(producto);
+	public void deleteProducto(Integer productoId) throws DataAccessException {
+		productoRepository.deleteProductoById(productoId);
+		productoRepository.deleteById(productoId);
 
 	}
 }

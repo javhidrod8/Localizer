@@ -16,12 +16,13 @@ import org.springframework.samples.localizer.model.Preferencias;
 import org.springframework.samples.localizer.model.Producto;
 import org.springframework.samples.localizer.service.IntoleranciasService;
 import org.springframework.samples.localizer.model.Tienda;
-import org.springframework.samples.localizer.model.User;
 import org.springframework.samples.localizer.service.ProductoService;
 import org.springframework.samples.localizer.service.TiendaService;
+import org.springframework.samples.localizer.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -41,13 +42,15 @@ public class ProductoController {
 	private static final String VIEWS_PRODUCTO_RECHAZAR_FORM = "productos/rechazarProductoForm";
 	private final ProductoService productoService;
 	private final IntoleranciasService intoleranciasService;
-  private final TiendaService tiendaService;
+    private final TiendaService tiendaService;
+    private final UserService userService;
 
 	@Autowired
-	public ProductoController(ProductoService productoService, IntoleranciasService intoleranciasService, TiendaService tiendaService) {
+	public ProductoController(ProductoService productoService, IntoleranciasService intoleranciasService, TiendaService tiendaService,UserService userService) {
 		this.productoService = productoService;
 		this.intoleranciasService = intoleranciasService;
 		this.tiendaService = tiendaService;
+		this.userService = userService;
 	}
 
 	@InitBinder
@@ -216,12 +219,15 @@ public class ProductoController {
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
+		
 		User currentUser = (User) authentication.getPrincipal();
-		if ((auth.equals("vendedor") && currentUser.getTienda().getId().equals(tiendaId)) || auth.equals("admin")) {
+		String username = currentUser.getUsername();
+		org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
+		if ((auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId)) || auth.equals("admin")) {
 			model.put("tiendaId", tiendaId);
 			Producto producto = this.productoService.findProductoById(productoId);
 			Integer id = producto.getTienda().getId();
-			this.productoService.deleteProducto(producto);
+			this.productoService.deleteProducto(producto.getId());
 			return "redirect:/tienda/"+id;
 		}else {
 			return VIEWS_ERROR_AUTH;

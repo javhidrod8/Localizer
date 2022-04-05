@@ -16,18 +16,19 @@
 		<div class="container">
 			<div class="form-group has-feedback">
 				
-				<div id="cantidad-reserva col-md-12">
-					<label id="cantidad2" for="cantidad">
-						<h3>Cantidad:</h3>
-					</label> <input required type="text" id="cantidad" name="cantidad" class="form-control" value="${reserva.cantidad}"><br>
-				</div>
+				 <petclinic:inputField label="Cantidad" name="cantidad" />
 				
-				<div id="comentario-reserva col-md-12">
-					<label id="comentario2" for="comentario">
-						<h3>Comentario:</h3>
-					</label> <input required type="text" id="comentario" name="comentario" class="form-control" value="${reserva.comentario}"><br>
-				</div>
+				 <petclinic:inputField label="Comentario" name="comentario" />
 				
+				
+				    <input type="text" id="tienda" name="tienda" class="hidden"
+					value="${tiendaId}">
+					<input type="text" id="user" name="user" class="hidden"
+					value="${username}">
+					<input type="text" id="producto" name="producto" class="hidden"
+					value="${productoId}">
+					<input type="text" id="reserva" name="estado" class="hidden"
+					value="${estado}">
 				<button class="btn btn-default" type="submit">Realizar Reserva</button>
 				
 			</div>
