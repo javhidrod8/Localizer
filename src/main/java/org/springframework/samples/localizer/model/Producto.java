@@ -10,27 +10,34 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "productos")
 public class Producto extends BaseEntity {
 
+	@NotBlank
 	private String nombre;
 
 	@Positive
 	private Double precio;
 
+	@NotBlank
 	private String marca;
 
+	@NotBlank
 	private String descripcion;
 
+	@NotNull
 	private Estado estado;
 
+	@NotNull
 	private Boolean promocionado;
 
+	@NotBlank
 	private String imagen;
 	
 	private String motivo;
@@ -47,10 +54,12 @@ public class Producto extends BaseEntity {
 	@JoinTable(name = "producto_intolerancias", joinColumns = @JoinColumn(name = "producto_id"), inverseJoinColumns = @JoinColumn(name = "intolerancias_id"))
 	private Set<Intolerancias> intolerancia;
 
+	@NotNull
 	private Preferencias preferencia;
 
 	@ManyToOne
 	@JoinColumn(name = "tienda_id")
+	@NotNull
 	private Tienda tienda;
 
 	public Producto(Producto producto) {

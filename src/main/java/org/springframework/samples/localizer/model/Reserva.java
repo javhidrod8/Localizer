@@ -10,22 +10,35 @@ import javax.validation.constraints.NotNull;
 public class Reserva extends BaseEntity{
 	
 	@OneToOne
+	@NotNull
 	private Tienda tienda;
 	
 	@OneToOne
+	@NotNull
 	private Producto producto;
 	
 	@NotNull
 	private Integer cantidad;
 	
 	@OneToOne
+	@NotNull
 	private User user;
 	
 	private String comentario;
 	
-	//Cantidad
-	//Precio final
-	//Usuario
+	@NotNull
+	private Double precio_total;
+	
+	@NotNull
+	private Estado estado;
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
 
 	public Integer getCantidad() {
 		return cantidad;
@@ -81,6 +94,16 @@ public class Reserva extends BaseEntity{
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
 	}
+
+	public Double getPrecio_total() {
+		return precio_total;
+	}
+
+	public void setPrecio_total(Double precio_total) {
+		this.precio_total = precio_total;
+	}
+	
+	
 	
 	
 	

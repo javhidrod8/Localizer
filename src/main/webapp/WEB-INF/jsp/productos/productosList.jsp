@@ -34,8 +34,7 @@
 					<input class="form-check-input" type="checkbox"
 						id="${intolerancia}" />
 					<c:out value="${intolerancia}"></c:out>
-					</br>
-					</br>
+					<br>
 				</c:forEach>
 			</div>
 			<div id="preferencias">
@@ -64,7 +63,8 @@
 	
     	var intolerancias = new Array();
         var preferencias = new Array();
-		<c:forEach items="${productos}" var="producto"> 
+		<c:forEach items="${productos}" var="producto">
+			<c:if test="${producto.estado == 'ACEPTADO'}">
 		    productoDetails = new Object();
 		    productoDetails.id =  "${producto.id}"; 
 		    productoDetails.nombre = "${producto.nombre}";
@@ -82,6 +82,7 @@
 		    productoDetails.preferencia = "${producto.preferencia}";
 		    preferencias.push(productoDetails.preferencia);/*2 - quitar cuando esten los checkbox*/
 		    productos.push(productoDetails);
+		    </c:if>
 		</c:forEach> 
 	
 		productos.forEach(producto=> printProducto(producto));
@@ -195,7 +196,7 @@
 		caption.className = "caption";
 		caption.id = "productoInfo";
 		if(producto.nombre.length>=30){
-	    	caption.innerHTML+="<h3>"+producto.nombre.substring(0,30)+"...</h3>";
+	    	caption.innerHTML+="<h3>"+producto.nombre.substring(0,25)+"...</h3>";
 		}else{
 	    	caption.innerHTML+="<h3>"+producto.nombre+"</h3>";
 		}

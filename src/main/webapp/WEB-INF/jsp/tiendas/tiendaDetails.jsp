@@ -9,6 +9,8 @@
 
 <petclinic:layout pageName="tiendas">
 
+
+	<c:if test="${tienda.id != null || tienda.id == '' }">
 	<div class="row">
 		<div class="col-md-6">
 			<img src="<c:out value="${tienda.imagen}"/>" class="img-responsive"
@@ -53,43 +55,67 @@
 					<dd>
 						<c:out value="${tienda.telefono}" />
 					</dd>
+					<br>
 					<sec:authorize access="hasAuthority('admin')">
+					<dd>				
+					<spring:url value="/tienda/{tiendaId}/delete" var="tiendaDeleteUrl">
+						<spring:param name="tiendaId" value="${tienda.id}" />
+					</spring:url>	
+					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
+						<button class = "btn btn-default btn-sm">Eliminar tienda</button>
+					</a>
+					</dd>
+					</sec:authorize>
+					<c:if test="${miTienda}">
+					<sec:authorize access="hasAuthority('vendedor')">
 				<dd>				
 					<spring:url value="/tienda/{tiendaId}/delete" var="tiendaDeleteUrl">
 						<spring:param name="tiendaId" value="${tienda.id}" />
 					</spring:url>	
 					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
-						<button>Eliminar tienda</button>
+						<button class = "btn btn-default btn-sm">Eliminar tienda</button>
+						<br>
+
 					</a>
 				</dd>
+				<br>
 				</sec:authorize>
+					
+					</c:if>
+				
 				  <sec:authorize access="hasAuthority('admin')">
 				<dd>				
 					<spring:url value="/tienda/{tiendaId}/edit" var="tiendaEditUrl">
 						<spring:param name="tiendaId" value="${tienda.id}" />
 					</spring:url>	
 					<a href="${fn:escapeXml(tiendaEditUrl)}">
-						<button>Editar tienda</button>
+						<button class='btn btn-default btn-sm'>Editar tienda</button>
 					</a>
 				</dd>
 				</sec:authorize>
 				 <sec:authorize access="hasAuthority('vendedor')">
 <%-- 			        <sec:authentication var="user" property="name" /> --%>
 <%-- 					<c:if test="${username == user}"> --%>
+					<c:if test="${miTienda}">
 					<dd>				
 						<spring:url value="/tienda/{tiendaId}/edit" var="tiendaEditUrl">
 							<spring:param name="tiendaId" value="${tienda.id}" />
 						</spring:url>	
 						<a href="${fn:escapeXml(tiendaEditUrl)}">
-							<button>Editar tienda</button>
+
+							<button class='btn btn-default btn-sm'>Editar tienda</button>
+
 						</a>
 						<spring:url value="/tienda/{tiendaId}/productos/new" var="tiendaUrl">
 							<spring:param name="tiendaId" value="${tienda.id}" />
 						</spring:url>	
 						<a href="${fn:escapeXml(tiendaUrl)}">
-							<button>Nuevo Producto</button>
+
+							<button class='btn btn-default btn-sm'>Nuevo Producto</button>
+
 						</a>
 					</dd>
+					</c:if>
 
 					
 <%-- 					</c:if> --%>
@@ -113,16 +139,17 @@
 				<c:forEach items="${intolerancias}" var="intolerancia">
 					<input class="form-check-input" type="checkbox" id="${intolerancia}" />
 					<c:out value="${intolerancia}"></c:out>
-					</br>
-					</br>
+					<br>
 				</c:forEach>
 			</div>
 			<div id="preferencias">
 				<h3>Preferencias</h3>
-				<input class="form-check-input" type="radio" name = "preferencia" checked> NINGUNA </br></input>
+				<input class="form-check-input" type="radio" name = "preferencia" checked> NINGUNA</input><br>
 				<c:forEach items="${preferencias}" var="preferencia">
-					<input class="form-check-input" type="radio" name = "preferencia" id="${preferencia}" />	
+					<c:if	test="${preferencia != 'TODO' && preferencia != null}"> 
+					<input class="form-check-input" type="radio" name = "preferencia" id="${preferencia}" />
 					<c:out value="${preferencia}"></c:out>
+					</c:if>
 					</br>
 				</c:forEach>
 				</br>
@@ -132,6 +159,7 @@
 	</div>
 	<spring:url value="/tienda/${tienda.id}/" var="tiendaUrl"></spring:url>
 	<spring:url value="/producto/" var="productoUrl"></spring:url>
+	<spring:url value="/tienda/${tienda.id}/producto/" var="productoEditarUrl"></spring:url>
 	<script type="text/javascript">
 	
 		function Buscar(){
@@ -147,13 +175,16 @@
 	
     	var intolerancias = new Array();
         var preferencias = new Array();
-		<c:forEach items="${tienda.productos}" var="producto"> 
+		<c:forEach items="${tienda.productos}" var="producto">
+			<c:if test="${producto.estado == 'ACEPTADO' || miTienda}">
 		    productoDetails = new Object();
 		    productoDetails.id =  "${producto.id}"; 
 		    productoDetails.nombre = "${producto.nombre}";
 		    productoDetails.precio = "${producto.precio}";
 		    productoDetails.marca = "${producto.marca}";
 		    productoDetails.imagen = "${producto.imagen}";
+		    productoDetails.estado = "${producto.estado}";
+		    productoDetails.tiendaid = "${producto.tienda.id}";
 		    productoDetails.intolerancias = new Array();
 		    <c:forEach items="${producto.intolerancia}" var="intolerancia">
 		    	productoDetails.intolerancias.push("${intolerancia}");
@@ -163,6 +194,7 @@
 		    productoDetails.preferencia = "${producto.preferencia}";
 		    preferencias.push(productoDetails.preferencia);/*2 - quitar cuando esten los checkbox*/
 		    productos.push(productoDetails);
+		    </c:if>
 		</c:forEach> 
 		productos.forEach(producto=> printProducto(producto));
 		
@@ -265,11 +297,12 @@
     
  		var url = document.createElement("a");
  		url.href="${fn:escapeXml(productoUrl)}"+producto.id;
+ 		url.className="producto-img";
  		url.appendChild(img);
     	thumbnail.appendChild(url);
 
-    
-    	var caption = document.createElement('div'); 
+    	
+    	var caption = document.createElement('div');
 		caption.className = "caption";
 		caption.id = "productoInfo";
 		if(producto.nombre.length>=30){
@@ -277,10 +310,45 @@
 		}else{
 	    	caption.innerHTML+="<h3>"+producto.nombre+"</h3>";
 		}
+		
 
-    	caption.innerHTML+="<p> Marca: "+producto.marca+"</p>"
+    	caption.innerHTML+="<p> Marca: "+producto.marca+"</p>";
     	caption.innerHTML+="<h3>"+producto.precio+"<span class='glyphicon glyphicon-euro' aria-hidden='true'></span></h3>";
-    	caption.innerHTML+="<button class='btn btn-default btn-sm'>Resevar</button>";
+    	<c:if test="${!miTienda}">
+    	<sec:authorize access="isAuthenticated()">
+    	caption.innerHTML+="<a href='/tienda/"+producto.tiendaid+"/producto/"+producto.id+"/reservar'><button class='btn btn-default btn-sm'>Reservar</button></br></br></a>";
+		</sec:authorize>
+    	</c:if>
+    	
+
+    	<c:if test="${miTienda}">
+    	var url = document.createElement("a");
+ 		url.href="${fn:escapeXml(productoEditarUrl)}"+producto.id+"/edit";
+    	button = document.createElement("button");
+    	button.className = 'btn btn-default btn-sm';   	
+		button.innerHTML="Editar";
+ 		url.appendChild(button);
+    	caption.appendChild(url);
+		</c:if>
+		if(producto.estado == "ACEPTADO" && ${miTienda}){
+    		check = document.createElement("i");
+    		check.className="fa fa-check";
+    		check.style.cssText+="margin-left: 2%";
+    		caption.appendChild(check);
+    	}
+		else if(producto.estado == "RECHAZADO" && ${miTienda}){
+    		check = document.createElement("i");
+    		check.className="fa fa-close";
+    		check.style.cssText+="margin-left: 2%";
+    		caption.appendChild(check);
+    	}
+		else if(${miTienda}){
+    		check = document.createElement("i");
+    		check.className="fa fa-clock-o";
+    		check.style.cssText+="margin-left: 2%";
+    		caption.appendChild(check);
+    	}	
+
     	thumbnail.appendChild(caption);
     	prodDiv.appendChild(thumbnail);
 		document.getElementById('productos').appendChild(prodDiv);
@@ -291,4 +359,20 @@
 		};
 
 </script>
+</c:if>
+<c:if test="${tienda.id == null}">
+<div class="col-md-12">
+<h3>No tienes todav�a ninguna tienda</h3>
+<p>Puedes crear una haciendo click en:</p> 
+<br>
+</div>
+
+<div class="col-md-12">
+<spring:url value="/tiendas/new" var="tiendaNew">
+</spring:url>	
+<a href="${fn:escapeXml(tiendaNew)}">
+	<button class='btn btn-default btn-sm'>Crear tienda</button>
+</a>
+</div>
+</c:if>
 </petclinic:layout>
