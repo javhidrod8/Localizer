@@ -8,7 +8,7 @@
 </head>
 <body>
 	<c:if test="'${error}'" <h3 style='color: red;'>${error}</h3></c:if>
-	<c:else
+	<c:else>
 		<div>
 		<h3 style='color: green;'>Pago realizado con exito</h3>
 		<div>
@@ -25,6 +25,6 @@
 		</div>
 		</div>
 	</c:else>
-	<a href='/'>Ir al inicio</a>
+	<a href='/tiendas/new'>Ir al inicio</a>
 </body>
 </html>

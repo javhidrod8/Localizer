@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class TiendaController {
 	private static final String VIEWS_TIENDA_CREATE_OR_UPDATE_FORM = "tiendas/createOrUpdateTiendaForm";
-	private static final String VIEWS_ERROR_AUTH = "productos/createOrUpdateProductoForm";
+	private static final String VIEWS_ERROR_AUTH = "errores/errorAuth";
 	private final TiendaService tiendaService;
 	private final UserService userService;
 
@@ -101,7 +101,7 @@ public class TiendaController {
 			Tienda tienda = user.getTienda();
 			if(tienda == null) {
 				if (auth.equals("vendedor") || auth.equals("admin")) {
-					return "redirect:/tiendas/new";
+					return "redirect:/checkout";
 				}
 			}
 			Iterable<Producto> productos = this.tiendaService.findProductos();
