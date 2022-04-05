@@ -17,6 +17,7 @@
             <th>Marca</th>
             <th>Cantidad</th>
             <th>Tienda</th>
+            <th>Estado</th>
             <th>Comentario</th>
             <th>Acción</th>
 
@@ -67,6 +68,10 @@
                 </td>
                <td>
                     <c:out value="${reserva.tienda.nombre}"/>
+                </td>
+                
+                <td>
+                    <c:out value="${reserva.estado}"/>
                 </td>
                <td>
                     <c:out value="${reserva.comentario}"/>
