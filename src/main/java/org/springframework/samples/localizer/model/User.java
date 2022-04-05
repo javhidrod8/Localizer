@@ -42,7 +42,6 @@ public class User{
 	private Tienda tienda;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	@NotEmpty
 	private Set<Authorities> authorities;
 
 	public String getUsername() {

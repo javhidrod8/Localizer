@@ -57,4 +57,5 @@ public class UserService {
 	public void deleteUser(User user) throws DataAccessException {
 		userRepository.delete(user);
 	}
+	
 }

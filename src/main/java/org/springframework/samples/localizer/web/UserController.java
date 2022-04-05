@@ -1,6 +1,7 @@
 package org.springframework.samples.localizer.web;
 
 import java.util.Map;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -9,6 +10,7 @@ import org.springframework.samples.localizer.model.Authorities;
 import org.springframework.samples.localizer.model.Tienda;
 import org.springframework.samples.localizer.model.User;
 import org.springframework.samples.localizer.service.AuthoritiesService;
+import org.springframework.samples.localizer.service.TiendaService;
 import org.springframework.samples.localizer.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,11 +31,13 @@ class UserController {
 
 	private final UserService userService;
 	private final AuthoritiesService authoritiesService;
+	private final TiendaService tiendaService;
 
 	@Autowired
-	public UserController(UserService userService, AuthoritiesService authoritiesService) {
+	public UserController(UserService userService, AuthoritiesService authoritiesService, TiendaService tiendaService) {
 		this.userService = userService;
 		this.authoritiesService = authoritiesService;
+		this.tiendaService = tiendaService;
 	}
 
 	@InitBinder
@@ -129,35 +133,34 @@ class UserController {
 	}
 */
 
-	@GetMapping("/users/edit")
+	@GetMapping("/users/{username}/edit")
 	public String initUpdateUserForm(Map<String, Object> model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		org.springframework.security.core.userdetails.User userSession = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
 		String username = userSession.getUsername();
 		User user = this.userService.findUser(username);
-		model.put("user", user);
+		Set<Authorities> a = user.getAuthorities();
 		Boolean isNew = false;
+		model.put("user", user);
+		model.put("authorities", a);
 		model.put("isNew", isNew);
-		Authorities auth = new Authorities();
-		model.put("authorities", auth);
 		Integer tiendaId = user.getTienda().getId();
 		model.put("tiendaId", tiendaId);
 		return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping("/users/edit")
-	public String processUpdateUserForm(@Valid User user, BindingResult result,  Map<String, Object> model) {
+	@PostMapping("/users/{username}/edit")
+	public String processUpdateUserForm(@PathVariable("username") String username,@Valid Authorities authorities, @Valid Integer tiendaId, @Valid User user,BindingResult result,  Map<String, Object> model) {
 		if (result.hasErrors()) {
 			model.put("user", user);
 			Boolean isNew = false;
-			model.put("isNew", isNew);
-			Authorities auth = new Authorities();
-			model.put("authorities", auth);
-			Integer tiendaId = user.getTienda().getId();
+			model.put("isNew", isNew);	
+			model.put("authorities", authorities);
 			model.put("tiendaId", tiendaId);
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
-		else {
+		else {	
+			user.setUsername(username);
 			this.userService.saveUser(user);
 			return "redirect:/users/" + user.getUsername();
 		}

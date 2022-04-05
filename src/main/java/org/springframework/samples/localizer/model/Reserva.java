@@ -26,7 +26,7 @@ public class Reserva extends BaseEntity{
 	
 	private String comentario;
 	
-	@NotNull
+	
 	private Double precio_total;
 	
 	@NotNull
