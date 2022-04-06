@@ -85,7 +85,7 @@ public class ProductoServiceTest {
 	public void shouldFindProductosByEstado() {
 
 		Collection<Producto> productos = this.productoService.findProductoByEstado(Estado.PENDIENTE);
-		assertThat(productos.size()).isEqualTo(39);
+		assertThat(productos.size()).isEqualTo(34);
 	}
 	
 	@Test
