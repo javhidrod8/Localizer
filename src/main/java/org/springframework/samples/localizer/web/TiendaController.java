@@ -144,7 +144,7 @@ public class TiendaController {
 	}
 
 	@GetMapping(value = "/tiendas/search/{codigoPostal}")
-	public String tiendasByCP(@PathVariable("codigoPostal") Integer codigoPostal, ModelMap modelMap) {
+	public String tiendasByCP(@PathVariable("codigoPostal") String codigoPostal, ModelMap modelMap) {
 		String vista = "tiendas/tiendasList";
 		Iterable<Tienda> tiendas = this.tiendaService.findByCodigoPostal(codigoPostal);
 		modelMap.addAttribute("tiendas", tiendas);
