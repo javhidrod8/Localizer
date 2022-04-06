@@ -66,7 +66,7 @@ public class Tienda extends BaseEntity{
 	public String toString() {
 		return "Tienda [nombre=" + nombre + ", descripcion=" + descripcion + ", calle=" + calle + ", provincia="
 				+ provincia + ", codigoPostal=" + codigoPostal + ", telefono=" + telefono + ", imagen=" + imagen
-				+ ", horario=" + horario + ", productos=" + productos + ", user=" + user + "]";
+				+ ", horario=" + horario + ", productos=" + productos + "]";
 	}
 
 	public String getNombre() {

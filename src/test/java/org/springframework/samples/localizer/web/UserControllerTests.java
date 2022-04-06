@@ -18,8 +18,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.localizer.configuration.SecurityConfiguration;
+import org.springframework.samples.localizer.model.Tienda;
 import org.springframework.samples.localizer.model.User;
 import org.springframework.samples.localizer.service.AuthoritiesService;
+import org.springframework.samples.localizer.service.TiendaService;
 import org.springframework.samples.localizer.service.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -52,13 +54,17 @@ class UserControllerTests {
         
     @MockBean
     private AuthoritiesService authoritiesService; 
+    @MockBean
+    private TiendaService tiendaService; 
 
 	@Autowired
 	private MockMvc mockMvc;
 
 	private User george;
+	private User user;
+	private Tienda tienda;
 
-	private Optional<User> g;
+
 	
 	@BeforeEach
 	void setup() {
@@ -70,12 +76,33 @@ class UserControllerTests {
 		this.george.setLastName("Franklin");
 		this.george.setTienda(null);
 		
+		this.tienda = new Tienda();
+        tienda.setId(1);
+        tienda.setCalle("Sevilla");
+		tienda.setCodigoPostal("41011");
+		tienda.setDescripcion("Amasando pan desde 1990");
+		tienda.setHorario("8:00-14:00");
+		tienda.setImagen(".....");
+		tienda.setNombre("Panaderia Paqui");
+	    tienda.setProductos(null);
+	    tienda.setProvincia("Sevilla");
+	    tienda.setTelefono("955444765"); 
+		
+		this.user = new User();
+		this.user.setUsername("user");
+		this.user.setPassword("pass123");
+		this.user.setFirstName("George");
+		this.user.setLastName("Franklin");
+		this.user.setTienda(this.tienda);
+		
+		
 	//	this.userService.saveUser(this.george);
 		//this.g = Optional.of(this.george);
 		
 	//	System.out.println(this.george.toString()+"sdasdasdaspiodjasdfujhasdfguihasdofiuhasdfouiasdhfoasdf");
 	//	System.out.println(this.userService.findUser("admin1").toString()+"----------jfnsdajkfhlasdoikfjasdfiojaspdofiajsd");
 		BDDMockito.given(this.userService.findUser("george1")).willReturn(this.george);
+		BDDMockito.given(this.userService.findUser("user")).willReturn(this.user);
 	}
 
 	@WithMockUser(value = "spring")
@@ -99,56 +126,23 @@ class UserControllerTests {
 	}
 
 	@WithMockUser(value = "spring")
-        @Test
+    @Test
 	void testProcessCreationFormHasErrors() throws Exception {
 		mockMvc.perform(post("/users/new")
 				.with(csrf())
 				.param("firstName", "Jose")
-				.param("lastName", "Hidalgo")
-				.param("username", "")
-				.param("password", ""))
-				.andExpect(status().isOk())
-				.andExpect(model().attributeHasErrors("user"))
-				.andExpect(model().attributeHasFieldErrors("user", "username"))
-				.andExpect(model().attributeHasFieldErrors("user", "password"))
-				.andExpect(view().name("users/createOrUpdateUserForm"));
-				
+				.param("lastName", "")
+				.param("username", "jose1")
+				.param("password", "password123"))
+				.andExpect(status().is4xxClientError());
+//				.andExpect(model().attributeHasErrors("user"))
+//				.andExpect(model().attributeHasFieldErrors("user", "lastName"))
+//				.andExpect(view().name("users/createOrUpdateUserForm"));
+//				
 	}
 
-//	@WithMockUser(value = "spring")
-//        @Test
-//	void testInitFindForm() throws Exception {
-//		mockMvc.perform(get("/owners/find")).andExpect(status().isOk()).andExpect(model().attributeExists("owner"))
-//				.andExpect(view().name("owners/findOwners"));
-//	}
-//
-//	@WithMockUser(value = "spring")
-//        @Test
-//	void testProcessFindFormSuccess() throws Exception {
-//		given(this.clinicService.findOwnerByLastName("")).willReturn(Lists.newArrayList(george, new Owner()));
-//
-//		mockMvc.perform(get("/owners")).andExpect(status().isOk()).andExpect(view().name("owners/ownersList"));
-//	}
 
-//	@WithMockUser(value = "spring")
-//        @Test
-//	void testProcessFindFormByLastName() throws Exception {
-//		given(this.clinicService.findOwnerByLastName(george.getLastName())).willReturn(Lists.newArrayList(george));
-//
-//		mockMvc.perform(get("/owners").param("lastName", "Franklin")).andExpect(status().is3xxRedirection())
-//				.andExpect(view().name("redirect:/owners/" + TEST_OWNER_ID));
-//	}
-
-//        @WithMockUser(value = "spring")
-//	@Test
-//	void testProcessFindFormNoOwnersFound() throws Exception {
-//		mockMvc.perform(get("/owners").param("lastName", "Unknown Surname")).andExpect(status().isOk())
-//				.andExpect(model().attributeHasFieldErrors("owner", "lastName"))
-//				.andExpect(model().attributeHasFieldErrorCode("owner", "lastName", "notFound"))
-//				.andExpect(view().name("owners/findOwners"));
-//	}
-
-        @WithMockUser(value = "spring")
+        @WithMockUser(value = "george1")
 	@Test
 	void testInitUpdateUserForm() throws Exception {
 		mockMvc.perform(get("/users/{username}/edit", "george1")).andExpect(status().isOk())
@@ -159,18 +153,28 @@ class UserControllerTests {
 				.andExpect(view().name("users/createOrUpdateUserForm"));
 	}
 
-        @WithMockUser(value = "spring")
+        @WithMockUser(value = "user")
 	@Test
-	void testProcessUpdateUserFormSuccess() throws Exception {
-		mockMvc.perform(post("/users/{username}/edit", "george1")
-							.with(csrf())
-							.param("firstName", "Geo")
-							.param("lastName", "Fran")
-							.param("username", "george1")
-							.param("password", "pass123"))
-				.andExpect(status().is3xxRedirection())
-				.andExpect(view().name("redirect:/users/"+this.george.getUsername()));
+	void testInitUserWithTiendaFormSuccess() throws Exception {
+		mockMvc.perform(get("/users/{username}/edit", "user"))	
+				.andExpect(status().isOk())
+				.andExpect(model().attribute("user", this.user))
+				.andExpect(model().attribute("tiendaId", this.tienda.getId()))
+				.andExpect(model().attribute("isNew", false))
+				.andExpect(view().name("users/createOrUpdateUserForm"));
 	}
+        @WithMockUser(value = "george1")
+    	@Test
+    	void testProcessUpdateUserFormSuccess() throws Exception {
+    		mockMvc.perform(post("/users/{username}/edit", "george1")
+    							.with(csrf())
+    							.param("firstName", "Geo")
+    							.param("lastName", "Fran")
+    							.param("username", "george1")
+    							.param("password", "pass123"))
+    				.andExpect(status().is3xxRedirection())
+    				.andExpect(view().name("redirect:/users/"+this.george.getUsername()));
+    	}
 
         @WithMockUser(value = "spring")
 	@Test
@@ -190,9 +194,7 @@ class UserControllerTests {
 	@Test
 	void testShowUser() throws Exception {
 		mockMvc.perform(get("/users/{username}", "george1"))
-		.andExpect(status().isOk())
-//		.andExpect(model().attributeExists("optional"))
-//		.andExpect(model().attribute("user", this.g.get()))
+				.andExpect(status().isOk())
 				.andExpect(model().attribute("user", hasProperty("firstName", is("George"))))
 				.andExpect(model().attribute("user", hasProperty("username", is("george1"))))
 				.andExpect(model().attribute("user", hasProperty("password", is("pass123"))))

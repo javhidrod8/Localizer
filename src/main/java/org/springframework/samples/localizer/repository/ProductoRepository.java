@@ -10,7 +10,7 @@ import org.springframework.samples.localizer.model.Preferencias;
 import org.springframework.samples.localizer.model.Producto;
 
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
-
+	
 	Producto findById(int id) throws DataAccessException;
 
 	@Query("select p from Producto p where p.tienda.id like ?1")

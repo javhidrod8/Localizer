@@ -213,3 +213,6 @@ INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (44,1);
 --Tienda 10
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (46,2);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (47,2);
+
+
+INSERT INTO reservas(producto_id,tienda_id, cantidad, precio_total,user_username,estado) VALUES (1,1,2,2.00,'cliente1',0);

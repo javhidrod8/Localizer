@@ -38,7 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProductoController {
 
 	private static final String VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM = "productos/createOrUpdateProductoForm";
-	private static final String VIEWS_ERROR_AUTH = "productos/createOrUpdateProductoForm";
+	private static final String VIEWS_ERROR_AUTH = "errores/errorAuth";
 	private static final String VIEWS_PRODUCTO_RECHAZAR_FORM = "productos/rechazarProductoForm";
 	private final ProductoService productoService;
 	private final IntoleranciasService intoleranciasService;

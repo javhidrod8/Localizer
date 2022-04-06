@@ -1,5 +1,5 @@
 # This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+# For more information ee: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
 name: Java CI with Maven
 
@@ -8,11 +8,6 @@ on:
     branches: [ develop ]
   pull_request:
     branches: [ develop ]
-    
-env:
-  DB_DATABASE: localizer
-  DB_USER: root
-  DB_PASSWORD: localizer
   
 jobs:
   build:
@@ -20,16 +15,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up MySQL
-        run: |  
-          sudo /etc/init.d/mysql start
-          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
-      - uses: actions/checkout@v2
-      - name: Set up JDK 8
-        uses: actions/setup-java@v2
-        with:
+       - name: Set up MySQL 5.7
+         uses: javhidrod8/Localizer@develop
+         with:
+           mysql version: 5.7
+           mysql database: localizer
+           mysql root password: localizer
+       - uses: actions/checkout@v1
+       - name: Set up JDK 8
+         uses: actions/setup-java@v2
+         with:
           java-version: '8'
           distribution: 'adopt'
           cache: maven
-      - name: Build with Maven Wrapper
-        run: ./mvnw -B package
+       - name: Build with Maven Wrapper
+         run: ./mvnw -B package

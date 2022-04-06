@@ -57,7 +57,7 @@ public class TiendaController {
 	public String productList(ModelMap modelMap, @PathVariable("tiendaId") int tiendaId) {
 		String vista = "tiendas/tiendaDetails";
 		Tienda tienda = this.tiendaService.findTiendaById(tiendaId);
-		Iterable<Producto> productos = this.tiendaService.findProductos();
+		Iterable<Producto> productos = this.tiendaService.findProductos(tiendaId);
 		Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
 		Set<Preferencias> preferencias = new HashSet<Preferencias>();
 		for (Producto p : productos) {
@@ -122,10 +122,9 @@ public class TiendaController {
 					return vista;
 				} else {
 					return VIEWS_ERROR_AUTH;
-		}
+        }
 		}
 		return "redirect:/login";
-
 	}
 
 	@GetMapping("/tiendas/new")

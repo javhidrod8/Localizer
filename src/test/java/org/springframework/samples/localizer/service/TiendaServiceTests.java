@@ -3,165 +3,192 @@ package org.springframework.samples.localizer.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
+
+import javax.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.samples.localizer.model.Authorities;
+import org.springframework.samples.localizer.model.Producto;
 import org.springframework.samples.localizer.model.Tienda;
+import org.springframework.samples.localizer.model.User;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlMergeMode;
+import org.springframework.test.context.jdbc.SqlMergeMode.MergeMode;
 import org.springframework.test.context.transaction.BeforeTransaction;
 
-
-
 @SpringBootTest
-class TiendaServiceTests {                
-    @Autowired
+//@Sql({ "/import.sql" })
+class TiendaServiceTests {
+	@Autowired
 	protected TiendaService tiendaService;
-    private static final Logger LOG = Logger.getLogger("org.springframework.samples.localizer.service.TiendaServiceTests");    
-    private Tienda tienda = new Tienda();
-    private Tienda tienda1= new Tienda();
-    private Tienda tienda2= new Tienda();
+	@Autowired
+	protected UserService userService;
+	@Autowired
+	protected AuthoritiesService authoritiesService;
+	private static final Logger LOG = Logger
+			.getLogger("org.springframework.samples.localizer.service.TiendaServiceTests");
+
 //
-//    @BeforeTransaction
-//	void setup() {
-//    	
-//		this.tienda.setCalle("Sevilla");
-//		this.tienda.setCodigoPostal(90);
-//		this.tienda.setDescripcion("Amasando pan desde 1990");
-//		this.tienda.setId(2);
-//		this.tienda.setHorario("8:00-14:00");
-//		this.tienda.setImagen(".....");
-//		this.tienda.setNombre("Panaderia Paqui");
-//	    this.tienda.setProductos(null);
-//	    this.tienda.setProvincia("Sevilla");
-//	    this.tienda.setTelefono(955444765);      
-//	    
-//	    this.tiendaService.saveTienda(this.tienda);
-//	    
-//		this.tienda1.setCalle("Sevilla");
-//		this.tienda1.setCodigoPostal(89);
-//		this.tienda1.setDescripcion("Todo lo que necesitas");
-//		this.tienda1.setId(2);
-//		this.tienda1.setHorario("8:00-14:00");
-//		this.tienda1.setImagen(".....");
-//		this.tienda1.setNombre("Polvillo");
-//	    this.tienda1.setProductos(null);
-//	    this.tienda1.setProvincia("Sevilla");
-//	    this.tienda1.setTelefono(955444765);      
-//	          
-//	    this.tiendaService.saveTienda(this.tienda1);
-//
-//		this.tienda2.setCalle("Sevilla");
-//		this.tienda2.setCodigoPostal(89);
-//		this.tienda2.setDescripcion("Tu fruta desde 1990");
-//		this.tienda2.setId(2);
-//		this.tienda2.setHorario("8:00-14:00");
-//		this.tienda2.setImagen(".....");
-//		this.tienda2.setNombre("Fruteria pepi");
-//	    this.tienda2.setProductos(null);
-//	    this.tienda2.setProvincia("Sevilla");
-//	    this.tienda2.setTelefono(955444765);      
-//	         
-//	    this.tiendaService.saveTienda(this.tienda2);
-//	    
-//    }
 	@Test
-	//Encontrar tienda por el id
+	// Encontrar tienda por el id
 	void shouldFindTiendaById() {
-//		Tienda tienda = new Tienda(); 
-//		tienda.setCalle("Sevilla");
-//		tienda.setCodigoPostal(41011);
-//		tienda.setDescripcion("Amasando pan desde 1990");
-//		tienda.setId(2);
-//		tienda.setHorario("8:00-14:00");
-//		tienda.setImagen(".....");
-//		tienda.setNombre("Panaderia Paqui");
-//	    tienda.setProductos(null);
-//	    tienda.setProvincia("Sevilla");
-//	    tienda.setTelefono(955444765);      
-	    
-//	    this.tiendaService.saveTienda(tienda);
-		Tienda t = this.tiendaService.findTiendaById(1);
-		assertThat(t.getId()).isEqualTo(1).isNotNull();
-		
+
+		Tienda t = this.tiendaService.findTiendaById(4);
+		assertThat(t.getId()).isEqualTo(4).isNotNull();
+
 	}
-	@Test //CASO POSITIVO 
-	//Encontrar tienda por el cp
+
+	@Test
+	// NO Encontrar tienda por el id
+	void shouldNotFindTiendaById() {
+
+		Tienda t = this.tiendaService.findTiendaById(50);
+		assertThat(t).isEqualTo(null);
+
+	}
+
+	@Test // CASO POSITIVO
+	// Encontrar tienda por el cp
 	void shouldFindTiendaByCP() {
-//		Tienda tienda = new Tienda();                           
-//		tienda.setCalle("Sevilla");                        
-//		tienda.setCodigoPostal(90);                        
-//		tienda.setDescripcion("Amasando pan desde 1990");  
-//		tienda.setId(2);                                   
-//		tienda.setHorario("8:00-14:00");                   
-//		tienda.setImagen(".....");                         
-//		tienda.setNombre("Panaderia Paqui");               
-//		tienda.setProductos(null);                         
-//		tienda.setProvincia("Sevilla");                    
-//		tienda.setTelefono(955444765);                     
-		                                                        
-//		this.tiendaService.saveTienda(tienda);                  
 		List<Tienda> t = new ArrayList<>();
 		
 		t.addAll(this.tiendaService.findByCodigoPostal("41001"));
 		
 		int count = t.size();
+
 		
-		Assertions.assertTrue(count == 1);
+		assertThat(count).isEqualTo(1);
 	}
-	@Test //CASO POSITIVO
-	//Encontrar varias tiendas por el cp
+
+	@Test // CASO POSITIVO
+	// Encontrar varias tiendas por el cp
 	void shouldFindTiendasByCP() {
-//		Tienda tienda1 = new Tienda();
-//		tienda1.setCalle("Sevilla");
-//		tienda1.setCodigoPostal(89);
-//		tienda1.setDescripcion("Todo lo que necesitas");
-//		tienda1.setId(2);
-//		tienda1.setHorario("8:00-14:00");
-//		tienda1.setImagen(".....");
-//		tienda1.setNombre("Polvillo");
-//	    tienda1.setProductos(null);
-//	    tienda1.setProvincia("Sevilla");
-//	    tienda1.setTelefono(955444765);      
-//	          
-//	    this.tiendaService.saveTienda(tienda1);
-//	    
-//	    Tienda tienda2 = new Tienda();
-//		tienda2.setCalle("Sevilla");
-//		tienda2.setCodigoPostal(89);
-//		tienda2.setDescripcion("Tu fruta desde 1990");
-//		tienda2.setId(2);
-//		tienda2.setHorario("8:00-14:00");
-//		tienda2.setImagen(".....");
-//		tienda2.setNombre("Fruteria pepi");
-//	    tienda2.setProductos(null);
-//	    tienda2.setProvincia("Sevilla");
-//	    tienda2.setTelefono(955444765);      
-//	         
-//	    this.tiendaService.saveTienda(tienda2);
+//		
 		List<Tienda> t = new ArrayList<>();
 		
 		t.addAll(this.tiendaService.findByCodigoPostal("41009"));
 		
 		int count = t.size();
-		
-		Assertions.assertTrue(count == 4);
+
+		assertThat(count).isEqualTo(4);
 	}
-	@Test //CASO NEGATIVO
-	//No encontrar ninguna tienda por el cp
+
+	@Test // CASO NEGATIVO
+	// No encontrar ninguna tienda por el cp
 	void shouldNotFindTiendaByCP() {
-		
-		
+
 		List<Tienda> t = new ArrayList<>();
 		
 		t.addAll(this.tiendaService.findByCodigoPostal("0"));
 		
 		int count = t.size();
-		
-		Assertions.assertTrue(count == 0);
+
+		assertThat(count).isEqualTo(0);
 	}
-	
-	
+
+	@Test // CASO POSITIVO
+	// Guardar tienda
+	void shouldSaveTienda() {
+
+		Tienda tienda = new Tienda();
+		tienda.setCalle("Sevilla");
+		tienda.setCodigoPostal("40000");
+		tienda.setDescripcion("Amasando pan desde 1990");
+		tienda.setHorario("8:00-14:00");
+		tienda.setImagen(".....");
+		tienda.setNombre("Panaderia Paqui");
+		tienda.setProductos(null);
+		tienda.setProvincia("Sevilla");
+		tienda.setTelefono("955444765");
+		this.tiendaService.saveTienda(tienda);
+		Collection<Tienda> c = this.tiendaService.findByCodigoPostal("40000");
+
+		assertThat(c.iterator().next().getId()).isNotNull();
+	}
+
+	@Test // CASO NEGATIVO
+	// Guardar tienda
+	void shouldNotSaveTienda() {
+
+		Tienda tienda = new Tienda();
+		tienda.setCalle("Sevilla");
+		tienda.setCodigoPostal("41000");
+		tienda.setDescripcion("Amasando pan desde 1990");
+		tienda.setHorario("8:00-14:00");
+		tienda.setImagen(".....");
+		tienda.setNombre("");
+		tienda.setProductos(null);
+		tienda.setProvincia("");
+		tienda.setTelefono("955444765");
+
+		Assertions.assertThrows(ConstraintViolationException.class, () -> {
+			this.tiendaService.saveTienda(tienda);
+		});
+	}
+
+	@Test // CASO POSITIVO
+	// Encontrar todas las tiendas
+	void shouldFindAll() {
+
+		List<Tienda> t = new ArrayList<>();
+
+		t.addAll(this.tiendaService.findAll());
+
+		int count = t.size();
+
+		assertThat(count).isEqualTo(10);
+	}
+
+	@Test // CASO POSITIVO
+	// Encontrar todos los productos de una tienda
+	void shouldFindProductos() {
+
+		List<Producto> t = new ArrayList<>();
+
+		t.addAll(this.tiendaService.findProductos(2));
+
+		int count = t.size();
+
+		assertThat(count).isEqualTo(5);
+	}
+
+	@Test // CASO POSITIVO
+	// Borrar una tienda
+	void shouldDeleteTienda() {
+
+		List<Tienda> t = new ArrayList<>();
+
+		t.addAll(this.tiendaService.findByCodigoPostal("40000"));
+
+		this.tiendaService.deleteTienda(t.get(0));
+
+		Tienda tienda = this.tiendaService.findTiendaById(t.get(0).getId());
+		assertThat(tienda).isEqualTo(null);
+	}
+
+	@Test // CASO POSITIVO
+	// Guardar authority
+	void shouldSaveAuthority() {
+		User u = this.userService.findUser("cliente1");
+		this.userService.saveUser(u);
+		Authorities authority = new Authorities();
+		authority.setAuthority("cliente");
+		authority.setUser(u);
+		this.authoritiesService.saveAuthorities(authority);
+
+		List<Authorities> t = new ArrayList<>();
+		t.add(authority);
+
+		int count = t.size();
+
+		assertThat(count).isEqualTo(1);
+	}
+
 }
