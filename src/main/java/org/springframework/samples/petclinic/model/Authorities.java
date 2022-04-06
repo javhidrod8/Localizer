@@ -32,6 +32,11 @@ public class Authorities extends BaseEntity{
 	public void setAuthority(String authority) {
 		this.authority = authority;
 	}
+
+	@Override
+	public String toString() {
+		return "Authorities [user=" + user + ", authority=" + authority + "]";
+	}
 	
 	
 }

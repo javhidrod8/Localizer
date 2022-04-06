@@ -11,7 +11,65 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+.btn-delete{
+	margin-left:3px;
+}
+
+#checkout-form > button {
+	background-color: black;
+}
+
+#reservaTable > tbody > tr > td {
+	vertical-align: middle;
+}
+
+.tiendas {
+	width:100%;
+}
+
+.thumbnail img{
+	width: auto;
+	height:auto;
+	min-width:30px;
+	min-height:100px;
+	max-width:200px;
+	max-height: 150px;
+}
+
+.producto-img{
+    min-height: 160px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.producto-tienda-img{
+    min-height: 160px;
+    max-height: 300px;
+    display: flex;
+    align-items: center;
+}
+
+
+.edit-btn{
+    height: 100%;
+    display: flex;
+    align-items: center;
+	text-transform: none;
+}
+
+.edit-btn:hover{
+    height: 100%;
+    display: flex;
+    align-items: center;
+	text-transform: none!important;
+	text-decoration: none!important;
+}
+
 @icon-font-path:    "../../webjars/bootstrap/fonts/";
+
+@localizer-brown: #905d4c;
 
 @spring-green:      #6db33f;
 @spring-dark-green: #5fa134;
@@ -24,13 +82,13 @@
 @link-color:                        @spring-dark-green;
 @link-hover-color:                  @spring-dark-green;
 
-@navbar-default-link-color:         @spring-light-grey;
+@navbar-default-link-color:         black;
 @navbar-default-link-active-color:  @spring-light-grey;
 @navbar-default-link-hover-color:   @spring-light-grey;
-@navbar-default-link-hover-bg:      @spring-green;
+@navbar-default-link-hover-bg:      @localizer-brown;
 @navbar-default-toggle-icon-bar-bg: @spring-light-grey;
 @navbar-default-toggle-hover-bg:    transparent;
-@navbar-default-link-active-bg:     @spring-green;
+@navbar-default-link-active-bg:     @localizer-brown;
 
 @border-radius-base:             0;
 @border-radius-large:            0;
@@ -38,7 +96,7 @@
 
 @btn-default-color:              @spring-light-grey;
 @btn-default-bg:                 @spring-brown;
-@btn-default-border:             @spring-green;
+@btn-default-border:             @localizer-brown;
 
 @nav-tabs-active-link-hover-color:        @spring-light-grey;
 @nav-tabs-active-link-hover-bg:           @spring-brown;
@@ -60,7 +118,7 @@
 }
 
 .nav > li > a {
-  color: @spring-grey;
+  color: @localizer-brown;
 }
 
 .btn-default {
@@ -125,7 +183,7 @@ h1 {
 }
 
 .splash {
-  background: @spring-green;
+  background: @localizer-brown;
   color: @spring-brown;
   display: none;
 }
@@ -233,6 +291,8 @@ table td.action-column {
 hr {
   border-top: 1px dotted @spring-brown;
 }
+
+
 
 @import "typography.less";
 @import "header.less";
