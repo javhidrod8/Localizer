@@ -8,12 +8,17 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.UniqueElements;
 
 @Entity
 @Table(name = "intolerancias")
 public class Intolerancias extends BaseEntity{
 	    
         @Column(name = "nombre")
+//        @NotBlank
+//        @UniqueElements
         private String nombre;
         
         @ManyToMany(fetch = FetchType.LAZY,

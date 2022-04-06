@@ -144,8 +144,11 @@ class UserController {
 		model.put("user", user);
 		model.put("authorities", a);
 		model.put("isNew", isNew);
-		Integer tiendaId = user.getTienda().getId();
-		model.put("tiendaId", tiendaId);
+		if(user.getTienda() != null) {
+			Integer tiendaId = user.getTienda().getId();
+			model.put("tiendaId", tiendaId);
+		}
+		
 		return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 	}
 
