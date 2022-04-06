@@ -58,9 +58,9 @@ class TiendaServiceTests {
 	// Encontrar tienda por el cp
 	void shouldFindTiendaByCP() {
 		List<Tienda> t = new ArrayList<>();
-
+		
 		t.addAll(this.tiendaService.findByCodigoPostal("41001"));
-
+		
 		int count = t.size();
 
 		
@@ -72,9 +72,9 @@ class TiendaServiceTests {
 	void shouldFindTiendasByCP() {
 //		
 		List<Tienda> t = new ArrayList<>();
-
+		
 		t.addAll(this.tiendaService.findByCodigoPostal("41009"));
-
+		
 		int count = t.size();
 
 		assertThat(count).isEqualTo(4);
@@ -85,9 +85,9 @@ class TiendaServiceTests {
 	void shouldNotFindTiendaByCP() {
 
 		List<Tienda> t = new ArrayList<>();
-
+		
 		t.addAll(this.tiendaService.findByCodigoPostal("0"));
-
+		
 		int count = t.size();
 
 		assertThat(count).isEqualTo(0);

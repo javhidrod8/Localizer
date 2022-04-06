@@ -35,12 +35,12 @@ public class Tienda extends BaseEntity{
   
 	@Column(name = "codigo_postal")
 	@NotBlank
-	@Pattern(regexp="^([1-9]{2}|[0-9][1-9]|[1-9][0-9])[0-9]{3}$")
+	@Pattern(regexp="^([1-9]{2}|[0-9][1-9]|[1-9][0-9])[0-9]{3}$", message="El código postal debe ser válido")
 	private String codigoPostal;
 	
 	@Column(name = "telefono")
 	@NotBlank
-	@Pattern(regexp="^(?:(?:\\+?[0-9]{2,4})?[ ]?[6789][0-9 ]{8,13})$")
+	@Pattern(regexp="^(?:(?:\\+?[0-9]{2,4})?[ ]?[6789][0-9 ]{8,13})$", message="El teléfono debe ser válido")
 	private String telefono;
 	
 	@Column(name = "imagen")
