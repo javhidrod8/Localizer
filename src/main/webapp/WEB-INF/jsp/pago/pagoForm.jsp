@@ -12,7 +12,8 @@
 	<form action='/charge' method='POST' id='checkout-form'>
 	<div>
 		<input type='hidden' value='${amount * 100}' name='amount' /> 
-		<span>Precio: ${amount} euros.</span>
+		<h2>Precio por suscripción mensual para tienda:</h2>
+		<h3>${amount} euros</h3>
 	</div>
 	<br>
 	<div>
