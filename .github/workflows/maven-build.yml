@@ -5,14 +5,14 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ develop, Fix-UpdateCI ]
   pull_request:
-    branches: [ develop ]
+    branches: [ develop, Fix-UpdateCI ]
     
 env:
   DB_DATABASE: localizer
   DB_USER: root
-  DB_PASSWORD: localizer
+  DB_PASSWORD: root
   
 jobs:
   build:
