@@ -29,7 +29,7 @@ public class TiendaService {
 	}
 
 	@Transactional(readOnly = true)
-	public Collection<Tienda> findByCodigoPostal(Integer codigoPostal) throws DataAccessException {
+	public Collection<Tienda> findByCodigoPostal(String codigoPostal) throws DataAccessException {
 		return tiendaRepository.findByCodigoPostal(codigoPostal);
 	}
 

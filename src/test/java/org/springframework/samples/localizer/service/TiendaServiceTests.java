@@ -105,7 +105,7 @@ class TiendaServiceTests {
 //		this.tiendaService.saveTienda(tienda);                  
 		List<Tienda> t = new ArrayList<>();
 		
-		t.addAll(this.tiendaService.findByCodigoPostal(41001));
+		t.addAll(this.tiendaService.findByCodigoPostal("41001"));
 		
 		int count = t.size();
 		
@@ -143,7 +143,7 @@ class TiendaServiceTests {
 //	    this.tiendaService.saveTienda(tienda2);
 		List<Tienda> t = new ArrayList<>();
 		
-		t.addAll(this.tiendaService.findByCodigoPostal(41009));
+		t.addAll(this.tiendaService.findByCodigoPostal("41009"));
 		
 		int count = t.size();
 		
@@ -156,7 +156,7 @@ class TiendaServiceTests {
 		
 		List<Tienda> t = new ArrayList<>();
 		
-		t.addAll(this.tiendaService.findByCodigoPostal(0));
+		t.addAll(this.tiendaService.findByCodigoPostal("0"));
 		
 		int count = t.size();
 		

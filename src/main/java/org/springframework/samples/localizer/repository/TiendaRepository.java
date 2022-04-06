@@ -19,6 +19,6 @@ public interface TiendaRepository extends JpaRepository<Tienda, Integer> {
 	public List<Producto> findAllProductos();
 	
 	@Query("select t from Tienda t where t.codigoPostal = ?1")
-	Collection<Tienda> findByCodigoPostal(Integer codigoPostal);
+	Collection<Tienda> findByCodigoPostal(String codigoPostal);
 
 }
