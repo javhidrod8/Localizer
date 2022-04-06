@@ -73,6 +73,7 @@
 							rows="3" style="pointer-events: none" readonly>${producto.descripcion}</textarea>
 						<br>
 					</div>
+					<c:if test="${producto.estado=='PENDIENTE'}">
 					<div id="intolerancias-producto">
 						<h3>Intolerancias</h3>
 					</div>
@@ -80,7 +81,7 @@
 					<div id="preferencias-producto">
 						<h3>Preferencias</h3>
 					</div>
-
+					</c:if>
 
 					<div id="estado-producto">
 
