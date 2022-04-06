@@ -101,6 +101,30 @@
 
 
 			</sec:authorize>
+			
+			<sec:authorize access="hasAuthority('admin')">
+
+					<spring:url value="/tienda/{tiendaId}/producto/{productoId}/edit"
+						var="productoUrl">
+						<spring:param name="tiendaId" value="${producto.tienda.id}" />
+						<spring:param name="productoId" value="${producto.id}" />
+					</spring:url>
+					<spring:url value="/tienda/{tiendaId}/producto/{productoId}/delete"
+						var="productoUrlBorrar">
+						<spring:param name="tiendaId" value="${producto.tienda.id}" />
+						<spring:param name="productoId" value="${producto.id}" />
+					</spring:url>
+					<a href="${fn:escapeXml(productoUrl)}">
+
+						<button class='btn btn-default btn-sm'>Editar producto</button>
+
+					</a>
+					<a href="${fn:escapeXml(productoUrlBorrar)}">
+						<button class='btn btn-default btn-sm'>Borrar producto</button>
+					</a>
+
+
+			</sec:authorize>
 
 		</div>
 

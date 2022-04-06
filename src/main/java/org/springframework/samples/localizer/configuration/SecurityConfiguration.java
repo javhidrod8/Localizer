@@ -47,10 +47,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/producto/**").permitAll()
 				//.antMatchers("/reserva/**").permitAll()
 				.antMatchers("/pay/**").permitAll()
-				.antMatchers("/test/**").permitAll()
+				.antMatchers("/test/**").hasAnyAuthority("vendedor")
 				.antMatchers("/paypal/**").permitAll()
 				.antMatchers("/checkout/**").permitAll()
 				.antMatchers("/charge/**").permitAll()
+
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
