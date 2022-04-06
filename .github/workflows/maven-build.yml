@@ -10,9 +10,9 @@ on:
     branches: [ develop, Fix-UpdateCI ]
     
 env:
-  DB_DATABASE: test_db
+  DB_DATABASE: jdbc:mysql://localhost:3306/localizer?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=CET&createDatabaseIfNotExist=true
   DB_USER: root
-  DB_PASSWORD: root
+  DB_PASSWORD: localizer
   
 jobs:
   build:
