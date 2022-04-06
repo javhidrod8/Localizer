@@ -53,6 +53,7 @@ class UserController {
 		model.put("authorities", auth);
 		Boolean isNew = true;
 		model.put("isNew", isNew);
+		model.put("tiendaId", 0);
 		return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 	}
 
@@ -60,12 +61,13 @@ class UserController {
 	public String processCreationForm(@Valid User user,@Valid Authorities auth, BindingResult result, Map<String, Object> model) {
 		
 		if (result.hasErrors()) {
+			System.out.println("SALE POR EL IF");
 			model.put("user",user);
 			model.put("authorities", auth);
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			
+			System.out.println("SALE POR EL ELSE");
 			String username = user.getUsername();
 			String auth1 = auth.getAuthority();
 			this.userService.saveUser(user);
