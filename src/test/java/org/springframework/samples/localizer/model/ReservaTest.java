@@ -81,30 +81,7 @@ public class ReservaTest {
 		assertThat(reserva.getProducto()).isEqualTo(producto);
 	}
 	
-	@Test
-	void shouldNotValidateWhenPrecioTotalNull() {
-		LocaleContextHolder.setLocale(Locale.ENGLISH);
-		Tienda tienda = new Tienda();
-		Producto producto = new Producto();
-		User user = new User();
-		Reserva reserva = new Reserva(tienda,producto);
-		reserva.setCantidad(2);
-		reserva.setComentario("Orlando");
-		reserva.setPrecio_total(null);
-		reserva.setEstado(Estado.PENDIENTE);
-		reserva.setUser(user);
-		reserva.toString();
-		
-		Validator validator = createValidator();
-		Set<ConstraintViolation<Reserva>> constraintViolations = validator.validate(reserva);
-		
-		assertThat(constraintViolations.size()).isEqualTo(1);
-		assertThat(reserva.getPrecio_total()).isEqualTo(null);
-		ConstraintViolation<Reserva> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("precio_total");
-		assertThat(violation.getMessage()).isEqualTo("must not be null");
-
-	}
+	
 	@Test
 	void shouldNotValidateWhenCantidadNull() {
 		LocaleContextHolder.setLocale(Locale.ENGLISH);

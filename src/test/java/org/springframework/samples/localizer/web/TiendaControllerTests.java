@@ -213,7 +213,7 @@ public class TiendaControllerTests {
     @Test
     void testMiTiendaWithoutTienda() throws Exception {
         mockMvc.perform(get("/tiendas/miTienda")).andExpect(status().is3xxRedirection())
-        .andExpect(view().name("redirect:/tiendas/new"));
+        .andExpect(view().name("redirect:/checkout"));
     }
     
     @WithMockUser(value="admin", authorities = "admin")
@@ -227,7 +227,7 @@ public class TiendaControllerTests {
     @Test
     void testMiTiendaCliente() throws Exception {
         mockMvc.perform(get("/tiendas/miTienda")).andExpect(status().isOk())
-        .andExpect(view().name("productos/createOrUpdateProductoForm"));
+        .andExpect(view().name("errores/errorAuth"));
     }
     @WithMockUser(value="localizer1",authorities = "vendedor")
     @Test
@@ -241,14 +241,14 @@ public class TiendaControllerTests {
     void testDeleteError() throws Exception {
         mockMvc.perform(get("/tienda/{tiendaId}/delete", TEST_TIENDA_ID))
         .andExpect(status().isOk())
-        .andExpect(view().name("productos/createOrUpdateProductoForm"));
+        .andExpect(view().name("errores/errorAuth"));
     }
     @WithMockUser(value = "localizer1")
     @Test
     void testNotInitCreationTiendaForm() throws Exception {
         mockMvc.perform(get("/tiendas/new"))
         .andExpect(status().isOk())
-        .andExpect(view().name("productos/createOrUpdateProductoForm"));
+        .andExpect(view().name("errores/errorAuth"));
     }
     @WithMockUser(value = "localizer", authorities = "vendedor")
     @Test
@@ -265,6 +265,13 @@ public class TiendaControllerTests {
         .andExpect(status().isOk())
         .andExpect(model().attribute("tienda",this.tienda))
         .andExpect(view().name("tiendas/createOrUpdateTiendaForm"));
+    }
+    @WithMockUser(value = "localizer1")
+    @Test
+    void testNotInitUpdateTiendaForm() throws Exception {
+        mockMvc.perform(get("/tienda/{tiendaId}/edit",TEST_TIENDA_ID))
+        .andExpect(status().isOk())
+        .andExpect(view().name("errores/errorAuth"));
     }
     
 }
