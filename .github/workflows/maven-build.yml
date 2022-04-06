@@ -5,9 +5,9 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ develop, Fix-UpdateCI ]
+    branches: [ develop ]
   pull_request:
-    branches: [ develop, Fix-UpdateCI ]
+    branches: [ develop ]
   
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
 
     steps:
        - name: Set up MySQL 5.7
-         uses: javhidrod8/Localizer@Fix-UpdateCI
+         uses: javhidrod8/Localizer@develop
          with:
            mysql version: 5.7
            mysql database: localizer
