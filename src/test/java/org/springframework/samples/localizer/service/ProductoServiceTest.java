@@ -70,7 +70,7 @@ public class ProductoServiceTest {
 
 		int count = p.size();
 
-		Assertions.assertTrue(count == 0);
+		assertThat(count).isEqualTo(0);
 	}
 
 	@Test

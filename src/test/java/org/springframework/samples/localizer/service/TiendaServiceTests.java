@@ -63,7 +63,8 @@ class TiendaServiceTests {
 
 		int count = t.size();
 
-		Assertions.assertTrue(count == 1);
+		
+		assertThat(count).isEqualTo(1);
 	}
 
 	@Test // CASO POSITIVO
@@ -76,7 +77,7 @@ class TiendaServiceTests {
 
 		int count = t.size();
 
-		Assertions.assertTrue(count == 4);
+		assertThat(count).isEqualTo(4);
 	}
 
 	@Test // CASO NEGATIVO
@@ -89,7 +90,7 @@ class TiendaServiceTests {
 
 		int count = t.size();
 
-		Assertions.assertTrue(count == 0);
+		assertThat(count).isEqualTo(0);
 	}
 
 	@Test // CASO POSITIVO

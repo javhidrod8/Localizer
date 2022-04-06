@@ -49,7 +49,7 @@ public class Producto extends BaseEntity {
 		this.motivo = motivo;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "producto_intolerancias", joinColumns = @JoinColumn(name = "producto_id"), inverseJoinColumns = @JoinColumn(name = "intolerancias_id"))
 	private Set<Intolerancias> intolerancia;
 
