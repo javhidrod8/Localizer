@@ -93,43 +93,45 @@ public class TiendaController {
 		String vista = "tiendas/tiendaDetails";
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
-		String auth = currentPrincipalName.iterator().next().toString().trim();
-		if (auth.equals("vendedor") || auth.equals("admin")) {
-			User userSession = (User) authentication.getPrincipal();
-			String username = userSession.getUsername();
-			org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
-			Tienda tienda = user.getTienda();
-			if (tienda == null) {
-				if (auth.equals("vendedor") ) {
-					return "redirect:/checkout";
-				} else if(auth.equals("admin")) {
-					return "redirect:/tiendas/new";
-				}
-			}
-			Iterable<Producto> productos = this.tiendaService.findProductos(tienda.getId());
-
-			Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
-			Set<Preferencias> preferencias = new HashSet<Preferencias>();
-			for (Producto p : productos) {
-				intolerancias.addAll(p.getIntolerancia());
-				preferencias.add(p.getPreferencia());
-			}
-			modelMap.addAttribute("tienda", tienda);
-			modelMap.addAttribute("productos", productos);
-			modelMap.addAttribute("intolerancias", intolerancias);
-			modelMap.addAttribute("preferencias", preferencias);
-			modelMap.addAttribute("miTienda", true);
-			return vista;
-		} else {
-			return VIEWS_ERROR_AUTH;
+		if (authentication.getPrincipal() != "anonymousUser") {
+			String auth = currentPrincipalName.iterator().next().toString().trim();
+				if (auth.equals("vendedor") || auth.equals("admin")) {
+					User userSession = (User) authentication.getPrincipal();
+					String username = userSession.getUsername();
+					org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
+					Tienda tienda = user.getTienda();
+					if (tienda == null) {
+						if (auth.equals("vendedor") ) {
+							return "redirect:/checkout";
+						} else if(auth.equals("admin")) {
+							return "redirect:/tiendas/new";
+						}
+					}
+					Iterable<Producto> productos = this.tiendaService.findProductos();
+					Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
+					Set<Preferencias> preferencias = new HashSet<Preferencias>();
+					for (Producto p : productos) {
+						intolerancias.addAll(p.getIntolerancia());
+						preferencias.add(p.getPreferencia());
+					}
+					modelMap.addAttribute("tienda", tienda);
+					modelMap.addAttribute("productos", productos);
+					modelMap.addAttribute("intolerancias", intolerancias);
+					modelMap.addAttribute("preferencias", preferencias);
+					modelMap.addAttribute("miTienda", true);
+					return vista;
+				} else {
+					return VIEWS_ERROR_AUTH;
+        }
 		}
-
+		return "redirect:/login";
 	}
 
 	@GetMapping("/tiendas/new")
 	public String initCreationTiendaForm(Map<String, Object> model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		if (authentication.getPrincipal() != "anonymousUser") {
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
 		if (auth.equals("vendedor") || auth.equals("admin")) {
@@ -141,6 +143,8 @@ public class TiendaController {
 		} else {
 			return VIEWS_ERROR_AUTH;
 		}
+		}
+		return "redirect:/login";
 
 	}
 
@@ -178,6 +182,7 @@ public class TiendaController {
 	public String initUpdateTiendaForm(@PathVariable("tiendaId") int tiendaId, Map<String, Object> model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		if (authentication.getPrincipal() != "anonymousUser") {
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
 		User currentUser = (User) authentication.getPrincipal();
@@ -192,6 +197,8 @@ public class TiendaController {
 		} else {
 			return VIEWS_ERROR_AUTH;
 		}
+		}
+		return "redirect:/login";
 	}
 
 	@PostMapping(value = "/tienda/{tiendaId}/edit")
@@ -212,6 +219,7 @@ public class TiendaController {
 	public String deleteTienda(@PathVariable("tiendaId") int tiendaId, ModelMap model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		if (authentication.getPrincipal() != "anonymousUser") {
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
 		User currentUser = (User) authentication.getPrincipal();
@@ -226,6 +234,8 @@ public class TiendaController {
 		} else {
 			return VIEWS_ERROR_AUTH;
 		}
+		}
+		return "redirect:/login";
 
 	}
 

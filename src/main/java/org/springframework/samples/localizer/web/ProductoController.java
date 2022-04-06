@@ -140,6 +140,7 @@ public class ProductoController {
 	public String productListNutricionista(ModelMap modelMap) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		if (authentication.getPrincipal() != "anonymousUser") {
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		if (auth.equals("nutricionista")) {
 			String vista = "productos/productosVerificar";
@@ -149,12 +150,15 @@ public class ProductoController {
 		} else {
 			return VIEWS_ERROR_AUTH;
 		}
+		}
+		return "redirect:/login";
 	}
 
 	@GetMapping(value = "/tienda/{tiendaId}/productos/new")
 	public String initCreationProductoForm(@PathVariable("tiendaId") Integer tiendaId, Map<String, Object> model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		if (authentication.getPrincipal() != "anonymousUser") {
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
 		Collection<Producto> productos = this.productoService.findAllProductos();
@@ -177,6 +181,8 @@ public class ProductoController {
 		} else {
 			return VIEWS_ERROR_AUTH;
 		}
+		}
+		return "redirect:/login";
 	}
 
 	@PostMapping(value = "/tienda/{tiendaId}/productos/new")
@@ -204,6 +210,7 @@ public class ProductoController {
 			@PathVariable("productoId") int productoId, ModelMap model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		if (authentication.getPrincipal() != "anonymousUser") {
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
 		Collection<Producto> productos = this.productoService.findAllProductos();
@@ -226,6 +233,8 @@ public class ProductoController {
 		} else {
 			return VIEWS_ERROR_AUTH;
 		}
+		}
+		return "redirect:/login";
 	}
 
 	@PostMapping(value = "/tienda/{tiendaId}/producto/{productoId}/edit")
@@ -249,6 +258,7 @@ public class ProductoController {
 			@PathVariable("tiendaId") final int tiendaId, final ModelMap model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		if (authentication.getPrincipal() != "anonymousUser") {
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
 		User currentUser = (User) authentication.getPrincipal();
@@ -263,5 +273,8 @@ public class ProductoController {
 			return VIEWS_ERROR_AUTH;
 		}
 	}
+		return "redirect:/login";
+	}
+	
 
 }
