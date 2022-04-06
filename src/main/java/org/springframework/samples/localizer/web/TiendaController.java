@@ -107,7 +107,7 @@ public class TiendaController {
 							return "redirect:/tiendas/new";
 						}
 					}
-					Iterable<Producto> productos = this.tiendaService.findProductos();
+					Iterable<Producto> productos = this.tiendaService.findProductos(tienda.getId());
 					Set<Intolerancias> intolerancias = new HashSet<Intolerancias>();
 					Set<Preferencias> preferencias = new HashSet<Preferencias>();
 					for (Producto p : productos) {
