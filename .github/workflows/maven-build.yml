@@ -10,7 +10,7 @@ on:
     branches: [ develop, Fix-UpdateCI ]
     
 env:
-  DB_DATABASE: localizer
+  DB_DATABASE: test_db
   DB_USER: root
   DB_PASSWORD: root
   
