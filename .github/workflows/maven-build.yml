@@ -17,7 +17,7 @@ jobs:
     steps:
        - uses: actions/checkout@v2
        - name: Set up MySQL 5.7
-         uses: javhidrod8/Localizer@Fix-UpdateCi
+         uses: javhidrod8/Localizer@Fix-UpdateCI
          with:
            mysql version: 5.7
            mysql database: test
