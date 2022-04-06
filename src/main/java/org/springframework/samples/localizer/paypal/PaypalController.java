@@ -33,7 +33,6 @@ public class PaypalController {
 					"http://localhost:8080/" + SUCCESS_URL);
 			for(Links link:payment.getLinks()) {
 				if(link.getRel().equals("approval_url")) {
-					System.out.println("=========================================================QUE ES EL GETHREF MANIN=" + link.getHref());
 					return "redirect:"+link.getHref();
 					
 					

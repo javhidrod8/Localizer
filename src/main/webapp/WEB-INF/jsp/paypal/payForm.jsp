@@ -15,7 +15,7 @@
 					<div class="col-md-12">
 						<h3>Pago por paypal</h3>
 						<div class="col-md-12">
-							<label for="price" class="hidden">Total</label> <input type="text" id="price"
+							<label for="price" class="hidden">Total</label> <input type="number" id="price"
 								name="price" value="12" readonly class="hidden">
 						</div>
 						<div class="col-md-12">

@@ -11,7 +11,7 @@
 	<div class="col-md-4 col-md-offset-4 ">
 	<form action='/charge' method='POST' id='checkout-form'>
 	<div>
-		<input type='hidden' value='${amount}' name='amount' /> 
+		<input type='hidden' value='${amount * 100}' name='amount' /> 
 		<span>Precio: ${amount} euros.</span>
 	</div>
 	<br>

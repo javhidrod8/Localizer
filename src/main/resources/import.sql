@@ -28,11 +28,11 @@ INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, p
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Filipinos chocolate blanco, 135g', 'https://es.openfoodfacts.org/images/products/841/000/080/4232/front_fr.11.200.jpg', 'Artiach', 'Filipinos chocolate blanco', 1.75, 2, true, 0, '', 3);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Jamon cocido, 115g', 'https://es.openfoodfacts.org/images/products/841/032/000/1816/front_es.26.200.jpg', 'Campofrio', 'Jamon cocido', 3.48, 2, true, 0, '', 3);
 --Tienda 4
-INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Spaghetti, 500g', 'https://es.openfoodfacts.org/images/products/20003463/front_en.98.200.jpg', 'Combino', 'Spaghetti', 4.50, 1, true, 0, '', 4);
-INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Bifrutas Tropical, 300ml', 'https://es.openfoodfacts.org/images/products/841/012/889/1169/front_es.38.200.jpg', 'Pascual', 'Bifrutas Tropical',3.23, 0, true, 0, '', 4);
-INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Ligeresa, 225ml', 'https://es.openfoodfacts.org/images/products/84138026/front_es.21.200.jpg', 'Ligeresa', 'Mayonesa', 2.76, 0, true, 0, '', 4);
-INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Helado con vainilla de Madagascar recubierto de chocolate con leche, 264g', 'https://es.openfoodfacts.org/images/products/871/410/063/5674/front_es.85.200.jpg', 'Magnum', 'Helados Mini Classic', 5.50, 2, true, 0, '', 4);
-INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Cerveza sin alcohol, 250ml', 'https://es.openfoodfacts.org/images/products/871/200/005/0023/front_fr.31.200.jpg', 'Heineken', 'Cerveza sin alcohol', 0.87, 2, true, 0, '', 4);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Spaghetti, 500g', 'https://es.openfoodfacts.org/images/products/20003463/front_en.98.200.jpg', 'Combino', 'Spaghetti', 4.50, 1, true, 1, '', 4);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Bifrutas Tropical, 300ml', 'https://es.openfoodfacts.org/images/products/841/012/889/1169/front_es.38.200.jpg', 'Pascual', 'Bifrutas Tropical',3.23, 0, true, 1, '', 4);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Ligeresa, 225ml', 'https://es.openfoodfacts.org/images/products/84138026/front_es.21.200.jpg', 'Ligeresa', 'Mayonesa', 2.76, 0, true, 1, '', 4);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Helado con vainilla de Madagascar recubierto de chocolate con leche, 264g', 'https://es.openfoodfacts.org/images/products/871/410/063/5674/front_es.85.200.jpg', 'Magnum', 'Helados Mini Classic', 5.50, 2, true, 1, '', 4);
+INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Cerveza sin alcohol, 250ml', 'https://es.openfoodfacts.org/images/products/871/200/005/0023/front_fr.31.200.jpg', 'Heineken', 'Cerveza sin alcohol', 0.87, 2, true, 1, '', 4);
 --Tienda 5
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Margarina con sal, 500g', 'https://es.openfoodfacts.org/images/products/871/920/003/9353/front_es.27.200.jpg', 'Tulipan', 'Margarina con sal', 3.23, 0, true, 1, '', 5);
 INSERT INTO productos(descripcion, imagen, marca, nombre, precio, preferencia, promocionado, estado, motivo, tienda_id) VALUES ('Mini Campurrianas', 'https://es.openfoodfacts.org/images/products/843/416/546/0768/front_en.20.200.jpg', 'Cuetara', 'Mini Campurrianas',1.00, 2, true, 1, '', 5);
@@ -81,7 +81,7 @@ INSERT INTO authorities(id,username,authority) VALUES (4,'cliente1','cliente');
 INSERT INTO users(username,password,enabled) VALUES ('cliente2','cli2',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (5,'cliente2','cliente');
 -- Un usuario vendedor, llamado vendedor1 con la contraseña vend1
-INSERT INTO users(username,password,enabled,first_name,last_name) VALUES ('vendedor1','vend1',TRUE,'Pepe','Cano');
+INSERT INTO users(username,password,enabled,first_name,last_name,tienda_id) VALUES ('vendedor1','vend1',TRUE,'Pepe','Cano',5);
 INSERT INTO authorities(id,username,authority) VALUES (6,'vendedor1','vendedor');
 -- Un usuario vendedor, llamado vendedor2 con la contraseña vend2
 INSERT INTO users(username,password,enabled,first_name,last_name) VALUES ('vendedor2','vend2',TRUE,'José','Lopez');

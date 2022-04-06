@@ -16,6 +16,7 @@
         <div>
         <h3 style='color: green;'>Pago realizado con exito</h3>
     </c:if>
-    <a href='/tiendas/new'><button class="btn-default btn btn-md">Crear mi tienda</button></a>
-   
+    <a href='/tiendas/new'><button id="pago" class="btn-default btn btn-md">Crear mi tienda</button></a>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script>$("#pago").click()</script>
 </petclinic:layout>
