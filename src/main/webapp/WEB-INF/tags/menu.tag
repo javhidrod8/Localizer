@@ -87,10 +87,10 @@
             	</spring:url>
 				 
 				 
-				 	<petclinic:menuItem active="${name eq 'reservasList'}" url="${fn:escapeXml(reservasUrl)}"
-					title="reservas">
-					<span>Mis Reservas</span>
-				</petclinic:menuItem>
+<%-- 				 	<petclinic:menuItem active="${name eq 'reservasList'}" url="${fn:escapeXml(reservasUrl)}" --%>
+<%-- 					title="reservas"> --%>
+<!-- 					<span>Mis Reservas</span> -->
+<%-- 				</petclinic:menuItem> --%>
 				 </sec:authorize>
 
 
@@ -123,9 +123,17 @@
 												<strong><sec:authentication property="name" /></strong>
 											</p>
 											<p class="text-left">
+											<spring:url value="/users/{username}" var="miPerfil">
+               	 							<spring:param name="username"> <sec:authentication property="name"/></spring:param>
+            								</spring:url>
+												<a href="${fn:escapeXml(miPerfil)}"
+													class="btn btn-primary btn-block btn-sm">Mi perfil</a>
+											</p>
+											<p class="text-left">
 												<a href="<c:url value="/logout" />"
 													class="btn btn-primary btn-block btn-sm">Logout</a>
 											</p>
+											
 										</div>
 									</div>
 								</div>

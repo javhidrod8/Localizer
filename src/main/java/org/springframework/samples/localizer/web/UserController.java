@@ -144,18 +144,24 @@ class UserController {
 		model.put("user", user);
 		model.put("authorities", a);
 		model.put("isNew", isNew);
-		Integer tiendaId = user.getTienda().getId();
-		model.put("tiendaId", tiendaId);
+		if(user.getTienda()!=null) {
+			Integer tiendaId = user.getTienda().getId();
+			model.put("tiendaId", tiendaId);
+			}else {
+				model.put("tiendaId", 0);
+			}
 		return VIEWS_USER_CREATE_OR_UPDATE_FORM;
+		
 	}
 
 	@PostMapping("/users/{username}/edit")
-	public String processUpdateUserForm(@PathVariable("username") String username,@Valid Authorities authorities, @Valid Integer tiendaId, @Valid User user,BindingResult result,  Map<String, Object> model) {
+	public String processUpdateUserForm(@PathVariable("username") String username,@Valid Authorities authorities,@Valid Integer tiendaId, @Valid User user,BindingResult result,  Map<String, Object> model) {
 		if (result.hasErrors()) {
 			model.put("user", user);
 			Boolean isNew = false;
 			model.put("isNew", isNew);	
 			model.put("authorities", authorities);
+			System.out.println("=================" + result + "=========================");
 			model.put("tiendaId", tiendaId);
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
