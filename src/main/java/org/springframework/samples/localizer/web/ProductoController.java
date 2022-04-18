@@ -34,6 +34,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import pl.coderion.model.Product;
+import pl.coderion.model.ProductResponse;
+import pl.coderion.service.OpenFoodFactsWrapper;
+import pl.coderion.service.impl.OpenFoodFactsWrapperImpl;
+
 @Controller
 public class ProductoController {
 
@@ -121,6 +126,28 @@ public class ProductoController {
 		modelMap.addAttribute("intolerancias", intolerancias);
 		modelMap.addAttribute("preferencias", preferencias);
 		return vista;
+
+	}
+	
+	@GetMapping(value = "/api/search/{barCode}")
+	public String productListByBarCode(@PathVariable("barCode") String barCode, ModelMap modelMap) {
+		OpenFoodFactsWrapper wrapper = new OpenFoodFactsWrapperImpl();
+	    ProductResponse productResponse = wrapper.fetchProductByCode(barCode);
+	    modelMap.addAttribute("producto",productResponse);
+	    Product product = productResponse.getProduct();
+	    
+	    System.out.println("Name: " + product.getProductName());
+	    System.out.println("Generic name: " + product.getGenericName());
+	    System.out.println("Product code: " + product.getCode());
+
+//		String vista = "productos/productosList";
+//		Iterable<Producto> productos = this.productoService.findByNombre(name);
+//		Collection<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
+//		Collection<Preferencias> preferencias = this.productoService.findAllPreferencias();
+//		modelMap.addAttribute("productos", productos);
+//		modelMap.addAttribute("intolerancias", intolerancias);
+//		modelMap.addAttribute("preferencias", preferencias);
+		return "redirect:/";
 
 	}
 
