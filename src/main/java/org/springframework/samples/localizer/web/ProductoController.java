@@ -45,6 +45,7 @@ public class ProductoController {
 	private static final String VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM = "productos/createOrUpdateProductoForm";
 	private static final String VIEWS_ERROR_AUTH = "errores/errorAuth";
 	private static final String VIEWS_PRODUCTO_RECHAZAR_FORM = "productos/rechazarProductoForm";
+	private static final String VIEWS_API_BARCODE_FORM = "productos/ApiBarCodeForm";
 	private final ProductoService productoService;
 	private final IntoleranciasService intoleranciasService;
 	private final TiendaService tiendaService;
@@ -129,25 +130,45 @@ public class ProductoController {
 
 	}
 	
-	@GetMapping(value = "/api/search/{barCode}")
-	public String productListByBarCode(@PathVariable("barCode") String barCode, ModelMap modelMap) {
-		OpenFoodFactsWrapper wrapper = new OpenFoodFactsWrapperImpl();
-	    ProductResponse productResponse = wrapper.fetchProductByCode(barCode);
-	    modelMap.addAttribute("producto",productResponse);
-	    Product product = productResponse.getProduct();
-	    
-	    System.out.println("Name: " + product.getProductName());
-	    System.out.println("Generic name: " + product.getGenericName());
-	    System.out.println("Product code: " + product.getCode());
+	@GetMapping(value = "/tienda/{tiendaId}/api/new")
+	public String initCreationProductoByAPI(@PathVariable("tiendaId") Integer tiendaId, Map<String, Object> model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		if (authentication.getPrincipal() != "anonymousUser") {
+		String auth = currentPrincipalName.iterator().next().toString().trim();
+		model.put("auth", auth);
+		if (auth.equals("vendedor") || auth.equals("admin")) {
+			model.put("precio",0.0);
+			model.put("barCode","");
+			return VIEWS_API_BARCODE_FORM;
+		} else {
+			return VIEWS_ERROR_AUTH;
+		}
+		}
+		return "redirect:/login";
+	}
+	
+	@PostMapping(value = "/tienda/{tiendaId}/api/new")
+	public String processCreationProductoByAPI(@PathVariable("tiendaId") Integer tiendaId, Map<String, Object> model, BindingResult result) {
 
-//		String vista = "productos/productosList";
-//		Iterable<Producto> productos = this.productoService.findByNombre(name);
-//		Collection<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
-//		Collection<Preferencias> preferencias = this.productoService.findAllPreferencias();
-//		modelMap.addAttribute("productos", productos);
-//		modelMap.addAttribute("intolerancias", intolerancias);
-//		modelMap.addAttribute("preferencias", preferencias);
-		return "redirect:/";
+		
+		OpenFoodFactsWrapper wrapper = new OpenFoodFactsWrapperImpl();
+		String barCode = (String) model.get("barCode");
+	    ProductResponse productResponse = wrapper.fetchProductByCode(barCode);
+	    
+		if (!productResponse.isStatus()) {
+			model.put("precio",0.0);
+			model.put("barCode","");
+			return VIEWS_API_BARCODE_FORM;
+	    }else {
+	    	Product product = productResponse.getProduct();
+	    	Double precio = (Double) model.get("precio");
+	    	Tienda t = this.tiendaService.findTiendaById(tiendaId);
+		    this.productoService.saveProductoAPI(product, t, precio);
+	    }
+	    
+	    return "redirect:/tienda/" + tiendaId;
+
 
 	}
 

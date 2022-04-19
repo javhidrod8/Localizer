@@ -14,13 +14,17 @@ import org.springframework.samples.localizer.model.Preferencias;
 import org.springframework.samples.localizer.model.Producto;
 import org.springframework.samples.localizer.model.Tienda;
 import org.springframework.samples.localizer.repository.ProductoRepository;
+import org.springframework.samples.localizer.repository.TiendaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import pl.coderion.model.Product;
 
 @Service
 public class ProductoService {
 
 	private ProductoRepository productoRepository;
+	private TiendaRepository tiendaRepository;
 	private TiendaService tiendaService;
 
 	@Autowired
@@ -77,4 +81,28 @@ public class ProductoService {
 		productoRepository.delete(producto);
 
 	}
+
+	public void saveProductoAPI(Product producto, Tienda tienda, Double precio) {
+		Producto p = new Producto();
+		p.setTienda(tienda);
+		p.setDescripcion(producto.getIngredientsText());
+		p.setEstado(Estado.ACEPTADO);
+		p.setImagen(producto.getImageFrontSmallUrl());
+		Set<Intolerancias> listIntolerancias = new HashSet<Intolerancias>();
+		String[] traces = producto.getTracesDebugTags();
+		for(int i = 0; i<traces.length;i++) {
+			Intolerancias j = new Intolerancias();
+			j.setNombre(traces[i]);
+			listIntolerancias.add(j);
+		}
+		p.setIntolerancia(listIntolerancias);
+		p.setMarca(producto.getBrands());
+		p.setNombre(producto.getProductName());
+		p.setPreferencia(Preferencias.valueOf(producto.getLabels()));
+		p.setPrecio(precio);
+		this.productoRepository.save(p);
+		tienda.getProductos().add(p);
+		this.tiendaRepository.save(tienda);
+	}
+
 }
