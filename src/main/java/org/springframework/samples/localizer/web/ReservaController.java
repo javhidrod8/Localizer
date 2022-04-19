@@ -50,14 +50,14 @@ public class ReservaController {
 		this.userService = userService;
 	}
 
-	@InitBinder
+	/*@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setAllowedFields("id");
-	}
+	}*/
 
 	@GetMapping("/tienda/{tiendaId}/producto/{productoId}/reservar")
 	public String initCreationReservaForm(@PathVariable("productoId") int productoId,
-			@PathVariable("tiendaId") int tiendaId, ModelMap model) {
+			@PathVariable("tiendaId") int tiendaId, Map<String, Object> model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
@@ -66,13 +66,7 @@ public class ReservaController {
 			Producto producto = this.productoService.findProductoById(productoId);
 			Tienda tienda = producto.getTienda();
 			if (tienda.getId().equals(tiendaId)) {
-				User userSession = (User) authentication.getPrincipal();
-				String username = userSession.getUsername();
-				org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
 				Reserva reserva = new Reserva();
-				reserva.setUser(user);
-				reserva.setProducto(producto);
-				reserva.setTienda(tienda);
 				model.put("reserva", reserva);
 				return VIEWS_FORM_RESERVAS;
 			} else {
@@ -89,15 +83,20 @@ public class ReservaController {
 			@PathVariable("tiendaId") int tiendaId, @Valid Reserva reserva, BindingResult result,
 			Map<String, Object> model) {
 		if (result.hasErrors()) {
-			System.out.println(result);
 			model.put("reserva", reserva);
 			return VIEWS_FORM_RESERVAS;
 		} else {
 			Producto producto = this.productoService.findProductoById(productoId);
 			Tienda tienda = producto.getTienda();
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			User userSession = (User) authentication.getPrincipal();
+			String username = userSession.getUsername();
+			org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
+			reserva.setUser(user);
 			reserva.setProducto(producto);
 			reserva.setTienda(tienda);
-			System.out.println("SALE EN ELSE");
+			reserva.setEstado(Estado.PENDIENTE);
+			reserva.setPrecio_total(reserva.getCantidad()*producto.getPrecio());
 			this.reservaService.saveReserva(reserva);
 			return "redirect:/tienda/" + tienda.getId();
 		}
