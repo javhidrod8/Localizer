@@ -3,33 +3,32 @@ package org.springframework.samples.localizer.model;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Entity
 @Table(name = "reservas")
 public class Reserva extends BaseEntity{
 	
 	@OneToOne
-	@NotNull
 	private Tienda tienda;
 	
 	@OneToOne
-	@NotNull
 	private Producto producto;
 	
-	@NotNull
+	@Positive
 	private Integer cantidad;
 	
 	@OneToOne
-	@NotNull
 	private User user;
 	
+	@NotBlank
 	private String comentario;
 	
 	
 	private Double precio_total;
 	
-	@NotNull
 	private Estado estado;
 
 	public Estado getEstado() {
@@ -84,7 +83,8 @@ public class Reserva extends BaseEntity{
 
 	@Override
 	public String toString() {
-		return "Reserva [tienda=" + tienda + ", producto=" + producto + "]";
+		return "Reserva [tienda=" + tienda + ", producto=" + producto + ", cantidad=" + cantidad + ", user=" + user
+				+ ", comentario=" + comentario + ", precio_total=" + precio_total + ", estado=" + estado + "]";
 	}
 
 	public String getComentario() {
