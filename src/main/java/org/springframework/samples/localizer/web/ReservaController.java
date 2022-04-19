@@ -116,6 +116,7 @@ public class ReservaController {
 		if ((auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId)) || auth.equals("admin")) {
 			if (reserva.getEstado() == Estado.PENDIENTE) {
 				model.addAttribute("reserva", reserva);
+				model.put("verificar", true);
 				return VIEWS_VERIFICAR_RESERVA;
 			} else {
 				return VIEWS_ERROR_ESTADO_PRODUCTO;
@@ -138,6 +139,7 @@ public class ReservaController {
 		if (((auth.equals("vendedor") || auth.equals("cliente")) && user.getUsername().equals(username)) || auth.equals("admin")) {
 			if (reserva.getEstado() == Estado.PENDIENTE) {
 				model.addAttribute("reserva", reserva);
+				model.put("cancelar", true);
 				return VIEWS_CANCELAR_RESERVA;
 			} else {
 				return VIEWS_ERROR_ESTADO_PRODUCTO;
@@ -154,6 +156,7 @@ public class ReservaController {
 			model.addAttribute("reserva", reserva);
 			return VIEWS_VERIFICAR_RESERVA;
 		} else {
+			reserva.setEstado(Estado.ACEPTADO);
 			this.reservaService.saveReserva(reserva);
 			return "redirect:/tienda/" + tiendaId + "/reservas";
 
@@ -167,6 +170,8 @@ public class ReservaController {
 			model.addAttribute("reserva", reserva);
 			return VIEWS_CANCELAR_RESERVA;
 		} else {
+			System.out.println("CULARDOOOOOOOO");
+			reserva.setEstado(Estado.RECHAZADO);
 			this.reservaService.saveReserva(reserva);
 			return "redirect:/users/" + username + "/reservas";
 
@@ -186,6 +191,7 @@ public class ReservaController {
 		if (cond) {
 			List<Reserva> reservas = this.reservaService.findReservaByTienda(tiendaId);
 			model.put("reservas", reservas);
+			model.put("mitienda", true);
 			return VIEWS_LIST_RESERVAS;
 		} else {
 			return VIEWS_ERROR_AUTH;

@@ -10,36 +10,85 @@
 <petclinic:layout pageName="reservas">
 
 	<h2>Reserva</h2>
-	<script>
-	reserva = "${reserva}";
-	productoId="${productoId}";
-	auth="${auth}";
-	console.log(reserva);
-	console.log(productoId);
-	console.log(auth);
-	</script>
-	<form:form modelAttribute="reserva" class="form-horizontal"
-		id="add-reserva-form">
-		<div class="container">
-			<div class="form-group has-feedback">
-				
-				 <petclinic:inputField label="Cantidad" name="cantidad" />
-				
-				 <petclinic:inputField label="Comentario" name="comentario" />
-				
-				    <input type="text" id="tienda" name="tienda" class="hidden"
-					value="${tiendaId}">
-					<input type="text" id="user" name="user" class="hidden"
-					value="${username}">
-					<input type="text" id="producto" name="producto" class="hidden"
-					value="${productoId}">
-					<input type="text" id="reserva" name="estado" class="hidden"
-					value="${estado}">
-				<button class="btn btn-default" type="submit">Realizar Reserva</button>
-				
+	
+	<c:if test="${reserva['new']}">
+	
+		<form:form modelAttribute="reserva" class="form-horizontal"
+			id="add-reserva-form">
+			<div class="container">
+				<div class="form-group has-feedback">
+					
+					 <petclinic:inputField label="Cantidad" name="cantidad" />
+					
+					 <petclinic:inputField label="Comentario" name="comentario" />
+					
+					    <input type="text" id="tienda" name="tienda" class="hidden"
+						value="${tiendaId}">
+						<input type="text" id="user" name="user" class="hidden"
+						value="${username}">
+						<input type="text" id="producto" name="producto" class="hidden"
+						value="${productoId}">
+						<input type="text" id="reserva" name="estado" class="hidden"
+						value="${estado}">
+					<button class="btn btn-default" type="submit">Realizar Reserva</button>
+					
+				</div>
 			</div>
-		</div>
-	</form:form>
+		</form:form>
+	
+	</c:if>
+	
+	<c:if test="${verificar}">
+	
+		<form:form modelAttribute="reserva" class="form-horizontal"
+			id="add-reserva-form">
+			<div class="container">
+				<div class="form-group has-feedback">
+					
+					<input type="text" id="cantidad" name="cantidad" readonly
+						value="${cantidad}">
+					 <petclinic:inputField label="Comentario" name="comentario" />
+					
+					    <input type="text" id="tienda" name="tienda" class="hidden"
+						value="${tiendaId}">
+						<input type="text" id="user" name="user" class="hidden"
+						value="${username}">
+						<input type="text" id="producto" name="producto" class="hidden"
+						value="${productoId}">
+						<input type="text" id="reserva" name="estado" class="hidden"
+						value="${estado}">
+					<button class="btn btn-default" type="submit">Verificar Reserva</button>
+					
+				</div>
+			</div>
+		</form:form>
+	
+	</c:if>
+	
+	<c:if test="${cancelar}">
+	
+		<form:form modelAttribute="reserva" class="form-horizontal"
+			id="add-reserva-form">
+			<div class="container">
+				<div class="form-group has-feedback">
+					
+					 <petclinic:inputField label="Comentario" name="comentario" />
+					
+					    <input type="text" id="tienda" name="tienda" class="hidden"
+						value="${tiendaId}">
+						<input type="text" id="user" name="user" class="hidden"
+						value="${username}">
+						<input type="text" id="producto" name="producto" class="hidden"
+						value="${productoId}">
+						<input type="text" id="reserva" name="estado" class="hidden"
+						value="${estado}">
+					<button class="btn btn-default" type="submit">Cancelar Reserva</button>
+					
+				</div>
+			</div>
+		</form:form>
+	
+	</c:if>
 	
 </petclinic:layout>
 
