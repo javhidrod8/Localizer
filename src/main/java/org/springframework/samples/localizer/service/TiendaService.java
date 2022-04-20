@@ -3,11 +3,11 @@ package org.springframework.samples.localizer.service;
 
 
 import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.localizer.model.Producto;
 import org.springframework.samples.localizer.model.Tienda;
+import org.springframework.samples.localizer.repository.ReservaRepository;
 import org.springframework.samples.localizer.repository.TiendaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +17,13 @@ public class TiendaService {
 	
 	private TiendaRepository tiendaRepository;
 	
+	private ReservaRepository reservaRepository;
+	
 	
 	@Autowired
-	public TiendaService(TiendaRepository tiendaRepository) {
+	public TiendaService(TiendaRepository tiendaRepository, ReservaRepository reservaRepository) {
 		this.tiendaRepository = tiendaRepository;
+		this.reservaRepository = reservaRepository;
 	}
 	
 	@Transactional(readOnly = true)
@@ -50,9 +53,10 @@ public class TiendaService {
 		return tiendaRepository.findAllProductos(id);
 	}
   
-  @Transactional
-  public void deleteTienda(Tienda tienda) throws DataAccessException {
+	@Transactional
+	public void deleteTienda(Tienda tienda) throws DataAccessException {
+		tiendaRepository.findAllReservas(tienda.getId()).stream().forEach(r->{r.setProducto(null);r.setTienda(null);r.setUser(null);reservaRepository.delete(r);});
 		tiendaRepository.delete(tienda); 
-  }
+	}
 	
 }

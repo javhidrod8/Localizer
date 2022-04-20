@@ -61,9 +61,9 @@
 					<spring:param name="tiendaId" value="${producto.tienda.id}" />
 					<spring:param name="productoId" value="${producto.id}" />
 				</spring:url>
-				<%--             <a href="${fn:escapeXml(reservaUrl)}"> --%>
-				<!--                 <button class = "btn btn-default btn-sm">Reservar</button></br></br> -->
-				<!--             </a> -->
+				<a href="${fn:escapeXml(reservaUrl)}">
+				<button class = "btn btn-default btn-sm">Reservar</button></br></br>
+				</a>
 			</sec:authorize>
 			<sec:authorize access="hasAuthority('nutricionista')">
 				<spring:url value="/tienda/{tiendaId}/producto/{productoId}/edit"

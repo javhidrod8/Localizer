@@ -3,10 +3,7 @@ package org.springframework.samples.localizer.web;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.localizer.model.Estado;
 import org.springframework.samples.localizer.model.Producto;
@@ -67,6 +64,7 @@ public class ReservaController {
 			Tienda tienda = producto.getTienda();
 			if (tienda.getId().equals(tiendaId)) {
 				Reserva reserva = new Reserva();
+				reserva.setProducto(producto);
 				model.put("reserva", reserva);
 				return VIEWS_FORM_RESERVAS;
 			} else {
@@ -116,6 +114,7 @@ public class ReservaController {
 		if ((auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId)) || auth.equals("admin")) {
 			if (reserva.getEstado() == Estado.PENDIENTE) {
 				model.addAttribute("reserva", reserva);
+				model.put("verificar", true);
 				return VIEWS_VERIFICAR_RESERVA;
 			} else {
 				return VIEWS_ERROR_ESTADO_PRODUCTO;
@@ -138,6 +137,7 @@ public class ReservaController {
 		if (((auth.equals("vendedor") || auth.equals("cliente")) && user.getUsername().equals(username)) || auth.equals("admin")) {
 			if (reserva.getEstado() == Estado.PENDIENTE) {
 				model.addAttribute("reserva", reserva);
+				model.put("cancelar", true);
 				return VIEWS_CANCELAR_RESERVA;
 			} else {
 				return VIEWS_ERROR_ESTADO_PRODUCTO;
@@ -147,27 +147,33 @@ public class ReservaController {
 		}
     }
 	
-	@PostMapping(value = "/tienda/{tiendaId}/reservas/verificar")
-	public String processVerificarReserva(@PathVariable("tiendaId") int tiendaId, @Valid Reserva reserva, BindingResult result,
+	@PostMapping(value = "tienda/{tiendaId}/reservas/{reservaId}/verificar")
+	public String processVerificarReserva(@PathVariable("tiendaId") int tiendaId, @PathVariable("reservaId") int reservaId, @Valid Reserva reserva, BindingResult result,
 			ModelMap model) {
 		if (result.hasErrors()) {
 			model.addAttribute("reserva", reserva);
 			return VIEWS_VERIFICAR_RESERVA;
 		} else {
-			this.reservaService.saveReserva(reserva);
+			Reserva r = reservaService.findReservaById(reservaId);
+			r.setEstado(reserva.getEstado());
+			r.setComentario(reserva.getComentario());
+			this.reservaService.saveReserva(r);
 			return "redirect:/tienda/" + tiendaId + "/reservas";
 
 		}
 	}
 	
-	@PostMapping(value = "/users/{username}/reservas/cancelar")
-	public String processCancelarReservaCliente(@PathVariable("username") String username, @Valid Reserva reserva, BindingResult result,
+	@PostMapping(value = "users/{username}/reservas/{reservaId}/cancelar")
+	public String processCancelarReservaCliente(@PathVariable("username") String username, @PathVariable("reservaId") int reservaId, @Valid Reserva reserva, BindingResult result,
 			ModelMap model) {
 		if (result.hasErrors()) {
 			model.addAttribute("reserva", reserva);
 			return VIEWS_CANCELAR_RESERVA;
 		} else {
-			this.reservaService.saveReserva(reserva);
+			Reserva r = reservaService.findReservaById(reservaId);
+			r.setComentario(reserva.getComentario());
+			r.setEstado(Estado.RECHAZADO);
+			this.reservaService.saveReserva(r);
 			return "redirect:/users/" + username + "/reservas";
 
 		}
@@ -186,6 +192,7 @@ public class ReservaController {
 		if (cond) {
 			List<Reserva> reservas = this.reservaService.findReservaByTienda(tiendaId);
 			model.put("reservas", reservas);
+			model.put("mitienda", true);
 			return VIEWS_LIST_RESERVAS;
 		} else {
 			return VIEWS_ERROR_AUTH;
