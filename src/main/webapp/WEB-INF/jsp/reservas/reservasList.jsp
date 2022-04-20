@@ -17,6 +17,7 @@
             <tr>
                 <td>
         <div class="row">
+        <br>
 		<div class="col-md-4">
 		<spring:url value="/producto/{productoId}" var="productoUrl">
       			<spring:param name="productoId" value="${reserva.producto.id}"/>
@@ -26,7 +27,7 @@
 		</a>
 		</div>
 		<div class="col-md-4">
-			<b><c:out value="${reserva.producto.nombre}" /></b><br> <br>
+			<h2><c:out value="${reserva.producto.nombre}" /></h2>
 			<h2>
 				<c:out value="${reserva.producto.precio}" />
 				&#8364
@@ -36,15 +37,21 @@
 				<c:if test="${reserva.producto.estado=='RECHAZADO'}">
 					<i class="fa-solid fa-x" style="margin-left: 2%"></i>
 				</c:if>
+				<c:if test="${not empty reserva.producto.descripcion}">
+				<h4>Descripción: ${reserva.producto.descripcion }</h4>
+				</c:if>
+				<c:if test="${not empty reserva.producto.marca}">
+				<h4>Marca: ${reserva.producto.marca }</h4>
+				</c:if>
 			</h2>
 			<c:if test="${not empty reserva.producto.intolerancia  }">
-			Intolerancias: <c:forEach items="${reserva.producto.intolerancia}" var="intolerancia">
-			<c:out	value="${intolerancia.nombre} " />
+			<h4>Intolerancias: </h4> <c:forEach items="${reserva.producto.intolerancia}" var="intolerancia"> 
+			<h5><li><c:out	value="${intolerancia.nombre} " /></li></h5>
 			</c:forEach>
 			</c:if>
 			<c:if test="${not empty reserva.producto.preferencia}">
-			</br></br>Preferencias: <c:out	value="${reserva.producto.preferencia} " />
-			</c:if></br></br>
+			<h4>Preferencias:</h4> <h5><li><c:out	value="${reserva.producto.preferencia} "/></li></h5>
+			</c:if>
 			<spring:url value="/tienda/{tiendaId}" var="tiendaUrl">
 				<spring:param name="tiendaId" value="${reserva.producto.tienda.id}" />
 			</spring:url>
@@ -54,14 +61,13 @@
 		</div>
 		
        	<div class="col-md-4">
-       		<h2>Datos de la Reserva:</h1>
-       		<p>Cantidad Reservada: <c:out value="${reserva.cantidad}"> </c:out></h2>
-       		<p>Precio Total: <c:out value="${reserva.precio_total}"> </c:out></h2>
-       		<p>Comentario: <c:out value="${reserva.comentario}"> </c:out></h2>
-       		<p>Estado de la reserva: <c:out value="${reserva.estado}"> </c:out></h2>
+       		<h2>Datos de la Reserva:</h2>
+       		<h4>Cantidad Reservada: <c:out value="${reserva.cantidad}"> </c:out></h4>
+       		<h4>Precio Total: <c:out value="${reserva.precio_total}"> </c:out></h4>
+       		<h4>Estado de la reserva: <c:out value="${reserva.estado}"> </c:out></h4>
+       		<h4>Comentario: <c:out value="${reserva.comentario}"> </c:out></h4>
             <sec:authorize access="hasAuthority('cliente')"> 
             	<c:if test="${reserva.estado=='PENDIENTE'}">
-         		<br>
 				<spring:url value="/users/{username}/reservas/{reservaId}/cancelar" var="cancelarUrl">
 					<spring:param name="username" value="${reserva.user.username}" />
 					<spring:param name="reservaId" value="${reserva.id}" />
@@ -102,7 +108,7 @@
 			</sec:authorize>
 					</div>
 					
-						</div></br></br>
+						</div><br>
                 </td>
                 
                 

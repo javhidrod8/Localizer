@@ -3,10 +3,7 @@ package org.springframework.samples.localizer.web;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.localizer.model.Estado;
 import org.springframework.samples.localizer.model.Producto;
@@ -67,6 +64,7 @@ public class ReservaController {
 			Tienda tienda = producto.getTienda();
 			if (tienda.getId().equals(tiendaId)) {
 				Reserva reserva = new Reserva();
+				reserva.setProducto(producto);
 				model.put("reserva", reserva);
 				return VIEWS_FORM_RESERVAS;
 			} else {
@@ -149,30 +147,33 @@ public class ReservaController {
 		}
     }
 	
-	@PostMapping(value = "/tienda/{tiendaId}/reservas/verificar")
-	public String processVerificarReserva(@PathVariable("tiendaId") int tiendaId, @Valid Reserva reserva, BindingResult result,
+	@PostMapping(value = "tienda/{tiendaId}/reservas/{reservaId}/verificar")
+	public String processVerificarReserva(@PathVariable("tiendaId") int tiendaId, @PathVariable("reservaId") int reservaId, @Valid Reserva reserva, BindingResult result,
 			ModelMap model) {
 		if (result.hasErrors()) {
 			model.addAttribute("reserva", reserva);
 			return VIEWS_VERIFICAR_RESERVA;
 		} else {
-			reserva.setEstado(Estado.ACEPTADO);
-			this.reservaService.saveReserva(reserva);
+			Reserva r = reservaService.findReservaById(reservaId);
+			r.setEstado(reserva.getEstado());
+			r.setComentario(reserva.getComentario());
+			this.reservaService.saveReserva(r);
 			return "redirect:/tienda/" + tiendaId + "/reservas";
 
 		}
 	}
 	
-	@PostMapping(value = "/users/{username}/reservas/cancelar")
-	public String processCancelarReservaCliente(@PathVariable("username") String username, @Valid Reserva reserva, BindingResult result,
+	@PostMapping(value = "users/{username}/reservas/{reservaId}/cancelar")
+	public String processCancelarReservaCliente(@PathVariable("username") String username, @PathVariable("reservaId") int reservaId, @Valid Reserva reserva, BindingResult result,
 			ModelMap model) {
 		if (result.hasErrors()) {
 			model.addAttribute("reserva", reserva);
 			return VIEWS_CANCELAR_RESERVA;
 		} else {
-			System.out.println("CULARDOOOOOOOO");
-			reserva.setEstado(Estado.RECHAZADO);
-			this.reservaService.saveReserva(reserva);
+			Reserva r = reservaService.findReservaById(reservaId);
+			r.setComentario(reserva.getComentario());
+			r.setEstado(Estado.RECHAZADO);
+			this.reservaService.saveReserva(r);
 			return "redirect:/users/" + username + "/reservas";
 
 		}
