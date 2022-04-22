@@ -3,19 +3,23 @@ package org.springframework.samples.localizer.web;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.localizer.model.Estado;
 import org.springframework.samples.localizer.model.Intolerancias;
 import org.springframework.samples.localizer.model.Preferencias;
 import org.springframework.samples.localizer.model.Producto;
 import org.springframework.samples.localizer.service.IntoleranciasService;
 import org.springframework.samples.localizer.model.Tienda;
+import org.springframework.samples.localizer.repository.ProductoRepository;
 import org.springframework.samples.localizer.service.ProductoService;
 import org.springframework.samples.localizer.service.TiendaService;
 import org.springframework.samples.localizer.service.UserService;
@@ -24,6 +28,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -32,6 +37,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -44,15 +50,17 @@ public class ProductoController {
 	private final IntoleranciasService intoleranciasService;
 	private final TiendaService tiendaService;
 	private final UserService userService;
+	private final ProductoRepository repo;
 
 	@Autowired
 	public ProductoController(ProductoService productoService, IntoleranciasService intoleranciasService,
-			TiendaService tiendaService, UserService userService) {
+			TiendaService tiendaService, UserService userService, ProductoRepository repo) {
 		this.productoService = productoService;
 		this.intoleranciasService = intoleranciasService;
 		this.tiendaService = tiendaService;
 		this.userService = userService;
-	}
+		this.repo = repo;
+				}
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
@@ -125,15 +133,31 @@ public class ProductoController {
 	}
 
 	@GetMapping(value = "/productos")
-	public String productList(ModelMap modelMap) {
+	public String productList(@RequestParam(defaultValue = "1") int page, ModelMap modelMap, Model model) {
 		String vista = "productos/productosList";
+		Page<Producto> paginated = findPaginated(page);
 		Iterable<Producto> productos = this.productoService.findAllProductos();
+		this.productoService.findAllProductos().addAll(paginated.toList());
 		Collection<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
 		Collection<Preferencias> preferencias = this.productoService.findAllPreferencias();
 		modelMap.addAttribute("productos", productos);
 		modelMap.addAttribute("intolerancias", intolerancias);
 		modelMap.addAttribute("preferencias", preferencias);
-		return vista;
+		return addPaginationModel(page, paginated, model);
+	}
+	private String addPaginationModel(int page, Page<Producto> paginated, Model model) {
+		List<Producto> listProductos = paginated.getContent();
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", paginated.getTotalPages());
+		model.addAttribute("totalItems", paginated.getTotalElements());
+		model.addAttribute("listProductos", listProductos);
+		return "productos/productosList";
+	}
+
+	private Page<Producto> findPaginated(int page) {
+		int pageSize = 5;
+		Pageable pageable = PageRequest.of(page - 1, pageSize);
+		return repo.findAll(pageable);
 	}
 
 	@GetMapping(value = "/productos/verificar")

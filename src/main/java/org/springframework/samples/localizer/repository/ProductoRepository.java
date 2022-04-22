@@ -3,11 +3,14 @@ package org.springframework.samples.localizer.repository;
 import java.util.Collection;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.samples.localizer.model.Estado;
 import org.springframework.samples.localizer.model.Preferencias;
 import org.springframework.samples.localizer.model.Producto;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 	
@@ -23,4 +26,8 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 
 	@Query("select p from Producto p where p.estado like ?1")
 	public Collection<Producto> findProductosByEstado(Estado estado);
+	
+	@Query("SELECT p FROM Producto p")
+	@Transactional(readOnly = true)
+	Page<Producto> findAll(Pageable pageable);
 }
