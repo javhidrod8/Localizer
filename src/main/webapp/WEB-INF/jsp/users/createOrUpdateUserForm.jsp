@@ -42,6 +42,8 @@
 					class="hidden" value="${tiendaId}" readonly>
 				</c:if>
 			</div>
+			<input type="text" id="pagado" name="pagado"
+					class="hidden" value="${user.pagado}" readonly>
 		</div>
 
 		<form:form modelAttribute="authorities" class="form-horizontal"

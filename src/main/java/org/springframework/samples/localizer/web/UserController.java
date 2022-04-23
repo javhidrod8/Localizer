@@ -61,13 +61,11 @@ class UserController {
 	public String processCreationForm(@Valid User user,@Valid Authorities auth, BindingResult result, Map<String, Object> model) {
 		
 		if (result.hasErrors()) {
-			System.out.println("SALE POR EL IF");
 			model.put("user",user);
 			model.put("authorities", auth);
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			System.out.println("SALE POR EL ELSE");
 			String username = user.getUsername();
 			String auth1 = auth.getAuthority();
 			this.userService.saveUser(user);
@@ -163,11 +161,12 @@ class UserController {
 			Boolean isNew = false;
 			model.put("isNew", isNew);	
 			model.put("authorities", authorities);
-			System.out.println("=================" + result + "=========================");
 			model.put("tiendaId", tiendaId);
 			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 		}
-		else {	
+		else {
+			Tienda t = this.tiendaService.findTiendaById(tiendaId);
+			user.setTienda(t);
 			user.setUsername(username);
 			this.userService.saveUser(user);
 			return "redirect:/users/" + user.getUsername();

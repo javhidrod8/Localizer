@@ -28,7 +28,18 @@ public class User{
 	@NotNull
 	boolean enabled;
 	
+	@NotNull
+	boolean pagado = false;
 	
+	
+
+	public boolean isPagado() {
+		return pagado;
+	}
+
+	public void setPagado(boolean pagado) {
+		this.pagado = pagado;
+	}
 
 	@Column(name = "first_name")
 	@NotBlank
@@ -102,8 +113,9 @@ public class User{
 
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", password=" + password + ", enabled=" + enabled + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", tienda=" + tienda + ", authorities=" + authorities + "]";
+		return "User [username=" + username + ", password=" + password + ", enabled=" + enabled + ", pagado=" + pagado
+				+ ", firstName=" + firstName + ", lastName=" + lastName + ", tienda=" + tienda + ", authorities="
+				+ authorities + "]";
 	}
 	
 }
