@@ -85,7 +85,7 @@ public class ProductoServiceTest {
 	public void shouldFindProductosByEstado() {
 
 		Collection<Producto> productos = this.productoService.findProductoByEstado(Estado.PENDIENTE);
-		assertThat(productos.size()).isEqualTo(9);
+		assertThat(productos.size()).isEqualTo(6);
 	}
 	
 	@Test
@@ -110,12 +110,12 @@ public class ProductoServiceTest {
 		
 		this.productoService.saveProducto(producto);
 		Producto producto1 = this.productoService.findProductoById(producto.getId());
-		assertThat(producto1.getId()).isNotNull().isEqualTo(69);
+		assertThat(producto1.getId()).isNotNull().isEqualTo(74);
 	
 		this.productoService.deleteProducto(producto1);
-		Producto p1 = this.productoService.findProductoById(69);
+		Producto p1 = this.productoService.findProductoById(74);
 //		assertThat(p1).isNull();//TODO
-		assertThat(producto1.getId()).isNotNull().isEqualTo(69);
+		assertThat(producto1.getId()).isNotNull().isEqualTo(74);
 	}
 	
 //	@Test
@@ -133,7 +133,7 @@ public class ProductoServiceTest {
 	public void shouldFindAllProducts() {
 
 		Collection<Producto> productos = this.productoService.findAllProductos();
-		assertThat(productos.size()).isEqualTo(69);
+		assertThat(productos.size()).isEqualTo(74);
 	}
 
 }
