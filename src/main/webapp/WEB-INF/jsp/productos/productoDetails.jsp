@@ -137,7 +137,7 @@
 	<br>
 	<div class="row" style="margin-top: 2%">
 		<div class="col-md-2">
-			<div id="intolerancias">
+<div id="intolerancias">
 				<h3>Intolerancias</h3>
 
 				<script type="text/javascript">
@@ -166,9 +166,6 @@
 				}
 				</script>
 			</div>
-
-
-
 			<div id="preferencias">
 				<h3>Preferencias</h3>
 				<input class="form-check-input" type="radio" name="preferencia"
