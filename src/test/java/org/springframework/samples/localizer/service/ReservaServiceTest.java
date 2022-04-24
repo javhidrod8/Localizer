@@ -56,7 +56,7 @@ public class ReservaServiceTest {
 
 
 		List<Reserva> res = this.reservaService.findReservaByTienda(1);
-		assertThat(res.size()).isEqualTo(1);
+		assertThat(res.size()).isEqualTo(3);
 	}
 
 	@Test
@@ -64,7 +64,7 @@ public class ReservaServiceTest {
 	public void shouldFindReservaByUser() {
 
 		List<Reserva> res = this.reservaService.findReservaByUser("cliente1");
-		assertThat(res.size()).isEqualTo(1);
+		assertThat(res.size()).isEqualTo(3);
 	}
 	@Test 
 	// encontrar reservas por estado y tienda
@@ -96,10 +96,10 @@ public class ReservaServiceTest {
 		res.setPrecio_total(2.00);
 		
 		this.reservaService.saveReserva(res);
-		assertThat(res.getId()).isNotNull().isEqualTo(2);
+		assertThat(res.getId()).isNotNull().isEqualTo(4);
 		
 		this.reservaService.deleteReserva(res);
-		Reserva r = this.reservaService.findReservaById(2);
+		Reserva r = this.reservaService.findReservaById(4);
 		assertThat(r).isNull();
 
 	}
