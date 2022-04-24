@@ -1,4 +1,5 @@
 -- Creacion de tienda y producto
+
 INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono,imagen,horario) VALUES ('Calle Mainomiedes, 9', '41009', 'Pan, bocadillos y productos de alimentación en general', 'Alimentacion Carmen', 'Sevilla', '647654945','https://i.ibb.co/cYTDmP7/CARMEN.png','Lunes a Viernes de 10:00 a 20:00');
 INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono,imagen,horario) VALUES ('Calle Francos, 12, 6', '41009', 'Productos MADE IN USA', 'Taste of America', 'Sevilla', '955286486','https://i.ibb.co/qYmN0h5/TASTE.png','Lunes a Viernes de 10:00 a 20:00');
 INSERT INTO tiendas(calle,codigo_postal,descripcion,nombre,provincia,telefono,imagen,horario) VALUES ('Calle Verano, 8', '41009', 'Pan, helados, galletas, bebidas y mucho más', 'Alimentacion y Chuches Arco Iris', 'Sevilla', '654654654','https://i.ibb.co/CtrW6rS/ARCOIRIS.png','Lunes a Viernes de 10:00 a 20:00');
@@ -84,7 +85,6 @@ INSERT INTO productos(nombre,precio,marca,descripcion,estado,promocionado,imagen
 INSERT INTO productos(nombre,precio,marca,descripcion,estado,promocionado,imagen,motivo,preferencia,tienda_id) VALUES ('Bocadillo de tortilla',2.50,'Carmen','Pan con tortilla y salsa mahonesa',0,false,'https://i.ibb.co/BPgV3Kj/bocadillo-tortilla.jpg',' ',2,1);
 INSERT INTO productos(nombre,precio,marca,descripcion,estado,promocionado,imagen,motivo,preferencia,tienda_id) VALUES ('Bocadillo de chorizo',2,'Carmen','Pan con chorizo extra',0,false,'https://i.ibb.co/kMQWVdS/bocadillochorizo.jpg',' ',2,1);
 INSERT INTO productos(nombre,precio,marca,descripcion,estado,promocionado,imagen,motivo,preferencia,tienda_id) VALUES ('Bocadillo de salchichón',2,'Carmen','Pan con salchichón extra',0,false,'https://i.ibb.co/wK57TZG/bocadillosalchichon.jpg',' ',2,1);
-
 
 -- One admin user, named admin1 with passwor 4dm1n and authority admin
 INSERT INTO users(username,password,enabled,pagado) VALUES ('admin1','4dm1n',TRUE,FALSE);
@@ -253,6 +253,5 @@ INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (66,2);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (66,10);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (67,2);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (67,10);
-
 
 INSERT INTO reservas(producto_id,tienda_id, cantidad, precio_total,user_username,estado) VALUES (1,1,2,2.00,'cliente1',0);
