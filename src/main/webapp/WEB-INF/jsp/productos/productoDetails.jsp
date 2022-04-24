@@ -258,18 +258,21 @@
 	  	prodHtml = "";
 	  	button.innerHTML = "Filtrar";
 	  	button.onclick = function(){
-	  		
 	  		var selectedPreferencia = new Array();
 			var selectedIntolerancias = new Array();
 			document.getElementById('productos').innerHTML= prodHtml;
 			var productosFiltrados = [...productos];
 			preferencias.forEach(p => {
 	  			if(document.getElementById(p) != null){
+	  				console.log(p);
 				 	if(document.getElementById(p).checked && !selectedPreferencia.includes(p)){
  					  selectedPreferencia.push(p);
 				 	}
 	  			}
 			  })
+			if(selectedPreferencia.includes("VEGETARIANO")){
+				selectedPreferencia.push("VEGANO");	
+			}
 	  		
 	  		intolerancias.forEach(i => {
 	  			if(document.getElementById(i) != null){
@@ -284,7 +287,8 @@
 				  var indexListIntolerancias = [];
 				  if(selectedPreferencia.length > 0 ) {
 					  productosFiltrados.forEach(e => {
-						  if(!(e.preferencia == selectedPreferencia[0])){
+// 						  if(!(e.preferencia == selectedPreferencia[0])){
+							if(!(selectedPreferencia.includes(e.preferencia))){
 							  var index = productosFiltrados.indexOf(e);
 							  if(!(indexListPreferencias.includes(index))){
 								  indexListPreferencias.push(index);
