@@ -26,6 +26,7 @@ public class ProductoService {
 	private ProductoRepository productoRepository;
 	private TiendaRepository tiendaRepository;
 	private TiendaService tiendaService;
+	private IntoleranciasService intoleranciasService;
 
 	@Autowired
 	public ProductoService(ProductoRepository productoRepository, TiendaService tiendaService) {
@@ -81,28 +82,44 @@ public class ProductoService {
 		productoRepository.delete(producto);
 
 	}
-
-	public void saveProductoAPI(Product producto, Tienda tienda, Double precio) {
+	@Transactional
+	public void saveProductoAPI(Product producto, Integer tiendaId, Double precio) throws DataAccessException {
 		Producto p = new Producto();
-		p.setTienda(tienda);
-		p.setDescripcion(producto.getIngredientsText());
+		Tienda t = tiendaService.findTiendaById(tiendaId);
+		p.setTienda(t);
+		p.setDescripcion(producto.getProductName());
 		p.setEstado(Estado.ACEPTADO);
 		p.setImagen(producto.getImageFrontSmallUrl());
 		Set<Intolerancias> listIntolerancias = new HashSet<Intolerancias>();
-		String[] traces = producto.getTracesDebugTags();
+		String[] traces = producto.getAllergensTags();
 		for(int i = 0; i<traces.length;i++) {
 			Intolerancias j = new Intolerancias();
-			j.setNombre(traces[i]);
+			j.setNombre(traces[i].replace("en:", "").toUpperCase().trim());
 			listIntolerancias.add(j);
 		}
 		p.setIntolerancia(listIntolerancias);
 		p.setMarca(producto.getBrands());
 		p.setNombre(producto.getProductName());
-		p.setPreferencia(Preferencias.valueOf(producto.getLabels()));
+		p.setPreferencia(Preferencias.TODO);
 		p.setPrecio(precio);
+		p.setPromocionado(false);
+		System.out.println("======================language" + producto.getLanguagesCodes() + "===========================");
+		System.out.println("======================language" + producto.getLanguagesHierarchy() + "===========================");
+		System.out.println("======================language" + producto.getLanguagesTags().toString() + "===========================");
+		System.out.println("======================AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa" + producto.getAllergensFromUser() + "===========================");
+		System.out.println("======================AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa" + producto.getIngredientsTextWithAllergens() + "===========================");
+		System.out.println("======================AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa" + producto.getIngredients() + "===========================");
+		System.out.println("======================AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa" + producto.getAllergens() + "===========================");
+		System.out.println("======================AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa" + producto.getImageIngredientsSmallUrl() + "===========================");
+		System.out.println("======================AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa" + producto.getTracesFromIngredients() + "===========================");
+		System.out.println("======================AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa" + producto.getLabels() + "===========================");
+		System.out.println("======================AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa" + producto.getLabelsLc() + "===========================");
+		System.out.println("======================AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa" + producto.getAllergensLc() + "===========================");
+
 		this.productoRepository.save(p);
-		tienda.getProductos().add(p);
-		this.tiendaRepository.save(tienda);
+		t.getProductos().add(p);
+		
+		//this.tiendaRepository.save(tienda);
 	}
 
 }

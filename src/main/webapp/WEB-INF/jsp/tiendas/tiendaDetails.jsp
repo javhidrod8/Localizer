@@ -114,7 +114,7 @@
 							<button class='btn btn-default btn-sm'>Nuevo Producto</button>
 
 						</a>
-						<spring:url value="/tienda/{tiendaId}/api/new" var="tiendaUrl">
+						<spring:url value="/tienda/{tiendaId}/api/productos/new" var="tiendaUrl">
 							<spring:param name="tiendaId" value="${tienda.id}" />
 						</spring:url>	
 						<a href="${fn:escapeXml(tiendaUrl)}">

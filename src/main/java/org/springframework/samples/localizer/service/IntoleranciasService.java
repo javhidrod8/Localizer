@@ -23,4 +23,11 @@ public class IntoleranciasService {
 	public Collection<Intolerancias> findAllIntolerancias() throws DataAccessException {
 		return intoleranciasRepository.findAllIntolerancias();
 	}
+	
+	@Transactional(readOnly = true)
+	public Intolerancias findIntoleranciaByName(String nombre) throws DataAccessException {
+		return intoleranciasRepository.findIntoleranciaByName(nombre);
+	}
+	
+	
 }

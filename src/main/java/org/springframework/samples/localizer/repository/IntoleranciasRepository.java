@@ -11,4 +11,7 @@ public interface IntoleranciasRepository extends JpaRepository<Intolerancias, In
 	@Query("select i from Intolerancias i")
 	public Collection<Intolerancias> findAllIntolerancias();
 
+	@Query("select i from Intolerancias i where i.nombre=?1")
+	public Intolerancias findIntoleranciaByName(String nombre);
+
 }

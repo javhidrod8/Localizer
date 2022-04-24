@@ -1,9 +1,7 @@
 package org.springframework.samples.localizer.web;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-
 import java.util.Map;
 import java.util.Set;
 
@@ -14,8 +12,9 @@ import org.springframework.samples.localizer.model.Estado;
 import org.springframework.samples.localizer.model.Intolerancias;
 import org.springframework.samples.localizer.model.Preferencias;
 import org.springframework.samples.localizer.model.Producto;
-import org.springframework.samples.localizer.service.IntoleranciasService;
+import org.springframework.samples.localizer.model.ProductoAPI;
 import org.springframework.samples.localizer.model.Tienda;
+import org.springframework.samples.localizer.service.IntoleranciasService;
 import org.springframework.samples.localizer.service.ProductoService;
 import org.springframework.samples.localizer.service.TiendaService;
 import org.springframework.samples.localizer.service.UserService;
@@ -130,8 +129,9 @@ public class ProductoController {
 
 	}
 	
-	@GetMapping(value = "/tienda/{tiendaId}/api/new")
-	public String initCreationProductoByAPI(@PathVariable("tiendaId") Integer tiendaId, Map<String, Object> model) {
+	@GetMapping(value = "/tienda/{tiendaId}/api/productos/new")
+	public String initCreationProductoByAPI(@PathVariable("tiendaId") Integer tiendaId, 
+			Map<String, Object> model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		if (authentication.getPrincipal() != "anonymousUser") {
@@ -140,6 +140,13 @@ public class ProductoController {
 		if (auth.equals("vendedor") || auth.equals("admin")) {
 			model.put("precio",0.0);
 			model.put("barCode","");
+			model.put("tiendaId", tiendaId);
+			ProductoAPI productoApi = new ProductoAPI();
+			model.put("productoApi", productoApi);
+			Boolean isNew = true;
+			model.put("isNew", isNew);
+			System.out.println("======================== EN EL GET IDPRODUCTOAPI=" + productoApi + "=========================");
+			
 			return VIEWS_API_BARCODE_FORM;
 		} else {
 			return VIEWS_ERROR_AUTH;
@@ -148,29 +155,48 @@ public class ProductoController {
 		return "redirect:/login";
 	}
 	
-	@PostMapping(value = "/tienda/{tiendaId}/api/new")
-	public String processCreationProductoByAPI(@PathVariable("tiendaId") Integer tiendaId, Map<String, Object> model, BindingResult result) {
+	@PostMapping(value = "/tienda/{tiendaId}/api/productos/new")
+	public String processCreationProductoByAPI(@PathVariable("tiendaId") Integer tiendaId, 
+			Map<String, Object> model, @Valid ProductoAPI productoApi, 
+			BindingResult result) {
 
+//		System.out.println("======================== PRECIO=" + productoApi.getPrecio() + "=========================");
+//		System.out.println("======================== BARCODE=" + productoApi.getBarCode() + "=========================");
+//		System.out.println("======================== IDTIENDA=" + productoApi.getTienda() + "=========================");
+//		System.out.println("======================== IDPRODUCTOAPI=" + productoApi.getId() + "=========================");
+//		
 		
 		OpenFoodFactsWrapper wrapper = new OpenFoodFactsWrapperImpl();
-		String barCode = (String) model.get("barCode");
-	    ProductResponse productResponse = wrapper.fetchProductByCode(barCode);
+	    ProductResponse productResponse = wrapper.fetchProductByCode(productoApi.getBarCode());
+	    //productResponse.getProduct().getLanguagesTags()
 	    
-		if (!productResponse.isStatus()) {
-			model.put("precio",0.0);
-			model.put("barCode","");
-			return VIEWS_API_BARCODE_FORM;
-	    }else {
-	    	Product product = productResponse.getProduct();
-	    	Double precio = (Double) model.get("precio");
-	    	Tienda t = this.tiendaService.findTiendaById(tiendaId);
-		    this.productoService.saveProductoAPI(product, t, precio);
+	   
+	    //System.out.println("=================== PRODUCTO API= " + productResponse.getProduct() + "===================================");
+	    
+	    if (!productResponse.isStatus()) {
+	        System.out.println("Status: " + productResponse.getStatusVerbose());
+	        return "redirect:/";
+	        
+	      }else {
+	    	  Product product = productResponse.getProduct();
+	          Double precio = productoApi.getPrecio();
+	          //Tienda t = this.tiendaService.findTiendaById(tiendaId);
+	          this.productoService.saveProductoAPI(product, tiendaId, precio);
+	          return "redirect:/tienda/" + tiendaId;
+	      }
+	    
+	    
+	    
+
+	      
 	    }
+
 	    
-	    return "redirect:/tienda/" + tiendaId;
+	    
 
-
-	}
+	    
+      
+	
 
 	@GetMapping(value = "/productos")
 	public String productList(ModelMap modelMap) {

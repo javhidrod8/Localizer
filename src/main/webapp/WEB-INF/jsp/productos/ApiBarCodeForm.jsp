@@ -8,16 +8,36 @@
 
 
 <petclinic:layout pageName="productos">
-   
-    <form:form modelAttribute="" class="form-horizontal" id="add-producto-form">
-        <div class="form-group has-feedback">
-            <petclinic:inputField label="BarCode" name="barCode"/>
-            <petclinic:inputField label="Precio" name="precio"/>
-     
-        </div>
-        <div class="form-group">
-                        <button class="btn btn-default" type="submit">Buscar Producto</button>
-        </div>
-    </form:form>
+
+	<h2>
+		<c:if test="${producto['new']}">Nuevo </c:if>
+		ProductoAPI
+	</h2>
+
+
+	<form:form modelAttribute="productoAPI" class="form-horizontal"
+		id="add-producto-form">
+		<div class="container">
+			<div id="tienda-producto col-md-12">
+				<input type="text" id="tienda" name="tienda" class="hidden"
+					value="${tiendaId}"><br>
+			</div>
+			<div id="barCode col-md-12">
+				<input type="text" id="barCode" name="barCode" 
+					value="${barCode}"><br>
+			</div>	
+			<div id="precio col-md-12">
+				<input type="text" id="precio" name="precio" 
+					value="${precio}"><br>
+			</div>	
+			<div id="productoAPI col-md-12">
+				<input type="text" id="productoApi" name="productoApi" class="hidden"
+					value="${productoApi}"><br>
+			</div>	
+			<button class='btn btn-default btn-sm' type="submit">A&ntildeadir
+									ProductoAPI</button>	
+			</div>					
+	</form:form>
+					
 </petclinic:layout>
 
