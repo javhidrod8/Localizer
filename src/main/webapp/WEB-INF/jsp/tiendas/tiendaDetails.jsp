@@ -130,25 +130,68 @@
 	<br>
 
 	<div class="row" style="margin-top: 2%">
-		<div class="col-md-2">
-			<div id="intolerancias">
+			<div class="col-md-2">
+<div id="intolerancias">
 				<h3>Intolerancias</h3>
-				<c:forEach items="${intolerancias}" var="intolerancia">
-					<input class="form-check-input" type="checkbox" id="${intolerancia}" />
-					<c:out value="${intolerancia}"></c:out>
-					<br>
+
+				<script type="text/javascript">
+				var intols = new Array();
+				<c:forEach items="${tienda.productos}" var="producto">
+					<c:forEach items="${producto.intolerancia}" var= "intolerancia">
+						intol = "${intolerancia}";
+				 			if (!intols.includes(intol)){
+					    	intols.push(intol);
+				    		}
+				 	</c:forEach>
 				</c:forEach>
+				intols.forEach(intol=>createIntolsInputs(intol));
+				function createIntolsInputs(intol){
+						input = document.createElement('input');
+						input.className ="form-check-input";
+						input.type ="checkbox";
+						input.id = intol;
+						input.value = intol;
+						div = document.createElement('div');
+						div.appendChild(input);
+						div.innerHTML += " "+intol;
+						intolerancias = document.getElementById("intolerancias");
+						intolerancias.appendChild(div);
+
+				}
+				</script>
 			</div>
 			<div id="preferencias">
 				<h3>Preferencias</h3>
-				<input class="form-check-input" type="radio" name = "preferencia" checked> NINGUNA</input><br>
-				<c:forEach items="${preferencias}" var="preferencia">
-					<c:if	test="${preferencia != 'TODO' && preferencia != null}"> 
-					<input class="form-check-input" type="radio" name = "preferencia" id="${preferencia}" />
-					<c:out value="${preferencia}"></c:out>
-					</c:if>
-					<br>
+				<input class="form-check-input" type="radio" name="preferencia"
+					checked> NINGUNA <br>
+				<script type="text/javascript">
+				var prefs = new Array();
+				<c:forEach items="${tienda.productos}" var="producto">
+				pref = "${producto.preferencia}";
+				 if (!prefs.includes(pref)){
+					    prefs.push(pref);
+				    }
 				</c:forEach>
+				
+				prefs.forEach(prefe=>createPrefsInputs(prefe));
+				function createPrefsInputs(prefe){
+					if(prefe!="TODO"){
+						input = document.createElement('input');
+						input.className ="form-check-input";
+						input.type ="radio";
+						input.name = "preferencia";
+						input.id = prefe;
+						input.value = prefe;
+						div = document.createElement('div');
+						div.appendChild(input);
+						div.innerHTML += " "+prefe;
+						preferencias = document.getElementById("preferencias");
+						preferencias.appendChild(div);
+						
+					}
+
+				}
+				</script>
 				<br>
 			</div>
 		</div>
@@ -209,18 +252,21 @@
 	  	prodHtml = "";
 	  	button.innerHTML = "Filtrar";
 	  	button.onclick = function(){
-	  		
 	  		var selectedPreferencia = new Array();
 			var selectedIntolerancias = new Array();
 			document.getElementById('productos').innerHTML= prodHtml;
 			var productosFiltrados = [...productos];
 			preferencias.forEach(p => {
 	  			if(document.getElementById(p) != null){
+	  				console.log(p);
 				 	if(document.getElementById(p).checked && !selectedPreferencia.includes(p)){
  					  selectedPreferencia.push(p);
 				 	}
 	  			}
 			  })
+			if(selectedPreferencia.includes("VEGETARIANO")){
+				selectedPreferencia.push("VEGANO");	
+			}
 	  		
 	  		intolerancias.forEach(i => {
 	  			if(document.getElementById(i) != null){
@@ -235,7 +281,8 @@
 				  var indexListIntolerancias = [];
 				  if(selectedPreferencia.length > 0 ) {
 					  productosFiltrados.forEach(e => {
-						  if(!(e.preferencia == selectedPreferencia[0])){
+// 						  if(!(e.preferencia == selectedPreferencia[0])){
+							if(!(selectedPreferencia.includes(e.preferencia))){
 							  var index = productosFiltrados.indexOf(e);
 							  if(!(indexListPreferencias.includes(index))){
 								  indexListPreferencias.push(index);
