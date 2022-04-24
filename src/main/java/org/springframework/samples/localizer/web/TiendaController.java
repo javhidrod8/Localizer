@@ -101,9 +101,9 @@ public class TiendaController {
 					org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
 					Tienda tienda = user.getTienda();
 					if (tienda == null) {
-						if (auth.equals("vendedor") ) {
+						if (auth.equals("vendedor") && !user.isPagado()) {
 							return "redirect:/checkout";
-						} else if(auth.equals("admin")) {
+						} else if(auth.equals("admin") || user.isPagado()) {
 							return "redirect:/tiendas/new";
 						}
 					}

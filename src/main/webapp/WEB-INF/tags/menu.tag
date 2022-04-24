@@ -82,16 +82,16 @@
 				</petclinic:menuItem>
 				 </sec:authorize>
 				 <sec:authorize access="hasAuthority('cliente')">
-				 <spring:url value="/users/{clienteName}/reservas" var="reservasUrl">
-               	 	<spring:param name="clienteName"> <sec:authentication property="name"/></spring:param>
-            	</spring:url>
-				 
-				 
-<%-- 				 	<petclinic:menuItem active="${name eq 'reservasList'}" url="${fn:escapeXml(reservasUrl)}" --%>
-<%-- 					title="reservas"> --%>
-<!-- 					<span>Mis Reservas</span> -->
-<%-- 				</petclinic:menuItem> --%>
-				 </sec:authorize>
+                <spring:url value="/users/{username}/reservas" var="historialUrl">
+                	<sec:authentication property="principal" var= "user"/>
+                        <spring:param name="username" value="${user.username}" />
+                    </spring:url>    
+                 <petclinic:menuItem active="${name eq 'historialReservas'}" url="${fn:escapeXml(historialUrl)}"
+                    title="historialReservas">
+                    <span>Mis Reservas</span>
+                </petclinic:menuItem>
+                 </sec:authorize>
+
 
 
 

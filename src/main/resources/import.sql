@@ -87,22 +87,22 @@ INSERT INTO productos(nombre,precio,marca,descripcion,estado,promocionado,imagen
 
 
 -- One admin user, named admin1 with passwor 4dm1n and authority admin
-INSERT INTO users(username,password,enabled) VALUES ('admin1','4dm1n',TRUE);
+INSERT INTO users(username,password,enabled,pagado) VALUES ('admin1','4dm1n',TRUE,FALSE);
 INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
 -- Un usuario cliente, llamado cliente1 con la contraseña cli1
-INSERT INTO users(username,password,enabled) VALUES ('cliente1','cli1',TRUE);
+INSERT INTO users(username,password,enabled,pagado) VALUES ('cliente1','cli1',TRUE,FALSE);
 INSERT INTO authorities(id,username,authority) VALUES (4,'cliente1','cliente');
 -- Un usuario cliente, llamado cliente2 con la contraseña cli2
-INSERT INTO users(username,password,enabled) VALUES ('cliente2','cli2',TRUE);
+INSERT INTO users(username,password,enabled,pagado) VALUES ('cliente2','cli2',TRUE,FALSE);
 INSERT INTO authorities(id,username,authority) VALUES (5,'cliente2','cliente');
 -- Un usuario vendedor, llamado vendedor1 con la contraseña vend1
-INSERT INTO users(username,password,enabled,first_name,last_name,tienda_id) VALUES ('vendedor1','vend1',TRUE,'Pepe','Cano',5);
+INSERT INTO users(username,password,enabled,first_name,last_name,tienda_id,pagado) VALUES ('vendedor1','vend1',TRUE,'Pepe','Cano',5,TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (6,'vendedor1','vendedor');
 -- Un usuario vendedor, llamado vendedor2 con la contraseña vend2
-INSERT INTO users(username,password,enabled,first_name,last_name) VALUES ('vendedor2','vend2',TRUE,'José','Lopez');
+INSERT INTO users(username,password,enabled,first_name,last_name,pagado) VALUES ('vendedor2','vend2',TRUE,'José','Lopez',FALSE);
 INSERT INTO authorities(id,username,authority) VALUES (7,'vendedor2','vendedor');
 -- Un usuario nutricionista, llamado nutricionista1 con la contraseña nut1
-INSERT INTO users(username,password,enabled) VALUES ('nutricionista1','nut1',TRUE);
+INSERT INTO users(username,password,enabled,pagado) VALUES ('nutricionista1','nut1',TRUE,FALSE);
 INSERT INTO authorities(id,username,authority) VALUES (8,'nutricionista1','nutricionista');
 
 
