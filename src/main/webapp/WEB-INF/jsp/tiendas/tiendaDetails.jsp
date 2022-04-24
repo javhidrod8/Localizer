@@ -302,8 +302,8 @@
     	var caption = document.createElement('div');
 		caption.className = "caption";
 		caption.id = "productoInfo";
-		if(producto.nombre.length>=30){
-	    	caption.innerHTML+="<h3>"+producto.nombre.substring(0,30)+"...</h3>";
+		if(producto.nombre.length>=25){
+	    	caption.innerHTML+="<h3>"+producto.nombre.substring(0,25)+"...</h3>";
 		}else{
 	    	caption.innerHTML+="<h3>"+producto.nombre+"</h3>";
 		}
