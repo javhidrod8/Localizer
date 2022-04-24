@@ -172,7 +172,7 @@ public class ReservaController {
 		} else {
 			Reserva r = reservaService.findReservaById(reservaId);
 			r.setComentario(reserva.getComentario());
-			r.setEstado(Estado.RECHAZADO);
+			r.setEstado(Estado.CANCELADO);
 			this.reservaService.saveReserva(r);
 			return "redirect:/users/" + username + "/reservas";
 
