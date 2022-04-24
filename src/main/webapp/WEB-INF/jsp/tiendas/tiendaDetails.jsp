@@ -368,7 +368,7 @@
 </c:if>
 <c:if test="${tienda.id == null}">
 <div class="col-md-12">
-<h3>No tienes todavía ninguna tienda</h3>
+<h3>No tienes todavÃ­a ninguna tienda</h3>
 <p>Puedes crear una haciendo click en:</p> 
 <br>
 </div>
@@ -382,5 +382,3 @@
 </div>
 </c:if>
 </petclinic:layout>
-message.txt
-14 KB
