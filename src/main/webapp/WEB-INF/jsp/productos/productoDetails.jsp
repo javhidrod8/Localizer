@@ -208,6 +208,7 @@
 	</div>
 	<spring:url value="/tienda/${tienda.id}/" var="tiendaUrl"></spring:url>
 	<spring:url value="/producto/" var="productoUrl"></spring:url>
+	<spring:url value="/tienda/${producto.tienda.id}/producto/" var="productoEditarUrl"></spring:url>
 	<script type="text/javascript">
 	
 		function Buscar(){
