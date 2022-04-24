@@ -22,8 +22,7 @@ public class Reserva extends BaseEntity{
 	
 	@OneToOne
 	private User user;
-	
-	@NotBlank
+
 	private String comentario;
 	
 	

@@ -26,7 +26,10 @@
 					<i class="fa fa-check" style="margin-left: 2%"></i>
 				</c:if>
 				<c:if test="${producto.estado=='RECHAZADO'}">
-					<i class="fa-solid fa-x" style="margin-left: 2%"></i>
+					<i class="fa fa-times" style="margin-left: 2%"></i>
+				</c:if>
+				<c:if test="${producto.estado=='PENDIENTE'}">
+					<i class="fa fa-clock-o" style="margin-left: 2%"></i>
 				</c:if>
 			</h2>
 			<c:if test="${not empty producto.descripcion}">

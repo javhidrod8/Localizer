@@ -96,7 +96,7 @@ INSERT INTO authorities(id,username,authority) VALUES (4,'cliente1','cliente');
 INSERT INTO users(username,password,enabled,pagado) VALUES ('cliente2','cli2',TRUE,FALSE);
 INSERT INTO authorities(id,username,authority) VALUES (5,'cliente2','cliente');
 -- Un usuario vendedor, llamado vendedor1 con la contraseña vend1
-INSERT INTO users(username,password,enabled,first_name,last_name,tienda_id,pagado) VALUES ('vendedor1','vend1',TRUE,'Pepe','Cano',5,TRUE);
+INSERT INTO users(username,password,enabled,first_name,last_name,tienda_id,pagado) VALUES ('vendedor1','vend1',TRUE,'Alimentación','Carmen',1,TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (6,'vendedor1','vendedor');
 -- Un usuario vendedor, llamado vendedor2 con la contraseña vend2
 INSERT INTO users(username,password,enabled,first_name,last_name,pagado) VALUES ('vendedor2','vend2',TRUE,'José','Lopez',FALSE);
@@ -104,7 +104,6 @@ INSERT INTO authorities(id,username,authority) VALUES (7,'vendedor2','vendedor')
 -- Un usuario nutricionista, llamado nutricionista1 con la contraseña nut1
 INSERT INTO users(username,password,enabled,pagado) VALUES ('nutricionista1','nut1',TRUE,FALSE);
 INSERT INTO authorities(id,username,authority) VALUES (8,'nutricionista1','nutricionista');
-
 
 -- Tolerancias
 INSERT INTO intolerancias(nombre) VALUES ('GLUTEN');
@@ -254,4 +253,6 @@ INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (66,10);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (67,2);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (67,10);
 
-INSERT INTO reservas(producto_id,tienda_id, cantidad, precio_total,user_username,estado) VALUES (1,1,2,2.00,'cliente1',0);
+INSERT INTO reservas(producto_id,tienda_id, cantidad, precio_total,user_username,estado) VALUES (66,1,2,2,'cliente1',0);
+INSERT INTO reservas(producto_id,tienda_id, cantidad, precio_total,user_username,estado,comentario) VALUES (67,1,2,2,'cliente1',1,'Puedes pasar cuando quieras a recogerlo');
+INSERT INTO reservas(producto_id,tienda_id, cantidad, precio_total,user_username,estado,comentario) VALUES (68,1,2,4.78,'cliente1',3,'Se han acabado, me llegan la semana que viene');
