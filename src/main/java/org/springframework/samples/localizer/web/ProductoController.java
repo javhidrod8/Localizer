@@ -268,9 +268,10 @@ public class ProductoController {
 		User currentUser = (User) authentication.getPrincipal();
 		String username = currentUser.getUsername();
 		org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
-		if ((auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId)) || auth.equals("admin")) {
+		Producto producto = this.productoService.findProductoById(productoId);
+		Tienda tiendaProducto = producto.getTienda();
+		if ((auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId) || auth.equals("admin")) && tiendaProducto.getId().equals(tiendaId)) {
 			model.put("tiendaId", tiendaId);
-			Producto producto = this.productoService.findProductoById(productoId);
 			this.productoService.deleteProducto(producto);
 			return "redirect:/tienda/" + tiendaId;
 		} else {
