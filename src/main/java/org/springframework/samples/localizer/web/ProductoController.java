@@ -161,6 +161,9 @@ public class ProductoController {
 		if (authentication.getPrincipal() != "anonymousUser") {
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
+		User currentUser = (User) authentication.getPrincipal();
+		String username = currentUser.getUsername();
+		org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
 		Collection<Producto> productos = this.productoService.findAllProductos();
 		Set<Intolerancias> intolerancias = new LinkedHashSet<Intolerancias>();
 		Set<Preferencias> preferencias = new LinkedHashSet<Preferencias>();
@@ -171,7 +174,7 @@ public class ProductoController {
 		model.put("productos", productos);
 		model.put("intolerancias", intolerancias);
 		model.put("preferencias", preferencias);
-		if (auth.equals("vendedor") || auth.equals("admin")) {
+		if (auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId) || auth.equals("admin")) {
 			model.put("tiendaId", tiendaId);
 			Producto producto = new Producto();
 			model.put("producto", producto);
