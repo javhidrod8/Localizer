@@ -17,25 +17,25 @@
 			<div id="nombre-usuario" class="col-md-12">
 				<label for="nombre">
 					<h3>Nombre:</h3>
-				</label> <input type="text" id="nombre" name="firstName"
+				</label> <input required type="text" id="nombre" name="firstName"
 					class="form-control" value="${user.firstName }"><br>
 			</div>
 			<div id="apellidos-usuario" class="col-md-12">
 				<label for="apellidos">
 					<h3>Apellidos:</h3>
-				</label> <input type="text" id="apellidos" name="lastName"
+				</label> <input required type="text" id="apellidos" name="lastName"
 					class="form-control" value="${user.lastName }"><br>
 			</div>
 			<div id="username-usuario" class="col-md-12">
 				<label for="username">
 					<h3>Usuario:</h3>
-				</label> <input type="text" id="user" name="username" class="form-control"
+				</label> <input required type="text" id="user" name="username" class="form-control"
 					value="${user.username}"><br>
 			</div>
 			<div id="password-usuario" class="col-md-12">
 				<label for="password">
 					<h3>Password:</h3>
-				</label> <input type="password" id="password" name="password"
+				</label> <input required type="password" id="password" name="password"
 					class="form-control" value="${user.password}"><br>
 				<c:if test="${!isNew && tiendaId!=0}">
 					<input type="text" id="tiendaId" name="tiendaId"
@@ -84,6 +84,12 @@
 					</div>
 				</c:otherwise>
 			</c:choose>
+			</br><div>
+			<a href="/terminos"><b>Aquí</b></a> encontrará toda la información relativa a los términos y condiciones de uso, deberá aceptarlos para poder registrarse.
+			</br>
+			<input required type="checkbox" id="terminos" value="Acepto">
+			<label>Acepto los términos y condiciones de uso</label> 
+			</div></br>
 			<div class="form-group">
 				<div class="col-sm-12" id="usuario-boton">
 					<c:choose>
