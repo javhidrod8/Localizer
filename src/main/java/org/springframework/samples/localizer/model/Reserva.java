@@ -25,9 +25,6 @@ public class Reserva extends BaseEntity{
 
 	private String comentario;
 	
-	
-	private Double precio_total;
-	
 	private Estado estado;
 
 	public Estado getEstado() {
@@ -83,7 +80,7 @@ public class Reserva extends BaseEntity{
 	@Override
 	public String toString() {
 		return "Reserva [tienda=" + tienda + ", producto=" + producto + ", cantidad=" + cantidad + ", user=" + user
-				+ ", comentario=" + comentario + ", precio_total=" + precio_total + ", estado=" + estado + "]";
+				+ ", comentario=" + comentario + ",  estado=" + estado + "]";
 	}
 
 	public String getComentario() {
@@ -95,11 +92,7 @@ public class Reserva extends BaseEntity{
 	}
 
 	public Double getPrecio_total() {
-		return precio_total;
-	}
-
-	public void setPrecio_total(Double precio_total) {
-		this.precio_total = precio_total;
+		return this.cantidad*this.producto.getPrecio();
 	}
 	
 	

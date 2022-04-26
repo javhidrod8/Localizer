@@ -253,6 +253,6 @@ INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (66,10);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (67,2);
 INSERT INTO producto_intolerancias(producto_id,intolerancias_id) VALUES (67,10);
 
-INSERT INTO reservas(producto_id,tienda_id, cantidad, precio_total,user_username,estado) VALUES (66,1,2,2,'cliente1',0);
-INSERT INTO reservas(producto_id,tienda_id, cantidad, precio_total,user_username,estado,comentario) VALUES (67,1,2,2,'cliente1',1,'Puedes pasar cuando quieras a recogerlo');
-INSERT INTO reservas(producto_id,tienda_id, cantidad, precio_total,user_username,estado,comentario) VALUES (68,1,2,4.78,'cliente1',3,'Se han acabado, me llegan la semana que viene');
+INSERT INTO reservas(producto_id,tienda_id, cantidad, user_username,estado) VALUES (66,1,2,'cliente1',0);
+INSERT INTO reservas(producto_id,tienda_id, cantidad, user_username,estado,comentario) VALUES (67,1,2,'cliente1',1,'Puedes pasar cuando quieras a recogerlo');
+INSERT INTO reservas(producto_id,tienda_id, cantidad, user_username,estado,comentario) VALUES (68,1,2,'cliente1',3,'Se han acabado, me llegan la semana que viene');

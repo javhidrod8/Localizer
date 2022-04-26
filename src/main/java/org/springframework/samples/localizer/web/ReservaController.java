@@ -33,7 +33,7 @@ public class ReservaController {
 	// TODO: Crear vistas de error
 	private static final String VIEWS_ERROR_AUTH = "errores/errorAuth";
 	private static final String VIEWS_CANCELAR_RESERVA = "reservas/createOrUpdateReservaForm";
-	private static final String VIEWS_ERROR_ESTADO_PRODUCTO = "reservas/createOrUpdateReservaForm";
+	private static final String VIEWS_ERROR_ESTADO_PRODUCTO = "errores/errorAuth";
 	private static final String VIEWS_VERIFICAR_RESERVA = "reservas/createOrUpdateReservaForm";
 	private final ReservaService reservaService;
 	private final ProductoService productoService;
@@ -88,7 +88,6 @@ public class ReservaController {
 			reserva.setProducto(producto);
 			reserva.setTienda(tienda);
 			reserva.setEstado(Estado.PENDIENTE);
-			reserva.setPrecio_total(reserva.getCantidad()*producto.getPrecio());
 			this.reservaService.saveReserva(reserva);
 			return "redirect:/tienda/" + tienda.getId();
 		}
