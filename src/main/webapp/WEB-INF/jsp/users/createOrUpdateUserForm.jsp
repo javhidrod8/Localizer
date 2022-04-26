@@ -26,18 +26,15 @@
 				</label> <input required type="text" id="apellidos" name="lastName"
 					class="form-control" value="${user.lastName }"><br>
 			</div>
-			<div id="username-usuario" class="col-md-12">
 				<label for="username">
-					<h3>Usuario:</h3>
-				</label> <input required type="text" id="user" name="username" class="form-control"
+				</label> <input required type="text" id="user" name="username" class="hidden" 
 					value="${user.username}"><br>
-			</div>
 			<div id="password-usuario" class="col-md-12">
 				<label for="password">
-					<h3>Password:</h3>
+					<h3>Contraseña:</h3>
 				</label> <input required type="password" id="password" name="password"
 					class="form-control" value="${user.password}"><br>
-				<c:if test="${!isNew && tiendaId!=0}">
+				<c:if test="${!isNew}">
 					<input type="text" id="tiendaId" name="tiendaId"
 					class="hidden" value="${tiendaId}" readonly>
 				</c:if>
@@ -66,8 +63,8 @@
 				</c:when>
 				<c:otherwise>
 					<div id="authority">
-						<h3>Rol:</h3>
 						<c:if test="${auth == 'cliente'}">
+						<h3>Rol:</h3>
 							<div class="radio-inline">
 								<label> <input type="radio" name="authority"
 									id="cliente" value="cliente" checked> CLIENTE
@@ -84,12 +81,15 @@
 					</div>
 				</c:otherwise>
 			</c:choose>
-			</br><div>
+			<c:if test="${isNew}">
+			</br>
+			<div>
 			<a href="/terminos"><b>Aquí</b></a> encontrará toda la información relativa a los términos y condiciones de uso, deberá aceptarlos para poder registrarse.
 			</br>
 			<input required type="checkbox" id="terminos" value="Acepto">
 			<label>Acepto los términos y condiciones de uso</label> 
 			</div></br>
+			</c:if>
 			<div class="form-group">
 				<div class="col-sm-12" id="usuario-boton">
 					<c:choose>
