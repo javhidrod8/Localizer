@@ -30,7 +30,6 @@ public class ReservaTest {
 		reserva.setId(1);
 		reserva.setCantidad(2);
 		reserva.setComentario("Orlando");
-		reserva.setPrecio_total(2.50);
 		reserva.setEstado(Estado.PENDIENTE);
 		reserva.setProducto(producto);
 		reserva.setUser(user);
@@ -61,7 +60,6 @@ public class ReservaTest {
 		Reserva reserva = new Reserva(tienda,producto);
 		reserva.setCantidad(2);
 		reserva.setComentario("Orlando");
-		reserva.setPrecio_total(2.50);
 		reserva.setEstado(Estado.PENDIENTE);
 		reserva.setUser(user);
 		reserva.toString();
@@ -91,7 +89,6 @@ public class ReservaTest {
 		Reserva reserva = new Reserva(tienda,producto);
 		reserva.setCantidad(null);
 		reserva.setComentario("Orlando");
-		reserva.setPrecio_total(2.00);
 		reserva.setEstado(Estado.PENDIENTE);
 		reserva.setUser(user);
 		reserva.toString();
@@ -116,7 +113,6 @@ public class ReservaTest {
 		Reserva reserva = new Reserva(tienda,producto);
 		reserva.setCantidad(2);
 		reserva.setComentario("Orlando");
-		reserva.setPrecio_total(2.00);
 		reserva.setEstado(null);
 		reserva.setUser(user);
 		reserva.toString();

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.samples.localizer.model.Estado;
 import org.springframework.samples.localizer.model.Preferencias;
 import org.springframework.samples.localizer.model.Producto;
+import org.springframework.samples.localizer.model.Reserva;
 
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 	
@@ -23,4 +24,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 
 	@Query("select p from Producto p where p.estado like ?1")
 	public Collection<Producto> findProductosByEstado(Estado estado);
+	
+	@Query("select r from Reserva r  where r.producto.id = ?1")
+	public Collection<Reserva> findReservasProducto(Integer id);
 }

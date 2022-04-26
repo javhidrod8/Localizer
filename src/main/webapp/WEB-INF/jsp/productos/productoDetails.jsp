@@ -57,7 +57,7 @@
 			<a href="${fn:escapeXml(tiendaUrl)}">
 				<button class='btn btn-default btn-sm'>Ver tienda</button>
 			</a>
-			<sec:authorize access="isAuthenticated()">
+			<sec:authorize access="hasAuthority('cliente')">
 				<spring:url
 					value="/tienda/{tiendaId}/producto/{productoId}/reservar"
 					var="reservaUrl">
