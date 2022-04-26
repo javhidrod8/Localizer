@@ -93,7 +93,6 @@ public class ReservaServiceTest {
 		res.setCantidad(1);
 		res.setEstado(Estado.PENDIENTE);
 		res.setUser(user);
-		res.setPrecio_total(2.00);
 		
 		this.reservaService.saveReserva(res);
 		assertThat(res.getId()).isNotNull().isEqualTo(4);

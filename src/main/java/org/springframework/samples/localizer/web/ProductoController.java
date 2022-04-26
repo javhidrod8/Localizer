@@ -213,6 +213,9 @@ public class ProductoController {
 		if (authentication.getPrincipal() != "anonymousUser") {
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
+		User currentUser = (User) authentication.getPrincipal();
+		String username = currentUser.getUsername();
+		org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
 		Collection<Producto> productos = this.productoService.findAllProductos();
 		Set<Intolerancias> intolerancias = new LinkedHashSet<Intolerancias>();
 		Set<Preferencias> preferencias = new LinkedHashSet<Preferencias>();
@@ -223,9 +226,10 @@ public class ProductoController {
 		model.put("productos", productos);
 		model.put("intolerancias", intolerancias);
 		model.put("preferencias", preferencias);
-		if (auth.equals("vendedor") || auth.equals("admin") || auth.equals("nutricionista")) {
+		Producto producto = this.productoService.findProductoById(productoId);
+		Tienda tiendaProducto = producto.getTienda();
+		if ((auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId) || auth.equals("admin") || auth.equals("nutricionista")) && tiendaProducto.getId().equals(tiendaId)) {
 			model.put("tiendaId", tiendaId);
-			Producto producto = this.productoService.findProductoById(productoId);
 			model.put("producto", producto);
 			Boolean isNew = false;
 			model.put("isNew", isNew);
@@ -264,9 +268,10 @@ public class ProductoController {
 		User currentUser = (User) authentication.getPrincipal();
 		String username = currentUser.getUsername();
 		org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
-		if ((auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId)) || auth.equals("admin")) {
+		Producto producto = this.productoService.findProductoById(productoId);
+		Tienda tiendaProducto = producto.getTienda();
+		if ((auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId) || auth.equals("admin")) && tiendaProducto.getId().equals(tiendaId)) {
 			model.put("tiendaId", tiendaId);
-			Producto producto = this.productoService.findProductoById(productoId);
 			this.productoService.deleteProducto(producto);
 			return "redirect:/tienda/" + tiendaId;
 		} else {

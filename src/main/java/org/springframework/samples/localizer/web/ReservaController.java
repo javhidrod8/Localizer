@@ -28,13 +28,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class ReservaController {
 
-	private static final String VIEWS_ERROR_TIENDAID = "";
 	private static final String VIEWS_FORM_RESERVAS = "reservas/createOrUpdateReservaForm";
 	private static final String VIEWS_LIST_RESERVAS = "reservas/reservasList";
 	// TODO: Crear vistas de error
-	private static final String VIEWS_ERROR_AUTH = "reservas/createOrUpdateReservaForm";
+	private static final String VIEWS_ERROR_AUTH = "errores/errorAuth";
 	private static final String VIEWS_CANCELAR_RESERVA = "reservas/createOrUpdateReservaForm";
-	private static final String VIEWS_ERROR_ESTADO_PRODUCTO = "reservas/createOrUpdateReservaForm";
+	private static final String VIEWS_ERROR_ESTADO_PRODUCTO = "errores/errorAuth";
 	private static final String VIEWS_VERIFICAR_RESERVA = "reservas/createOrUpdateReservaForm";
 	private final ReservaService reservaService;
 	private final ProductoService productoService;
@@ -59,18 +58,13 @@ public class ReservaController {
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		String auth = currentPrincipalName.iterator().next().toString().trim();
 		model.put("auth", auth);
-		if (auth.equals("cliente")) {
-			Producto producto = this.productoService.findProductoById(productoId);
-			Tienda tienda = producto.getTienda();
-			if (tienda.getId().equals(tiendaId)) {
-				Reserva reserva = new Reserva();
-				reserva.setProducto(producto);
-				model.put("reserva", reserva);
-				return VIEWS_FORM_RESERVAS;
-			} else {
-				return VIEWS_ERROR_TIENDAID;
-			}
-
+		Producto producto = this.productoService.findProductoById(productoId);
+		Tienda tiendaProducto = producto.getTienda();
+		if (auth.equals("cliente") && tiendaProducto.getId().equals(tiendaId)) {
+			Reserva reserva = new Reserva();
+			reserva.setProducto(producto);
+			model.put("reserva", reserva);
+			return VIEWS_FORM_RESERVAS;
 		} else {
 			return VIEWS_ERROR_AUTH;
 		}
@@ -94,7 +88,6 @@ public class ReservaController {
 			reserva.setProducto(producto);
 			reserva.setTienda(tienda);
 			reserva.setEstado(Estado.PENDIENTE);
-			reserva.setPrecio_total(reserva.getCantidad()*producto.getPrecio());
 			this.reservaService.saveReserva(reserva);
 			return "redirect:/tienda/" + tienda.getId();
 		}
