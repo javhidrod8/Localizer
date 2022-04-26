@@ -75,6 +75,12 @@ public class ProductoController {
 			User currentUser = (User) authentication.getPrincipal();
 			String username = currentUser.getUsername();
 			org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
+			if(auth.equals("cliente")) {
+				if(producto.getEstado()!=Estado.ACEPTADO) {
+					ModelAndView mav2 = new ModelAndView("errores/errorAuth");
+					return mav2;
+				}
+			}
 			if (auth.equals("admin")) {
 				mav.addObject("miTienda", true);
 			} else {
@@ -83,10 +89,19 @@ public class ProductoController {
 					if (t != null) {
 						if (t.getId().equals(producto.getTienda().getId())) {
 							mav.addObject("miTienda", true);
+							
 						} else {
+							if(producto.getEstado()!=Estado.ACEPTADO) {
+								ModelAndView mav2 = new ModelAndView("errores/errorAuth");
+								return mav2;
+							}
 							mav.addObject("miTienda", false);
 						}
 					} else {
+						if(producto.getEstado()!=Estado.ACEPTADO) {
+							ModelAndView mav2 = new ModelAndView("errores/errorAuth");
+							return mav2;
+						}
 						mav.addObject("miTienda", false);
 					}
 				} else {
