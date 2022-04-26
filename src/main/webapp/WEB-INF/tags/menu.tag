@@ -91,6 +91,10 @@
                     <span>Mis Reservas</span>
                 </petclinic:menuItem>
                  </sec:authorize>
+                 <petclinic:menuItem active="${name eq 'terminos'}" url="/terminos"
+					title="terminos">
+					<span>Términos</span>
+				</petclinic:menuItem>
 
 
 
