@@ -204,8 +204,12 @@
 				<br>
 			</div>
 		</div>
-		<div class="col-md-10" id="productos"></div>
+		<div class="col-md-10">
+			<div class="row row-cols-md-4 row-cols-sm-1" id="productos"></div>
+			<div class="row row-cols-md-4 row-cols-sm-1" id="botonPaginacion"></div>
+		</div>
 	</div>
+	
 	<spring:url value="/tienda/${tienda.id}/" var="tiendaUrl"></spring:url>
 	<spring:url value="/producto/" var="productoUrl"></spring:url>
 	<spring:url value="/tienda/${producto.tienda.id}/producto/" var="productoEditarUrl"></spring:url>
@@ -246,7 +250,72 @@
 		    productos.push(productoDetails);
 		    </c:if>
 		</c:forEach> 
-		productos.forEach(producto=> printProducto(producto));
+		//PRINCIPIO PAGINACION
+		productosPaginados = productos.slice(0,9);
+		productosPaginados.forEach(producto=> printProducto(producto));
+		inicio = 0;
+		fin = 9;
+		
+		function paginacion (inicio, fin, productosList){
+			productosPaginados = productosList.slice(inicio,fin);
+			
+		}
+	
+		var buttonPag = document.createElement('button');
+		buttonPag.id= "botonMas";
+		buttonPag.className="btn btn-default";
+	  	buttonPag.innerHTML = "Mostrar más";
+	  	buttonPag.onclick = function(){
+	  		
+	  	buttonPagBack.className="btn btn-default";
+	  		if(productos.length==productosFiltrados.length){
+	  			if (fin <= productos.length){
+		  			inicio+=9;
+			  		fin+=9;
+			  		paginacion(inicio, fin, productos);
+			  		productosPaginados.forEach(producto=> printProducto(producto));
+			  		document.getElementById("botonMenos").className="btn btn-default";
+		  		}
+	  			if(fin>= productos.length){
+		  			document.getElementById("botonMas").className="btn btn-default hidden";
+		  		}
+	  		}else{
+	  			
+	  		if (fin <= productosFiltrados.length){
+	  			inicio+=9;
+		  		fin+=9;
+		  		paginacion(inicio, fin, productosFiltrados);
+		  		productosPaginados.forEach(producto=> printProducto(producto));
+		  		
+	  		}if(fin>= productosFiltrados.length){
+	  			document.getElementById("botonMas").className="btn btn-default hidden";
+	  		}}
+	  		
+	  	}
+		document.getElementById("botonPaginacion").appendChild(buttonPag);
+		
+		var buttonPagBack = document.createElement('button');
+		buttonPagBack.className="btn btn-default hidden";
+	  	buttonPagBack.innerHTML = "Mostrar menos";
+	  	buttonPagBack.id= "botonMenos";
+	  	buttonPagBack.onclick = function(){	
+	  		buttonPag.className="btn btn-default";
+	  		ay = document.getElementById("productos");
+	  		if (fin > 9){
+	  			inicio-=9;
+		  		fin-=9;
+		  		for(i=0; i<=8; i++){
+		  			ay.removeChild(ay.lastElementChild);
+		  		}}
+	  		if(fin<=9){
+	  			document.getElementById("botonMenos").className="btn btn-default hidden";
+	  		}
+	  		
+	  		
+	  	}
+		document.getElementById("botonPaginacion").appendChild(buttonPagBack);
+	
+	//FIN PAGINACION
 		
 		
 	/*TODO: asignar a las siguientes variable las intolerancias seleccionadas y la preferencia*/
@@ -261,11 +330,12 @@
 		button.className="btn btn-default btn-md";
 	  	prodHtml = "";
 	  	button.innerHTML = "Filtrar";
+	  	var productosFiltrados = [...productos];
 	  	button.onclick = function(){
+	  		productosFiltrados = [...productos];
 	  		var selectedPreferencia = new Array();
 			var selectedIntolerancias = new Array();
 			document.getElementById('productos').innerHTML= prodHtml;
-			var productosFiltrados = [...productos];
 			preferencias.forEach(p => {
 	  			if(document.getElementById(p) != null){
 	  				console.log(p);
@@ -327,7 +397,10 @@
 			  } else {
 				  productosFiltrados = [...productos]
 			  }
-	  			productosFiltrados.forEach(producto=> printProducto(producto));
+			  	inicio = 0;
+	  			fin = 9;
+	  			paginacion(inicio, fin, productosFiltrados); //<-PAGINACION
+	  			productosPaginados.forEach(producto=> printProducto(producto));
 			  
 		  };
 			
@@ -338,7 +411,7 @@
 				
 				var prodDiv = document.createElement('div'); 
 				prodDiv.className = "col-sm-6 col-md-4";
-				prodDiv.id = "producto"; 
+				prodDiv.id = "producto"+producto.id; 
 				prodDiv.title = producto.nombre;
 		    
 		    	var thumbnail = document.createElement('div');
@@ -388,7 +461,7 @@
 
 		    	thumbnail.appendChild(caption);
 		    	prodDiv.appendChild(thumbnail);
-				document.getElementById('productos').appendChild(prodDiv);
+				document.getElementById("productos").appendChild(prodDiv);
 			};
 
 	function onlyUnique(value, index, self) {

@@ -283,9 +283,10 @@
 	  			
 	  			inicio = 0;
 	  			fin = 9;
+	  			document.getElementById("botonMenos").className="btn btn-default hidden";
 	  			paginacion(inicio, fin, productosFiltrados); //<-PAGINACION
 	  			productosPaginados.forEach(producto=> printProducto(producto));
-			  
+			   
 		  };
 			
 		  document.getElementById('preferencias').appendChild(button);
