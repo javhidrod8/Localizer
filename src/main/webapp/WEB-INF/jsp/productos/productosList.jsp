@@ -258,7 +258,7 @@
 				  var indexListPreferencias = [];
 				  var indexListIntolerancias = [];
 				  if(selectedPreferencia.length > 0 ) {
-					  productosFiltrados.forEach(e => 
+					  productosFiltrados.forEach(e => {
 							if(!(selectedPreferencia.includes(e.preferencia))){
 							  var index = productosFiltrados.indexOf(e);
 							  if(!(indexListPreferencias.includes(index))){
