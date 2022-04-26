@@ -161,7 +161,10 @@
 				  		document.getElementById("botonMenos").className="btn btn-default";
 			  		}
 		  			if(fin>= productos.length){
-			  			document.getElementById("botonMas").className="btn btn-default hidden";
+			  			resto = fin - productos.length;
+			  			fin = fin - resto;
+			  			inicio = fin - 9;
+		  				document.getElementById("botonMas").className="btn btn-default hidden";
 			  		}
 		  		}else{
 		  			
@@ -172,10 +175,11 @@
 			  		productosPaginados.forEach(producto=> printProducto(producto));
 			  		
 		  		}if(fin>= productosFiltrados.length){
+		  			resto = fin - productosFiltrados.length;
+		  			fin = fin - resto;
+		  			inicio = fin - 9;
 		  			document.getElementById("botonMas").className="btn btn-default hidden";
-		  		}}
-		  		
-		  	}
+		  		}}		  	}
 			document.getElementById("botonPaginacion").appendChild(buttonPag);
 			
 			var buttonPagBack = document.createElement('button');
@@ -194,20 +198,31 @@
 		  		if(fin<=9){
 		  			document.getElementById("botonMenos").className="btn btn-default hidden";
 		  		}
-		  		
-		  		
+		  		if(ay.children.length < 9){
+		  			while (ay.firstChild) {
+		  				ay.removeChild(ay.firstChild);
+		  			}
+		  			if(productos.length==productosFiltrados.length){
+		  				productosPaginados = productos.slice(0,9);
+						productosPaginados.forEach(producto=> printProducto(producto));
+						inicio = 0;
+						fin = 9;
+		  			} else {
+		  				productosPaginados = productosFiltrados.slice(0,9);
+						productosPaginados.forEach(producto=> printProducto(producto));
+						inicio = 0;
+						fin = 9;
+		  			}
+		  		}	
 		  	}
 			document.getElementById("botonPaginacion").appendChild(buttonPagBack);
+			
+			if(productos.length <= 9){
+	  			document.getElementById("botonMas").className="btn btn-default hidden";
+	  			document.getElementById("botonMenos").className="btn btn-default hidden";
+			}
 		
 		//FIN PAGINACION
-			
-	/*TODO: asignar a las siguientes variable las intolerancias seleccionadas y la preferencia*/
-	/* ahora solo esta cogiendo la primera de todas las preferencias de la lista y todas las intolerancias disponibles*/
-		
-// 		var selectedPreferencia = preferencias.filter(onlyUnique)[0];
-//  	var selectedIntolerancias = intolerancias.filter(onlyUnique);	
-		//var selectedPreferencia = new Array();
-		//var selectedIntolerancias = new Array();	
 
 		var button = document.createElement('button');
 		button.className="btn btn-default";
@@ -243,8 +258,7 @@
 				  var indexListPreferencias = [];
 				  var indexListIntolerancias = [];
 				  if(selectedPreferencia.length > 0 ) {
-					  productosFiltrados.forEach(e => {
-// 						  if(!(e.preferencia == selectedPreferencia[0])){
+					  productosFiltrados.forEach(e => 
 							if(!(selectedPreferencia.includes(e.preferencia))){
 							  var index = productosFiltrados.indexOf(e);
 							  if(!(indexListPreferencias.includes(index))){
@@ -286,7 +300,12 @@
 	  			document.getElementById("botonMenos").className="btn btn-default hidden";
 	  			paginacion(inicio, fin, productosFiltrados); //<-PAGINACION
 	  			productosPaginados.forEach(producto=> printProducto(producto));
-			   
+	  			if(productosFiltrados.length <= 9){
+		  			document.getElementById("botonMas").className="btn btn-default hidden";
+		  			document.getElementById("botonMenos").className="btn btn-default hidden";
+				} else {
+					document.getElementById("botonMas").className="btn btn-default";
+				}
 		  };
 			
 		  document.getElementById('preferencias').appendChild(button);
