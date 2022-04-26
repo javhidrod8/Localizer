@@ -15,20 +15,20 @@
 		  location.href = "${fn:escapeXml(searchUrl)}"+text;
 		}
 </script>
-<div class="row">
-  <div class="col-sm-1"></div>
-			<div class="col-sm-9">
-				<input id="busqueda" type="text" class="form-control"
-					placeholder="Busqueda de productos...">
-			</div>
-			<div class="col-sm-1">
-				<button class="btn btn-default" onClick="Buscar()">Buscar</button>
-			</div>
+	<div class="row">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-9">
+			<input id="busqueda" type="text" class="form-control"
+				placeholder="Busqueda de productos...">
+		</div>
+		<div class="col-sm-1">
+			<button class="btn btn-default" onClick="Buscar()">Buscar</button>
+		</div>
 
-  <div class="col-sm-1"></div>
-  
-</div>
-<div class="row" style="margin-top: 2%">
+		<div class="col-sm-1"></div>
+
+	</div>
+	<div class="row" style="margin-top: 2%">
 		<div class="col-md-2">
 			<div id="intolerancias">
 				<h3>Intolerancias</h3>
@@ -94,8 +94,11 @@
 				<br>
 			</div>
 		</div>
-		<div class="col-md-10"><div class="row row-cols-md-4 row-cols-sm-1" id="productos"></div></div>
-</div>
+		<div class="col-md-10">
+			<div class="row row-cols-md-4 row-cols-sm-1" id="productos"></div>
+			<div class="row row-cols-md-4 row-cols-sm-1" id="botonPaginacion"></div>
+		</div>
+	</div>
 	<script type="text/javascript">
 	
 
@@ -120,20 +123,84 @@
 		    productoDetails.intolerancias = new Array();
 		    <c:forEach items="${producto.intolerancia}" var="intolerancia">
 		    	productoDetails.intolerancias.push("${intolerancia}");
-		    	intolerancias.push("${intolerancia}");/*1 - quitar cuando esten los checkbox*/
+		    	intolerancias.push("${intolerancia}");
 		    </c:forEach>
 
 		    productoDetails.preferencia = "${producto.preferencia}";
 		    if (!preferencias.includes(productoDetails.preferencia)){
-			    preferencias.push(productoDetails.preferencia);/*2 - quitar cuando esten los checkbox*/	
+			    preferencias.push(productoDetails.preferencia);
 		    }
 		    productos.push(productoDetails);
 		    </c:if>
 		</c:forEach> 
 	
-		productos.forEach(producto=> printProducto(producto));
+		//PRINCIPIO PAGINACION
+			productosPaginados = productos.slice(0,9);
+			productosPaginados.forEach(producto=> printProducto(producto));
+			inicio = 0;
+			fin = 9;
+			
+			function paginacion (inicio, fin, productosList){
+				productosPaginados = productosList.slice(inicio,fin);
+				
+			}
 		
+			var buttonPag = document.createElement('button');
+			buttonPag.id= "botonMas";
+			buttonPag.className="btn btn-default";
+		  	buttonPag.innerHTML = "Mostrar más";
+		  	buttonPag.onclick = function(){
+		  		
+		  	buttonPagBack.className="btn btn-default";
+		  		if(productos.length==productosFiltrados.length){
+		  			if (fin <= productos.length){
+			  			inicio+=9;
+				  		fin+=9;
+				  		paginacion(inicio, fin, productos);
+				  		productosPaginados.forEach(producto=> printProducto(producto));
+				  		document.getElementById("botonMenos").className="btn btn-default";
+			  		}
+		  			if(fin>= productos.length){
+			  			document.getElementById("botonMas").className="btn btn-default hidden";
+			  		}
+		  		}else{
+		  			
+		  		if (fin <= productosFiltrados.length){
+		  			inicio+=9;
+			  		fin+=9;
+			  		paginacion(inicio, fin, productosFiltrados);
+			  		productosPaginados.forEach(producto=> printProducto(producto));
+			  		
+		  		}if(fin>= productosFiltrados.length){
+		  			document.getElementById("botonMas").className="btn btn-default hidden";
+		  		}}
+		  		
+		  	}
+			document.getElementById("botonPaginacion").appendChild(buttonPag);
+			
+			var buttonPagBack = document.createElement('button');
+			buttonPagBack.className="btn btn-default hidden";
+		  	buttonPagBack.innerHTML = "Mostrar menos";
+		  	buttonPagBack.id= "botonMenos";
+		  	buttonPagBack.onclick = function(){	
+		  		buttonPag.className="btn btn-default";
+		  		ay = document.getElementById("productos");
+		  		if (fin > 9){
+		  			inicio-=9;
+			  		fin-=9;
+			  		for(i=0; i<=8; i++){
+			  			ay.removeChild(ay.lastElementChild);
+			  		}}
+		  		if(fin<=9){
+		  			document.getElementById("botonMenos").className="btn btn-default hidden";
+		  		}
+		  		
+		  		
+		  	}
+			document.getElementById("botonPaginacion").appendChild(buttonPagBack);
 		
+		//FIN PAGINACION
+			
 	/*TODO: asignar a las siguientes variable las intolerancias seleccionadas y la preferencia*/
 	/* ahora solo esta cogiendo la primera de todas las preferencias de la lista y todas las intolerancias disponibles*/
 		
@@ -146,15 +213,15 @@
 		button.className="btn btn-default";
 	  	prodHtml = "";
 	  	button.innerHTML = "Filtrar";
+	  	var productosFiltrados = [...productos];
 	  	button.onclick = function(){
-	  		
+	  		productosFiltrados = [...productos];
 	  		var selectedPreferencia = new Array();
 			var selectedIntolerancias = new Array();
 			document.getElementById('productos').innerHTML= prodHtml;
-			var productosFiltrados = [...productos];
+			
 			preferencias.forEach(p => {
 	  			if(document.getElementById(p) != null){
-	  				console.log(p);
 				 	if(document.getElementById(p).checked && !selectedPreferencia.includes(p)){
  					  selectedPreferencia.push(p);
 				 	}
@@ -213,8 +280,13 @@
 			  } else {
 				  productosFiltrados = [...productos]
 			  }
-	  			productosFiltrados.forEach(producto=> printProducto(producto));
-			  
+	  			
+	  			inicio = 0;
+	  			fin = 9;
+	  			document.getElementById("botonMenos").className="btn btn-default hidden";
+	  			paginacion(inicio, fin, productosFiltrados); //<-PAGINACION
+	  			productosPaginados.forEach(producto=> printProducto(producto));
+			   
 		  };
 			
 		  document.getElementById('preferencias').appendChild(button);
@@ -224,7 +296,7 @@
 			
 			var prodDiv = document.createElement('div'); 
 			prodDiv.className = "col-sm-6 col-md-4";
-			prodDiv.id = "producto"; 
+			prodDiv.id = "producto"+producto.id; 
 	    
 	    	var thumbnail = document.createElement('div');
 	    	thumbnail.className = "thumbnail";
@@ -283,7 +355,7 @@
 	 		
 	    	thumbnail.appendChild(caption);
 	    	prodDiv.appendChild(thumbnail);
-			document.getElementById('productos').appendChild(prodDiv);
+			document.getElementById("productos").appendChild(prodDiv);
 	};
 
 	function onlyUnique(value, index, self) {
