@@ -64,49 +64,19 @@
 					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
 						<button class = "btn btn-default btn-sm">Eliminar tienda</button>
 					</a>
-					</dd>
-					</sec:authorize>
-					<c:if test="${miTienda}">
-					<sec:authorize access="hasAuthority('vendedor')">
-				<dd>				
-					<spring:url value="/tienda/{tiendaId}/delete" var="tiendaDeleteUrl">
+					<spring:url value="/tienda/{tiendaId}/reservas" var="tiendaReservasUrl">
 						<spring:param name="tiendaId" value="${tienda.id}" />
 					</spring:url>	
-					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
-						<button class = "btn btn-default btn-sm">Eliminar tienda</button>
-						<br>
-
+					<a href="${fn:escapeXml(tiendaReservasUrl)}">
+						<button class='btn btn-default btn-sm'>Ver Reservas</button>
 					</a>
-				</dd>
-				<br>
-				</sec:authorize>
-					
-					</c:if>
-				
-				  <sec:authorize access="hasAuthority('admin')">
-				<dd>				
 					<spring:url value="/tienda/{tiendaId}/edit" var="tiendaEditUrl">
 						<spring:param name="tiendaId" value="${tienda.id}" />
 					</spring:url>	
 					<a href="${fn:escapeXml(tiendaEditUrl)}">
 						<button class='btn btn-default btn-sm'>Editar tienda</button>
 					</a>
-				</dd>
-				</sec:authorize>
-				 <sec:authorize access="hasAuthority('vendedor')">
-<%-- 			        <sec:authentication var="user" property="name" /> --%>
-<%-- 					<c:if test="${username == user}"> --%>
-					<c:if test="${miTienda}">
-					<dd>				
-						<spring:url value="/tienda/{tiendaId}/edit" var="tiendaEditUrl">
-							<spring:param name="tiendaId" value="${tienda.id}" />
-						</spring:url>	
-						<a href="${fn:escapeXml(tiendaEditUrl)}">
-
-							<button class='btn btn-default btn-sm'>Editar tienda</button>
-
-						</a>
-						<spring:url value="/tienda/{tiendaId}/productos/new" var="tiendaUrl">
+					<spring:url value="/tienda/{tiendaId}/productos/new" var="tiendaUrl">
 							<spring:param name="tiendaId" value="${tienda.id}" />
 						</spring:url>	
 						<a href="${fn:escapeXml(tiendaUrl)}">
@@ -114,13 +84,40 @@
 							<button class='btn btn-default btn-sm'>Nuevo Producto</button>
 
 						</a>
-					</dd>
+					</dd>				
+					</sec:authorize>
+					<sec:authorize access="hasAuthority('vendedor')">
+					<c:if test="${miTienda}">
+					<dd>				
+					<spring:url value="/tienda/{tiendaId}/delete" var="tiendaDeleteUrl">
+						<spring:param name="tiendaId" value="${tienda.id}" />
+					</spring:url>	
+					<a href="${fn:escapeXml(tiendaDeleteUrl)}">
+						<button class = "btn btn-default btn-sm">Eliminar tienda</button>
+					</a>
+					<spring:url value="/tienda/{tiendaId}/reservas" var="tiendaReservasUrl">
+						<spring:param name="tiendaId" value="${tienda.id}" />
+					</spring:url>	
+					<a href="${fn:escapeXml(tiendaReservasUrl)}">
+						<button class='btn btn-default btn-sm'>Ver Reservas</button>
+					</a>
+					<spring:url value="/tienda/{tiendaId}/edit" var="tiendaEditUrl">
+						<spring:param name="tiendaId" value="${tienda.id}" />
+					</spring:url>	
+					<a href="${fn:escapeXml(tiendaEditUrl)}">
+						<button class='btn btn-default btn-sm'>Editar tienda</button>
+					</a>
+					<spring:url value="/tienda/{tiendaId}/productos/new" var="tiendaUrl">
+							<spring:param name="tiendaId" value="${tienda.id}" />
+						</spring:url>	
+						<a href="${fn:escapeXml(tiendaUrl)}">
+
+							<button class='btn btn-default btn-sm'>Nuevo Producto</button>
+
+						</a>
+					</dd>				
 					</c:if>
-
-					
-<%-- 					</c:if> --%>
-
-				</sec:authorize>
+					</sec:authorize>
 				</dl>
 			</div>
 
@@ -133,29 +130,72 @@
 	<br>
 
 	<div class="row" style="margin-top: 2%">
-		<div class="col-md-2">
-			<div id="intolerancias">
+			<div class="col-md-2">
+<div id="intolerancias">
 				<h3>Intolerancias</h3>
-				<c:forEach items="${intolerancias}" var="intolerancia">
-					<input class="form-check-input" type="checkbox" id="${intolerancia}" />
-					<c:out value="${intolerancia}"></c:out>
-					<br>
+
+				<script type="text/javascript">
+				var intols = new Array();
+				<c:forEach items="${tienda.productos}" var="producto">
+					<c:forEach items="${producto.intolerancia}" var= "intolerancia">
+						intol = "${intolerancia}";
+				 			if (!intols.includes(intol)){
+					    	intols.push(intol);
+				    		}
+				 	</c:forEach>
 				</c:forEach>
+				intols.forEach(intol=>createIntolsInputs(intol));
+				function createIntolsInputs(intol){
+						input = document.createElement('input');
+						input.className ="form-check-input";
+						input.type ="checkbox";
+						input.id = intol;
+						input.value = intol;
+						div = document.createElement('div');
+						div.appendChild(input);
+						div.innerHTML += " "+intol;
+						intolerancias = document.getElementById("intolerancias");
+						intolerancias.appendChild(div);
+
+				}
+				</script>
 			</div>
 			<div id="preferencias">
 				<h3>Preferencias</h3>
-				<input class="form-check-input" type="radio" name = "preferencia" checked> NINGUNA</input><br>
-				<c:forEach items="${preferencias}" var="preferencia">
-					<c:if	test="${preferencia != 'TODO' && preferencia != null}"> 
-					<input class="form-check-input" type="radio" name = "preferencia" id="${preferencia}" />
-					<c:out value="${preferencia}"></c:out>
-					</c:if>
-					<br>
+				<input class="form-check-input" type="radio" name="preferencia"
+					checked> NINGUNA <br>
+				<script type="text/javascript">
+				var prefs = new Array();
+				<c:forEach items="${tienda.productos}" var="producto">
+				pref = "${producto.preferencia}";
+				 if (!prefs.includes(pref)){
+					    prefs.push(pref);
+				    }
 				</c:forEach>
+				
+				prefs.forEach(prefe=>createPrefsInputs(prefe));
+				function createPrefsInputs(prefe){
+					if(prefe!="TODO"){
+						input = document.createElement('input');
+						input.className ="form-check-input";
+						input.type ="radio";
+						input.name = "preferencia";
+						input.id = prefe;
+						input.value = prefe;
+						div = document.createElement('div');
+						div.appendChild(input);
+						div.innerHTML += " "+prefe;
+						preferencias = document.getElementById("preferencias");
+						preferencias.appendChild(div);
+						
+					}
+
+				}
+				</script>
 				<br>
 			</div>
 		</div>
-		<div class="col-md-10" id="productos"></div>
+		<div class="col-md-10"><div class="row row-cols-md-4 row-cols-sm-1" id="productos"></div></div>
 	</div>
 	<spring:url value="/tienda/${tienda.id}/" var="tiendaUrl"></spring:url>
 	<spring:url value="/producto/" var="productoUrl"></spring:url>
@@ -195,7 +235,8 @@
 		    preferencias.push(productoDetails.preferencia);/*2 - quitar cuando esten los checkbox*/
 		    productos.push(productoDetails);
 		    </c:if>
-		</c:forEach> 
+		</c:forEach>
+		
 		productos.forEach(producto=> printProducto(producto));
 		
 		
@@ -212,7 +253,6 @@
 	  	prodHtml = "";
 	  	button.innerHTML = "Filtrar";
 	  	button.onclick = function(){
-	  		
 	  		var selectedPreferencia = new Array();
 			var selectedIntolerancias = new Array();
 			document.getElementById('productos').innerHTML= prodHtml;
@@ -224,6 +264,9 @@
 				 	}
 	  			}
 			  })
+			if(selectedPreferencia.includes("VEGETARIANO")){
+				selectedPreferencia.push("VEGANO");	
+			}
 	  		
 	  		intolerancias.forEach(i => {
 	  			if(document.getElementById(i) != null){
@@ -238,7 +281,8 @@
 				  var indexListIntolerancias = [];
 				  if(selectedPreferencia.length > 0 ) {
 					  productosFiltrados.forEach(e => {
-						  if(!(e.preferencia == selectedPreferencia[0])){
+// 						  if(!(e.preferencia == selectedPreferencia[0])){
+							if(!(selectedPreferencia.includes(e.preferencia))){
 							  var index = productosFiltrados.indexOf(e);
 							  if(!(indexListPreferencias.includes(index))){
 								  indexListPreferencias.push(index);
@@ -273,8 +317,7 @@
 			  } else {
 				  productosFiltrados = [...productos]
 			  }
-	  			productosFiltrados.forEach(producto=> printProducto(producto));
-			  
+			  	productosFiltrados.forEach(producto=> printProducto(producto));
 		  };
 			
 		  document.getElementById('preferencias').appendChild(button);
@@ -305,8 +348,8 @@
     	var caption = document.createElement('div');
 		caption.className = "caption";
 		caption.id = "productoInfo";
-		if(producto.nombre.length>=30){
-	    	caption.innerHTML+="<h3>"+producto.nombre.substring(0,30)+"...</h3>";
+		if(producto.nombre.length>=25){
+	    	caption.innerHTML+="<h3>"+producto.nombre.substring(0,25)+"...</h3>";
 		}else{
 	    	caption.innerHTML+="<h3>"+producto.nombre+"</h3>";
 		}
@@ -360,7 +403,7 @@
 
     	thumbnail.appendChild(caption);
     	prodDiv.appendChild(thumbnail);
-		document.getElementById('productos').appendChild(prodDiv);
+		document.getElementById("productos").appendChild(prodDiv);
 	};
 
 	function onlyUnique(value, index, self) {
@@ -371,7 +414,7 @@
 </c:if>
 <c:if test="${tienda.id == null}">
 <div class="col-md-12">
-<h3>No tienes todav�a ninguna tienda</h3>
+<h3>No tienes todavía ninguna tienda</h3>
 <p>Puedes crear una haciendo click en:</p> 
 <br>
 </div>

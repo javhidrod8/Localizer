@@ -29,8 +29,8 @@ public class PaypalController {
 	public String payment(@ModelAttribute("order") Order order) {
 		try {
 			Payment payment = service.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(),
-					order.getIntent(), order.getDescription(), "https://localizer-ispp-sprint2.herokuapp.com" + CANCEL_URL,
-					"https://localizer-ispp-sprint2.herokuapp.com" + SUCCESS_URL);
+					order.getIntent(), order.getDescription(), "https://localizer-ispp-sprint2-po.herokuapp.com" + CANCEL_URL,
+					"https://localizer-ispp-sprint2-po.herokuapp.com" + SUCCESS_URL);
 			for(Links link:payment.getLinks()) {
 				if(link.getRel().equals("approval_url")) {
 					return "redirect:"+link.getHref();

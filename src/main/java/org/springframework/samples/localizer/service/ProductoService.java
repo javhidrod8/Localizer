@@ -22,11 +22,13 @@ public class ProductoService {
 
 	private ProductoRepository productoRepository;
 	private TiendaService tiendaService;
+	private ReservaService reservaService;
 
 	@Autowired
-	public ProductoService(ProductoRepository productoRepository, TiendaService tiendaService) {
+	public ProductoService(ProductoRepository productoRepository, TiendaService tiendaService, ReservaService reservaService) {
 		this.productoRepository = productoRepository;
 		this.tiendaService = tiendaService;
+		this.reservaService = reservaService;
 	}
 
 	@Transactional(readOnly = true)
@@ -73,6 +75,8 @@ public class ProductoService {
 		Integer tiendaId = producto.getTienda().getId();
 		Tienda t = this.tiendaService.findTiendaById(tiendaId);
 		t.getProductos().remove(producto);
+		
+		productoRepository.findReservasProducto(producto.getId()).stream().forEach(r->{r.setProducto(null);r.setTienda(null);r.setUser(null);reservaService.deleteReserva(r);});
 		
 		productoRepository.delete(producto);
 

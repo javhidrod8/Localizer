@@ -50,7 +50,7 @@ public class ProductoServiceTest {
 
 
 		Collection<Producto> res = this.productoService.findProductoTiendaByLike(1);
-		assertThat(res.size()).isEqualTo(5);
+		assertThat(res.size()).isEqualTo(9);
 	}
 
 	@Test
@@ -58,7 +58,7 @@ public class ProductoServiceTest {
 	public void shouldFindProductosByNombre() {
 
 		Collection<Producto> productos = this.productoService.findByNombre("crema");
-		assertThat(productos.size()).isEqualTo(4);
+		assertThat(productos.size()).isEqualTo(1);
 	}
 	@Test // CASO NEGATIVO
 	// No encontrar ningun producto por el nombre
@@ -85,7 +85,7 @@ public class ProductoServiceTest {
 	public void shouldFindProductosByEstado() {
 
 		Collection<Producto> productos = this.productoService.findProductoByEstado(Estado.PENDIENTE);
-		assertThat(productos.size()).isEqualTo(34);
+		assertThat(productos.size()).isEqualTo(6);
 	}
 	
 	@Test
@@ -102,7 +102,7 @@ public class ProductoServiceTest {
 		producto.setDescripcion("Tomate frito para cocinar");
 		producto.setEstado(Estado.PENDIENTE);
 		producto.setPromocionado(false);
-		producto.setImagen("....");
+		producto.setImagen("https://s176.jpg");
 		producto.setMotivo("");
 		producto.setPreferencia(Preferencias.TODO);
 		producto.setTienda(tienda); 
@@ -110,12 +110,12 @@ public class ProductoServiceTest {
 		
 		this.productoService.saveProducto(producto);
 		Producto producto1 = this.productoService.findProductoById(producto.getId());
-		assertThat(producto1.getId()).isNotNull().isEqualTo(51);
+		assertThat(producto1.getId()).isNotNull().isEqualTo(75);
 	
 		this.productoService.deleteProducto(producto1);
-		Producto p1 = this.productoService.findProductoById(51);
+		Producto p1 = this.productoService.findProductoById(74);
 //		assertThat(p1).isNull();//TODO
-		assertThat(producto1.getId()).isNotNull().isEqualTo(51);
+		assertThat(producto1.getId()).isNotNull().isEqualTo(75);
 	}
 	
 //	@Test
@@ -133,7 +133,7 @@ public class ProductoServiceTest {
 	public void shouldFindAllProducts() {
 
 		Collection<Producto> productos = this.productoService.findAllProductos();
-		assertThat(productos.size()).isEqualTo(51);
+		assertThat(productos.size()).isEqualTo(75);
 	}
 
 }

@@ -9,7 +9,6 @@
 	<spring:url value="/productos/search/" var="searchUrl"></spring:url>
 	<h2>Productos</h2>
 	<br>
-
 	<script>
 		function Buscar(){
 		  var text = $("#busqueda").val();
@@ -17,40 +16,88 @@
 		}
 </script>
 	<div class="row">
-			<div class="col-sm-11">
-				<input id="busqueda" type="text" class="form-control"
-					placeholder="Busqueda de productos...">
-			</div>
-			<div class="col-sm-1">
-				<button class="btn btn-default" onClick="Buscar()">Buscar</button>
-			</div>
+		<div class="col-sm-1"></div>
+		<div class="col-sm-9">
+			<input id="busqueda" type="text" class="form-control"
+				placeholder="Busqueda de productos...">
+		</div>
+		<div class="col-sm-1">
+			<button class="btn btn-default" onClick="Buscar()">Buscar</button>
+		</div>
+
+		<div class="col-sm-1"></div>
 
 	</div>
 	<div class="row" style="margin-top: 2%">
 		<div class="col-md-2">
 			<div id="intolerancias">
 				<h3>Intolerancias</h3>
-				<c:forEach items="${intolerancias}" var="intolerancia">
-					<input class="form-check-input" type="checkbox"
-						id="${intolerancia}" />
-					<c:out value="${intolerancia}"></c:out>
-					<br>
+
+				<script type="text/javascript">
+				var intols = new Array();
+				<c:forEach items="${productos}" var="producto">
+					<c:forEach items="${producto.intolerancia}" var= "intolerancia">
+						intol = "${intolerancia}";
+				 			if (!intols.includes(intol)){
+					    	intols.push(intol);
+				    		}
+				 	</c:forEach>
 				</c:forEach>
+				intols.forEach(intol=>createIntolsInputs(intol));
+				function createIntolsInputs(intol){
+						input = document.createElement('input');
+						input.className ="form-check-input";
+						input.type ="checkbox";
+						input.id = intol;
+						input.value = intol;
+						div = document.createElement('div');
+						div.appendChild(input);
+						div.innerHTML += " "+intol;
+						intolerancias = document.getElementById("intolerancias");
+						intolerancias.appendChild(div);
+
+				}
+				</script>
 			</div>
 			<div id="preferencias">
 				<h3>Preferencias</h3>
-				<input class="form-check-input" type="radio" name = "preferencia" checked> NINGUNA </br></input>
-				<c:forEach items="${preferencias}" var="preferencia">
-					<c:if	test="${preferencia != 'TODO'}"> 
-					<input class="form-check-input" type="radio" name = "preferencia" id="${preferencia}" />	
-					
-					<c:out value="${preferencia}"></c:out></c:if>
-					</br>
+				<input class="form-check-input" type="radio" name="preferencia"
+					checked> NINGUNA <br>
+				<script type="text/javascript">
+				var prefs = new Array();
+				<c:forEach items="${productos}" var="producto">
+				pref = "${producto.preferencia}";
+				 if (!prefs.includes(pref)){
+					    prefs.push(pref);
+				    }
 				</c:forEach>
-				</br>
+				
+				prefs.forEach(prefe=>createPrefsInputs(prefe));
+				function createPrefsInputs(prefe){
+					if(prefe!="TODO"){
+						input = document.createElement('input');
+						input.className ="form-check-input";
+						input.type ="radio";
+						input.name = "preferencia";
+						input.id = prefe;
+						input.value = prefe;
+						div = document.createElement('div');
+						div.appendChild(input);
+						div.innerHTML += " "+prefe;
+						preferencias = document.getElementById("preferencias");
+						preferencias.appendChild(div);
+						
+					}
+
+				}
+				</script>
+				<br>
 			</div>
 		</div>
-		<div class="col-md-10" id="productos"></div>
+		<div class="col-md-10">
+			<div class="row row-cols-md-4 row-cols-sm-1" id="productos"></div>
+			<div class="row row-cols-md-4 row-cols-sm-1" id="botonPaginacion"></div>
+		</div>
 	</div>
 	<script type="text/javascript">
 	
@@ -76,36 +123,118 @@
 		    productoDetails.intolerancias = new Array();
 		    <c:forEach items="${producto.intolerancia}" var="intolerancia">
 		    	productoDetails.intolerancias.push("${intolerancia}");
-		    	intolerancias.push("${intolerancia}");/*1 - quitar cuando esten los checkbox*/
+		    	intolerancias.push("${intolerancia}");
 		    </c:forEach>
 
 		    productoDetails.preferencia = "${producto.preferencia}";
-		    preferencias.push(productoDetails.preferencia);/*2 - quitar cuando esten los checkbox*/
+		    if (!preferencias.includes(productoDetails.preferencia)){
+			    preferencias.push(productoDetails.preferencia);
+		    }
 		    productos.push(productoDetails);
 		    </c:if>
 		</c:forEach> 
 	
-		productos.forEach(producto=> printProducto(producto));
+		//PRINCIPIO PAGINACION
+			productosPaginados = productos.slice(0,9);
+			productosPaginados.forEach(producto=> printProducto(producto));
+			inicio = 0;
+			fin = 9;
+			
+			function paginacion (inicio, fin, productosList){
+				productosPaginados = productosList.slice(inicio,fin);
+				
+			}
 		
+			var buttonPag = document.createElement('button');
+			buttonPag.id= "botonMas";
+			buttonPag.className="btn btn-default";
+		  	buttonPag.innerHTML = "Mostrar más";
+		  	buttonPag.onclick = function(){
+		  		
+		  	buttonPagBack.className="btn btn-default";
+		  		if(productos.length==productosFiltrados.length){
+		  			if (fin <= productos.length){
+			  			inicio+=9;
+				  		fin+=9;
+				  		paginacion(inicio, fin, productos);
+				  		productosPaginados.forEach(producto=> printProducto(producto));
+				  		document.getElementById("botonMenos").className="btn btn-default";
+			  		}
+		  			if(fin>= productos.length){
+			  			resto = fin - productos.length;
+			  			fin = fin - resto;
+			  			inicio = fin - 9;
+		  				document.getElementById("botonMas").className="btn btn-default hidden";
+			  		}
+		  		}else{
+		  			
+		  		if (fin <= productosFiltrados.length){
+		  			inicio+=9;
+			  		fin+=9;
+			  		paginacion(inicio, fin, productosFiltrados);
+			  		productosPaginados.forEach(producto=> printProducto(producto));
+			  		
+		  		}if(fin>= productosFiltrados.length){
+		  			resto = fin - productosFiltrados.length;
+		  			fin = fin - resto;
+		  			inicio = fin - 9;
+		  			document.getElementById("botonMas").className="btn btn-default hidden";
+		  		}}		  	}
+			document.getElementById("botonPaginacion").appendChild(buttonPag);
+			
+			var buttonPagBack = document.createElement('button');
+			buttonPagBack.className="btn btn-default hidden";
+		  	buttonPagBack.innerHTML = "Mostrar menos";
+		  	buttonPagBack.id= "botonMenos";
+		  	buttonPagBack.onclick = function(){	
+		  		buttonPag.className="btn btn-default";
+		  		ay = document.getElementById("productos");
+		  		if (fin > 9){
+		  			inicio-=9;
+			  		fin-=9;
+			  		for(i=0; i<=8; i++){
+			  			ay.removeChild(ay.lastElementChild);
+			  		}}
+		  		if(fin<=9){
+		  			document.getElementById("botonMenos").className="btn btn-default hidden";
+		  		}
+		  		if(ay.children.length < 9){
+		  			while (ay.firstChild) {
+		  				ay.removeChild(ay.firstChild);
+		  			}
+		  			if(productos.length==productosFiltrados.length){
+		  				productosPaginados = productos.slice(0,9);
+						productosPaginados.forEach(producto=> printProducto(producto));
+						inicio = 0;
+						fin = 9;
+		  			} else {
+		  				productosPaginados = productosFiltrados.slice(0,9);
+						productosPaginados.forEach(producto=> printProducto(producto));
+						inicio = 0;
+						fin = 9;
+		  			}
+		  		}	
+		  	}
+			document.getElementById("botonPaginacion").appendChild(buttonPagBack);
+			
+			if(productos.length <= 9){
+	  			document.getElementById("botonMas").className="btn btn-default hidden";
+	  			document.getElementById("botonMenos").className="btn btn-default hidden";
+			}
 		
-	/*TODO: asignar a las siguientes variable las intolerancias seleccionadas y la preferencia*/
-	/* ahora solo esta cogiendo la primera de todas las preferencias de la lista y todas las intolerancias disponibles*/
-		
-// 		var selectedPreferencia = preferencias.filter(onlyUnique)[0];
-//  	var selectedIntolerancias = intolerancias.filter(onlyUnique);	
-		//var selectedPreferencia = new Array();
-		//var selectedIntolerancias = new Array();	
+		//FIN PAGINACION
 
 		var button = document.createElement('button');
 		button.className="btn btn-default";
 	  	prodHtml = "";
 	  	button.innerHTML = "Filtrar";
+	  	var productosFiltrados = [...productos];
 	  	button.onclick = function(){
-	  		
+	  		productosFiltrados = [...productos];
 	  		var selectedPreferencia = new Array();
 			var selectedIntolerancias = new Array();
 			document.getElementById('productos').innerHTML= prodHtml;
-			var productosFiltrados = [...productos];
+			
 			preferencias.forEach(p => {
 	  			if(document.getElementById(p) != null){
 				 	if(document.getElementById(p).checked && !selectedPreferencia.includes(p)){
@@ -113,6 +242,9 @@
 				 	}
 	  			}
 			  })
+			if(selectedPreferencia.includes("VEGETARIANO")){
+				selectedPreferencia.push("VEGANO");	
+			}
 	  		
 	  		intolerancias.forEach(i => {
 	  			if(document.getElementById(i) != null){
@@ -127,7 +259,7 @@
 				  var indexListIntolerancias = [];
 				  if(selectedPreferencia.length > 0 ) {
 					  productosFiltrados.forEach(e => {
-						  if(!(e.preferencia == selectedPreferencia[0])){
+							if(!(selectedPreferencia.includes(e.preferencia))){
 							  var index = productosFiltrados.indexOf(e);
 							  if(!(indexListPreferencias.includes(index))){
 								  indexListPreferencias.push(index);
@@ -162,77 +294,87 @@
 			  } else {
 				  productosFiltrados = [...productos]
 			  }
-	  			productosFiltrados.forEach(producto=> printProducto(producto));
-			  
+	  			
+	  			inicio = 0;
+	  			fin = 9;
+	  			document.getElementById("botonMenos").className="btn btn-default hidden";
+	  			paginacion(inicio, fin, productosFiltrados); //<-PAGINACION
+	  			productosPaginados.forEach(producto=> printProducto(producto));
+	  			if(productosFiltrados.length <= 9){
+		  			document.getElementById("botonMas").className="btn btn-default hidden";
+		  			document.getElementById("botonMenos").className="btn btn-default hidden";
+				} else {
+					document.getElementById("botonMas").className="btn btn-default";
+				}
 		  };
 			
 		  document.getElementById('preferencias').appendChild(button);
 		
 	
-	function printProducto(producto){
-		
-		var prodDiv = document.createElement('div'); 
-		prodDiv.className = "col-sm-6 col-md-4";
-		prodDiv.id = "producto"; 
-    
-    	var thumbnail = document.createElement('div');
-    	thumbnail.className = "thumbnail";
-    	thumbnail.id ="productThumbnail";
-		
-		var img = document.createElement('img');
-		img.src = producto.imagen;
-		img.alt = producto.nombre;
-// 		prodDiv.style = "object-fit: cover";
-		img.id = "productoImg";
-    
- 		var url = document.createElement("a");
- 		url.className="producto-img";
- 		url.href="${fn:escapeXml(productoUrl)}"+producto.id;
- 		url.appendChild(img);
-    	thumbnail.appendChild(url);
+		function printProducto(producto){
+			
+			var prodDiv = document.createElement('div'); 
+			prodDiv.className = "col-sm-6 col-md-4";
+			prodDiv.id = "producto"+producto.id; 
+	    
+	    	var thumbnail = document.createElement('div');
+	    	thumbnail.className = "thumbnail";
+	    	thumbnail.id ="productThumbnail";
+			
+			var img = document.createElement('img');
+			img.src = producto.imagen;
+			img.alt = producto.nombre;
+//	 		prodDiv.style = "object-fit: cover";
+			img.id = "productoImg";
+	    
+	 		var url = document.createElement("a");
+	 		url.className="producto-img";
+	 		url.href="${fn:escapeXml(productoUrl)}"+producto.id;
+	 		url.appendChild(img);
+	    	thumbnail.appendChild(url);
 
-    
-    	var caption = document.createElement('div'); 
-		caption.className = "caption";
-		caption.id = "productoInfo";
-		if(producto.nombre.length>=30){
-	    	caption.innerHTML+="<h3>"+producto.nombre.substring(0,25)+"...</h3>";
-		}else{
-	    	caption.innerHTML+="<h3>"+producto.nombre+"</h3>";
-		}
+	    
+	    	var caption = document.createElement('div'); 
+			caption.className = "caption";
+			caption.id = "productoInfo";
+			if(producto.nombre.length>=30){
+		    	caption.innerHTML+="<h3>"+producto.nombre.substring(0,25)+"...</h3>";
+			}else{
+		    	caption.innerHTML+="<h3>"+producto.nombre+"</h3>";
+			}
 
-    	caption.innerHTML+="<p> Marca: "+producto.marca+"</p>"
-    	caption.innerHTML+="<h3>"+producto.precio+"<span class='glyphicon glyphicon-euro' aria-hidden='true'></span></h3>";
-    	
-    	
-    	urlVer = document.createElement("a");
-    	button="<button class='btn btn-default btn-sm'>Ver</button>";
- 		urlVer.href="${fn:escapeXml(productoUrl)}"+producto.id;
- 		urlVer.innerHTML = button;
- 		urlVer.className = "edit-btn";
- 		caption.appendChild(urlVer);
- 		
-    	<c:if test="${auth == 'vendedor'&&producto.tienda==tiendaId}">
+	    	caption.innerHTML+="<p> Marca: "+producto.marca+"</p>"
+	    	caption.innerHTML+="<h3>"+producto.precio+"<span class='glyphicon glyphicon-euro' aria-hidden='true'></span></h3>";
+	    	
+	    	
 	    	urlVer = document.createElement("a");
-	    	button="<button class='btn btn-default btn-sm'>Editar</button>";
-	 		urlVer.href="${fn:escapeXml(tiendaUrl)}"+producto.tienda+"/producto/"+producto.id+"/edit";
+	    	button="<button class='btn btn-default btn-sm'>Ver</button>";
+	 		urlVer.href="${fn:escapeXml(productoUrl)}"+producto.id;
 	 		urlVer.innerHTML = button;
 	 		urlVer.className = "edit-btn";
 	 		caption.appendChild(urlVer);
- 		</c:if>
- 		<c:if test="${auth == 'nutricionista'}">
-	    	urlVerificar = document.createElement("a");
-	    	button="<button class='btn btn-default btn-sm'>Ver</button>";
-	 		urlVerificar.href="${fn:escapeXml(tiendaUrl)}"+producto.tienda+"/producto/"+producto.id+"/edit";
-	 		urlVerificar.innerHTML = button;
-	 		urlVerificar.className = "edit-btn";
-	 		caption.appendChild(urlVerificar);
- 		</c:if>
+	 		
+	    	<c:if test="${auth == 'vendedor'&&producto.tienda==tiendaId}">
+		    	urlVer = document.createElement("a");
+		    	button="<button class='btn btn-default btn-sm'>Editar</button>";
+		 		urlVer.href="${fn:escapeXml(tiendaUrl)}"+producto.tienda+"/producto/"+producto.id+"/edit";
+		 		urlVer.innerHTML = button;
+		 		urlVer.className = "edit-btn";
+		 		caption.appendChild(urlVer);
+	 		</c:if>
+	 		<c:if test="${auth == 'nutricionista'}">
+		    	urlVerificar = document.createElement("a");
+		    	button="<button class='btn btn-default btn-sm'>Ver</button>";
+		 		urlVerificar.href="${fn:escapeXml(tiendaUrl)}"+producto.tienda+"/producto/"+producto.id+"/edit";
+		 		urlVerificar.innerHTML = button;
+		 		urlVerificar.className = "edit-btn";
+		 		caption.appendChild(urlVerificar);
+	 		</c:if>
 
- 		
-    	thumbnail.appendChild(caption);
-    	prodDiv.appendChild(thumbnail);
-		document.getElementById('productos').appendChild(prodDiv);
+	 		
+	    	thumbnail.appendChild(caption);
+	    	prodDiv.appendChild(thumbnail);
+			document.getElementById("productos").appendChild(prodDiv);
 	};
 
 	function onlyUnique(value, index, self) {

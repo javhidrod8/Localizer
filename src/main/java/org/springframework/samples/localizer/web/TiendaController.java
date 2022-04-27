@@ -101,9 +101,9 @@ public class TiendaController {
 					org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
 					Tienda tienda = user.getTienda();
 					if (tienda == null) {
-						if (auth.equals("vendedor") ) {
+						if (auth.equals("vendedor") && !user.isPagado()) {
 							return "redirect:/checkout";
-						} else if(auth.equals("admin")) {
+						} else if(auth.equals("admin") || user.isPagado()) {
 							return "redirect:/tiendas/new";
 						}
 					}
@@ -157,6 +157,15 @@ public class TiendaController {
 
 	}
 
+	@GetMapping(value = "/tiendas/search")
+	public String tiendasByCP(ModelMap modelMap) {
+		String vista = "tiendas/tiendasList";
+		Iterable<Tienda> tiendas = this.tiendaService.findAll();
+		modelMap.addAttribute("tiendas", tiendas);
+		return vista;
+
+	}
+	
 	@PostMapping("/tiendas/new")
 	public String processCreationTiendaForm(@Valid Tienda tienda, BindingResult result, Map<String, Object> model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -164,9 +173,13 @@ public class TiendaController {
 		String username = userSession.getUsername();
 		org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
 		if (result.hasErrors()) {
+			Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+			String auth = currentPrincipalName.iterator().next().toString().trim();
+			model.put("auth", auth);
 			Boolean isNew = true;
 			model.put("isNew", isNew);
 			model.put("tienda", tienda);
+			model.put("patternImagen", true);
 			return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
 		} else {
 			tienda.setId(tienda.getId());
@@ -204,9 +217,15 @@ public class TiendaController {
 	@PostMapping(value = "/tienda/{tiendaId}/edit")
 	public String processUpdateTiendaForm(@Valid Tienda tienda, BindingResult result,
 			@PathVariable("tiendaId") int tiendaId, Map<String, Object> model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (result.hasErrors()) {
+			Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+			String auth = currentPrincipalName.iterator().next().toString().trim();
+			model.put("auth", auth);
 			Boolean isNew = false;
 			model.put("isNew", isNew);
+			model.put("tienda", tienda);
+			model.put("patternImagen", true);
 			return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
 		} else {
 			tienda.setId(tiendaId);

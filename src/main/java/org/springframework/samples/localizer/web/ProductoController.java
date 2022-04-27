@@ -75,6 +75,12 @@ public class ProductoController {
 			User currentUser = (User) authentication.getPrincipal();
 			String username = currentUser.getUsername();
 			org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
+			if (auth.equals("cliente")) {
+				if (producto.getEstado() != Estado.ACEPTADO) {
+					ModelAndView mav2 = new ModelAndView("errores/errorAuth");
+					return mav2;
+				}
+			}
 			if (auth.equals("admin")) {
 				mav.addObject("miTienda", true);
 			} else {
@@ -83,22 +89,40 @@ public class ProductoController {
 					if (t != null) {
 						if (t.getId().equals(producto.getTienda().getId())) {
 							mav.addObject("miTienda", true);
+
 						} else {
+							if (producto.getEstado() != Estado.ACEPTADO) {
+								ModelAndView mav2 = new ModelAndView("errores/errorAuth");
+								return mav2;
+							}
 							mav.addObject("miTienda", false);
 						}
 					} else {
+						if (producto.getEstado() != Estado.ACEPTADO) {
+							ModelAndView mav2 = new ModelAndView("errores/errorAuth");
+							return mav2;
+						}
 						mav.addObject("miTienda", false);
 					}
 				} else {
 					mav.addObject("miTienda", false);
 				}
 			}
-		} else {
+		} else if (authentication.getPrincipal() == "anonymousUser") {
+			if (producto.getEstado() != Estado.ACEPTADO) {
+				ModelAndView mav2 = new ModelAndView("errores/errorAuth");
+				return mav2;
+			}
+			mav.addObject("miTienda", false);
+		}
+
+		else {
 			mav.addObject("miTienda", false);
 		}
 		return mav;
 
 	}
+
 	@GetMapping(value = "/productos/search")
 	public String productListSearchEmpty(ModelMap modelMap) {
 		String vista = "productos/productosList";
@@ -141,15 +165,15 @@ public class ProductoController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		if (authentication.getPrincipal() != "anonymousUser") {
-		String auth = currentPrincipalName.iterator().next().toString().trim();
-		if (auth.equals("nutricionista")) {
-			String vista = "productos/productosVerificar";
-			Iterable<Producto> productos = this.productoService.findProductoByEstado(Estado.PENDIENTE);
-			modelMap.addAttribute("productos", productos);
-			return vista;
-		} else {
-			return VIEWS_ERROR_AUTH;
-		}
+			String auth = currentPrincipalName.iterator().next().toString().trim();
+			if (auth.equals("nutricionista")) {
+				String vista = "productos/productosVerificar";
+				Iterable<Producto> productos = this.productoService.findProductoByEstado(Estado.PENDIENTE);
+				modelMap.addAttribute("productos", productos);
+				return vista;
+			} else {
+				return VIEWS_ERROR_AUTH;
+			}
 		}
 		return "redirect:/login";
 	}
@@ -159,28 +183,31 @@ public class ProductoController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		if (authentication.getPrincipal() != "anonymousUser") {
-		String auth = currentPrincipalName.iterator().next().toString().trim();
-		model.put("auth", auth);
-		Collection<Producto> productos = this.productoService.findAllProductos();
-		Set<Intolerancias> intolerancias = new LinkedHashSet<Intolerancias>();
-		Set<Preferencias> preferencias = new LinkedHashSet<Preferencias>();
-		for (Producto p : productos) {
-			intolerancias.addAll(p.getIntolerancia());
-			preferencias.add(p.getPreferencia());
-		}
-		model.put("productos", productos);
-		model.put("intolerancias", intolerancias);
-		model.put("preferencias", preferencias);
-		if (auth.equals("vendedor") || auth.equals("admin")) {
-			model.put("tiendaId", tiendaId);
-			Producto producto = new Producto();
-			model.put("producto", producto);
-			Boolean isNew = true;
-			model.put("isNew", isNew);
-			return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
-		} else {
-			return VIEWS_ERROR_AUTH;
-		}
+			String auth = currentPrincipalName.iterator().next().toString().trim();
+			model.put("auth", auth);
+			User currentUser = (User) authentication.getPrincipal();
+			String username = currentUser.getUsername();
+			org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
+			Collection<Producto> productos = this.productoService.findAllProductos();
+			Set<Intolerancias> intolerancias = new LinkedHashSet<Intolerancias>();
+			Set<Preferencias> preferencias = new LinkedHashSet<Preferencias>();
+			for (Producto p : productos) {
+				intolerancias.addAll(p.getIntolerancia());
+				preferencias.add(p.getPreferencia());
+			}
+			model.put("productos", productos);
+			model.put("intolerancias", intolerancias);
+			model.put("preferencias", preferencias);
+			if (auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId) || auth.equals("admin")) {
+				model.put("tiendaId", tiendaId);
+				Producto producto = new Producto();
+				model.put("producto", producto);
+				Boolean isNew = true;
+				model.put("isNew", isNew);
+				return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
+			} else {
+				return VIEWS_ERROR_AUTH;
+			}
 		}
 		return "redirect:/login";
 	}
@@ -189,10 +216,15 @@ public class ProductoController {
 	public String processCreationProductoForm(@PathVariable("tiendaId") Integer tiendaId, @Valid Producto producto,
 			BindingResult result, Map<String, Object> model) {
 		if (result.hasErrors()) {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+			String auth = currentPrincipalName.iterator().next().toString().trim();
+			model.put("auth", auth);
 			model.put("tiendaId", tiendaId);
 			Boolean isNew = true;
 			model.put("isNew", isNew);
 			model.put("producto", producto);
+			model.put("patternImagen", true);
 			return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
 		} else {
 			Tienda t = tiendaService.findTiendaById(tiendaId);
@@ -211,28 +243,33 @@ public class ProductoController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		if (authentication.getPrincipal() != "anonymousUser") {
-		String auth = currentPrincipalName.iterator().next().toString().trim();
-		model.put("auth", auth);
-		Collection<Producto> productos = this.productoService.findAllProductos();
-		Set<Intolerancias> intolerancias = new LinkedHashSet<Intolerancias>();
-		Set<Preferencias> preferencias = new LinkedHashSet<Preferencias>();
-		for (Producto p : productos) {
-			intolerancias.addAll(p.getIntolerancia());
-			preferencias.add(p.getPreferencia());
-		}
-		model.put("productos", productos);
-		model.put("intolerancias", intolerancias);
-		model.put("preferencias", preferencias);
-		if (auth.equals("vendedor") || auth.equals("admin") || auth.equals("nutricionista")) {
-			model.put("tiendaId", tiendaId);
+			String auth = currentPrincipalName.iterator().next().toString().trim();
+			model.put("auth", auth);
+			User currentUser = (User) authentication.getPrincipal();
+			String username = currentUser.getUsername();
+			org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
+			Collection<Producto> productos = this.productoService.findAllProductos();
+			Set<Intolerancias> intolerancias = new LinkedHashSet<Intolerancias>();
+			Set<Preferencias> preferencias = new LinkedHashSet<Preferencias>();
+			for (Producto p : productos) {
+				intolerancias.addAll(p.getIntolerancia());
+				preferencias.add(p.getPreferencia());
+			}
+			model.put("productos", productos);
+			model.put("intolerancias", intolerancias);
+			model.put("preferencias", preferencias);
 			Producto producto = this.productoService.findProductoById(productoId);
-			model.put("producto", producto);
-			Boolean isNew = false;
-			model.put("isNew", isNew);
-			return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
-		} else {
-			return VIEWS_ERROR_AUTH;
-		}
+			Tienda tiendaProducto = producto.getTienda();
+			if ((auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId) || auth.equals("admin")
+					|| auth.equals("nutricionista")) && tiendaProducto.getId().equals(tiendaId)) {
+				model.put("tiendaId", tiendaId);
+				model.put("producto", producto);
+				Boolean isNew = false;
+				model.put("isNew", isNew);
+				return VIEWS_PRODUCTO_CREATE_OR_UPDATE_FORM;
+			} else {
+				return VIEWS_ERROR_AUTH;
+			}
 		}
 		return "redirect:/login";
 	}
@@ -259,22 +296,23 @@ public class ProductoController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
 		if (authentication.getPrincipal() != "anonymousUser") {
-		String auth = currentPrincipalName.iterator().next().toString().trim();
-		model.put("auth", auth);
-		User currentUser = (User) authentication.getPrincipal();
-		String username = currentUser.getUsername();
-		org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
-		if ((auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId)) || auth.equals("admin")) {
-			model.put("tiendaId", tiendaId);
+			String auth = currentPrincipalName.iterator().next().toString().trim();
+			model.put("auth", auth);
+			User currentUser = (User) authentication.getPrincipal();
+			String username = currentUser.getUsername();
+			org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
 			Producto producto = this.productoService.findProductoById(productoId);
-			this.productoService.deleteProducto(producto);
-			return "redirect:/tienda/" + tiendaId;
-		} else {
-			return VIEWS_ERROR_AUTH;
+			Tienda tiendaProducto = producto.getTienda();
+			if ((auth.equals("vendedor") && user.getTienda().getId().equals(tiendaId) || auth.equals("admin"))
+					&& tiendaProducto.getId().equals(tiendaId)) {
+				model.put("tiendaId", tiendaId);
+				this.productoService.deleteProducto(producto);
+				return "redirect:/tienda/" + tiendaId;
+			} else {
+				return VIEWS_ERROR_AUTH;
+			}
 		}
-	}
 		return "redirect:/login";
 	}
-	
 
 }

@@ -15,9 +15,9 @@ public class DBConfig {
     public DataSource mySqlDataSource(){
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
-        dataSourceBuilder.url("jdbc:mysql://ilzyz0heng1bygi8.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/r3riqmlrzacro8q7?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=CET&createDatabaseIfNotExist=true");
-        dataSourceBuilder.username("g1mtsqhpan3h69pt");
-        dataSourceBuilder.password("i61xg43m4fmzwsrm");
+        dataSourceBuilder.url("jdbc:mysql://localhost:3306/jp9vdp3kqcjnun7s?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=CET&createDatabaseIfNotExist=true");
+        dataSourceBuilder.username("root");
+        dataSourceBuilder.password("localizer");
         return dataSourceBuilder.build();
     }
 

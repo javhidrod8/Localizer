@@ -12,8 +12,23 @@
  * limitations under the License.
  */
 
+.imagen-prod-reserva a img{
+	margin-left: auto;
+    margin-right: auto;
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.red{
+	color: red;
+}
 .btn-delete{
 	margin-left:3px;
+}
+
+#botonMas, #botonMenos{
+	margin: 3px;
 }
 
 #checkout-form > button {
@@ -292,8 +307,19 @@ hr {
   border-top: 1px dotted @spring-brown;
 }
 
-
-
+.container-login{
+	display: flex;
+	justify-content:center
+}
+.form-signin{
+	flex: 0 0 35%
+}
+ input.login{
+	margin-bottom: 20px;
+}
+button.login{
+	margin-top: 20px;
+}
 @import "typography.less";
 @import "header.less";
 @import "responsive.less";

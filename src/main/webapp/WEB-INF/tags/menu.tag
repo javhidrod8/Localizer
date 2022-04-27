@@ -82,16 +82,20 @@
 				</petclinic:menuItem>
 				 </sec:authorize>
 				 <sec:authorize access="hasAuthority('cliente')">
-				 <spring:url value="/users/{clienteName}/reservas" var="reservasUrl">
-               	 	<spring:param name="clienteName"> <sec:authentication property="name"/></spring:param>
-            	</spring:url>
-				 
-				 
-<%-- 				 	<petclinic:menuItem active="${name eq 'reservasList'}" url="${fn:escapeXml(reservasUrl)}" --%>
-<%-- 					title="reservas"> --%>
-<!-- 					<span>Mis Reservas</span> -->
-<%-- 				</petclinic:menuItem> --%>
-				 </sec:authorize>
+                <spring:url value="/users/{username}/reservas" var="historialUrl">
+                	<sec:authentication property="principal" var= "user"/>
+                        <spring:param name="username" value="${user.username}" />
+                    </spring:url>    
+                 <petclinic:menuItem active="${name eq 'historialReservas'}" url="${fn:escapeXml(historialUrl)}"
+                    title="historialReservas">
+                    <span>Mis Reservas</span>
+                </petclinic:menuItem>
+                 </sec:authorize>
+                 <petclinic:menuItem active="${name eq 'terminos'}" url="/terminos"
+					title="terminos">
+					<span>Términos</span>
+				</petclinic:menuItem>
+
 
 
 
@@ -100,7 +104,7 @@
 
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
-					<li><a href="<c:url value="/login" />">Login</a></li>
+					<li><a href="<c:url value="/login" />">Acceder</a></li>
 					<li><a href="<c:url value="/users/new" />">Registro</a></li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
@@ -131,7 +135,7 @@
 											</p>
 											<p class="text-left">
 												<a href="<c:url value="/logout" />"
-													class="btn btn-primary btn-block btn-sm">Logout</a>
+													class="btn btn-primary btn-block btn-sm">Cerrar sesión</a>
 											</p>
 											
 										</div>
