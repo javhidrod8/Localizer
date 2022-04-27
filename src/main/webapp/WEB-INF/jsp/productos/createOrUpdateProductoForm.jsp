@@ -34,7 +34,7 @@
 					</div>
 					<div id="imagen-producto col-md-12">
 						<label id="imagen2" for="imagen" style="pointer-events: none">
-							<h3>Imagen (URL):</h3> <c:if test="${producto.imagen!=null}">
+							<h3>Imagen (URL):</h3> <c:if test="${producto['new']||producto.imagen!=null}">
 								<img src="${producto.imagen }" class="img-responsive" />
 							</c:if>
 						</label> <input required type="text" id="imagen" name="imagen"
