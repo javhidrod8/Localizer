@@ -87,13 +87,13 @@ INSERT INTO productos(nombre,precio,marca,descripcion,estado,promocionado,imagen
 INSERT INTO productos(nombre,precio,marca,descripcion,estado,promocionado,imagen,motivo,preferencia,tienda_id) VALUES ('Bocadillo de salchichón',2,'Carmen','Pan con salchichón extra',0,false,'https://i.ibb.co/wK57TZG/bocadillosalchichon.jpg',' ',2,1);
 
 -- One admin user, named admin1 with passwor 4dm1n and authority admin
-INSERT INTO users(username,password,enabled,pagado) VALUES ('admin1','4dm1n',TRUE,FALSE);
+INSERT INTO users(username,password,enabled,first_name,last_name,pagado) VALUES ('admin1','4dm1n',TRUE,'Admin','Localizer',FALSE);
 INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
 -- Un usuario cliente, llamado cliente1 con la contraseña cli1
-INSERT INTO users(username,password,enabled,pagado) VALUES ('cliente1','cli1',TRUE,FALSE);
+INSERT INTO users(username,password,enabled,first_name,last_name,pagado) VALUES ('cliente1','cli1',TRUE,'Cliente','Uno',FALSE);
 INSERT INTO authorities(id,username,authority) VALUES (4,'cliente1','cliente');
 -- Un usuario cliente, llamado cliente2 con la contraseña cli2
-INSERT INTO users(username,password,enabled,pagado) VALUES ('cliente2','cli2',TRUE,FALSE);
+INSERT INTO users(username,password,enabled,first_name,last_name,pagado) VALUES ('cliente2','cli2',TRUE,'Cliente','Dos',FALSE);
 INSERT INTO authorities(id,username,authority) VALUES (5,'cliente2','cliente');
 -- Un usuario vendedor, llamado vendedor1 con la contraseña vend1
 INSERT INTO users(username,password,enabled,first_name,last_name,tienda_id,pagado) VALUES ('vendedor1','vend1',TRUE,'Alimentación','Carmen',1,TRUE);
@@ -102,7 +102,7 @@ INSERT INTO authorities(id,username,authority) VALUES (6,'vendedor1','vendedor')
 INSERT INTO users(username,password,enabled,first_name,last_name,pagado) VALUES ('vendedor2','vend2',TRUE,'José','Lopez',FALSE);
 INSERT INTO authorities(id,username,authority) VALUES (7,'vendedor2','vendedor');
 -- Un usuario nutricionista, llamado nutricionista1 con la contraseña nut1
-INSERT INTO users(username,password,enabled,pagado) VALUES ('nutricionista1','nut1',TRUE,FALSE);
+INSERT INTO users(username,password,enabled,first_name,last_name,pagado) VALUES ('nutricionista1','nut1',TRUE,'Nutricionista','Uno',FALSE);
 INSERT INTO authorities(id,username,authority) VALUES (8,'nutricionista1','nutricionista');
 
 -- Tolerancias

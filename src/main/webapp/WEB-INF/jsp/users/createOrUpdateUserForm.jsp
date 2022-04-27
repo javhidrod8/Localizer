@@ -26,9 +26,12 @@
 				</label> <input required type="text" id="apellidos" name="lastName"
 					class="form-control" value="${user.lastName }"><br>
 			</div>
+			<div id="username-usuario" class="col-md-12">
 				<label for="username">
-				</label> <input required type="text" id="user" name="username" class="hidden" 
+				<c:if test="${isNew}"><h3>Usuario:</h3></c:if>
+				</label> <input required type="text" id="user" name="username" class="<c:if test="${!isNew}"> hidden </c:if>form-control"
 					value="${user.username}"><br>
+			</div>
 			<div id="password-usuario" class="col-md-12">
 				<label for="password">
 					<h3>Contraseña:</h3>
