@@ -45,7 +45,7 @@ public class Tienda extends BaseEntity{
 	
 	@Column(name = "imagen")
 	@NotBlank
-	@Pattern(regexp = "(https://{1,}.(?:\\.png|\\.jpg))$")
+	@Pattern(regexp = "(https:\\/\\/.+\\.(?:png|jpg|jpeg|gif|png|svg))$")
 	private String imagen;
 	
 	@Column(name = "horario")

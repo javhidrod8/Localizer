@@ -33,7 +33,7 @@ public class ProductoTest {
 			producto.setDescripcion("Tomate frito para cocinar");
 			producto.setEstado(Estado.PENDIENTE);
 			producto.setPromocionado(false);
-			producto.setImagen("....");
+			producto.setImagen("https://s176.jpg");
 			producto.setMotivo("");
 			producto.setIntolerancia(new HashSet<>());
 			producto.setPreferencia(Preferencias.TODO);
@@ -52,7 +52,7 @@ public class ProductoTest {
 			assertThat(producto.getDescripcion()).isEqualTo("Tomate frito para cocinar");
 			assertThat(producto.getEstado()).isEqualTo(Estado.PENDIENTE);
 			assertThat(producto.getPromocionado()).isEqualTo(false);
-			assertThat(producto.getImagen()).isEqualTo("....");
+			assertThat(producto.getImagen()).isEqualTo("https://s176.jpg");
 			assertThat(producto.getMotivo()).isEqualTo("");
 			assertThat(producto.getIntolerancia()).isEqualTo(new HashSet<>());
 			assertThat(producto.getPreferencia()).isEqualTo(Preferencias.TODO);
@@ -76,7 +76,7 @@ public class ProductoTest {
 			producto.setDescripcion("Tomate frito para cocinar");
 			producto.setEstado(Estado.PENDIENTE);
 			producto.setPromocionado(false);
-			producto.setImagen("....");
+			producto.setImagen("https://s176.jpg");
 			producto.setMotivo("");
 			producto.setIntolerancia(new HashSet<>());
 			producto.setPreferencia(Preferencias.TODO);
