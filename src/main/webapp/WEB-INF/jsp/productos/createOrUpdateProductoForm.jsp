@@ -445,5 +445,19 @@ preferencias.forEach((preferencia, i) => {
 		    }
 		});
 	</script>
+	    
+    <script>
+    $('#imagen').attr("onchange", "validImagen()");
+
+    
+    function validImagen(){
+    var img = $("#imagen").val();
+    $.get(img)
+    .fail(function() { 
+    	$("#imagen").val('');
+    	alert("La imagen no es valida");
+
+    })}
+    </script>
 </petclinic:layout>
 
