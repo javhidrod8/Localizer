@@ -120,7 +120,7 @@ class UserControllerTests {
 				.andExpect(view().name("redirect:/users/jose1"));
 	}
 
-	@WithMockUser(value = "spring")
+	@WithMockUser(value = "jose1")
     @Test
 	void testProcessCreationFormHasErrors() throws Exception {
 		mockMvc.perform(post("/users/new")
@@ -171,6 +171,20 @@ class UserControllerTests {
     				.andExpect(status().is3xxRedirection())
     				.andExpect(view().name("redirect:/users/"+this.george.getUsername()));
     	}
+        @WithMockUser(value = "george1")
+    	@Test
+    	void testProcessUpdateUserWithTiendaFormSuccess() throws Exception {
+    		mockMvc.perform(post("/users/{username}/edit", "george1")
+    							.with(csrf())
+    							.param("firstName", "Geo")
+    							.param("lastName", "Fran")
+    							.param("username", "george1")
+    							.param("tiendaId", this.tienda.getId().toString())
+    							.param("password", "pass123"))
+    				.andExpect(status().is3xxRedirection())
+    				.andExpect(view().name("redirect:/users/"+this.george.getUsername()));
+    	}
+
 
         @WithMockUser(value = "george1")
 	@Test
@@ -196,6 +210,16 @@ class UserControllerTests {
 				.andExpect(model().attribute("user", hasProperty("password", is("pass123"))))
 				.andExpect(view().name("users/userDetails"));
 	}
+        @WithMockUser(value = "admin",authorities = "admin")
+    	@Test
+    	void testShowUserAdmin() throws Exception {
+    		mockMvc.perform(get("/users/{username}", "george1"))
+    				.andExpect(status().isOk())
+    				.andExpect(model().attribute("user", hasProperty("firstName", is("George"))))
+    				.andExpect(model().attribute("user", hasProperty("username", is("george1"))))
+    				.andExpect(model().attribute("user", hasProperty("password", is("pass123"))))
+    				.andExpect(view().name("users/userDetails"));
+    	}
         @WithMockUser(value = "spring")
     	@Test
     	void testNotShowUser() throws Exception {
