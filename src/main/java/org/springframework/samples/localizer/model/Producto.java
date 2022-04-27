@@ -38,7 +38,7 @@ public class Producto extends BaseEntity {
 	private Boolean promocionado;
 
 	@NotBlank
-	@Pattern(regexp = "(https://{1,}.(?:\\.png|\\.jpg))$")
+	@Pattern(regexp = "(https:\\/\\/.+\\.(?:png|jpg|jpeg|gif|png|svg))")
 	private String imagen;
 	
 	private String motivo;

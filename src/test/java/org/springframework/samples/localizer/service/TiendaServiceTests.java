@@ -102,7 +102,7 @@ class TiendaServiceTests {
 		tienda.setCodigoPostal("40000");
 		tienda.setDescripcion("Amasando pan desde 1990");
 		tienda.setHorario("8:00-14:00");
-		tienda.setImagen(".....");
+		tienda.setImagen("https://s176.jpg");
 		tienda.setNombre("Panaderia Paqui");
 		tienda.setProductos(null);
 		tienda.setProvincia("Sevilla");

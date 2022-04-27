@@ -102,7 +102,7 @@ public class ProductoServiceTest {
 		producto.setDescripcion("Tomate frito para cocinar");
 		producto.setEstado(Estado.PENDIENTE);
 		producto.setPromocionado(false);
-		producto.setImagen("....");
+		producto.setImagen("https://s176.jpg");
 		producto.setMotivo("");
 		producto.setPreferencia(Preferencias.TODO);
 		producto.setTienda(tienda); 

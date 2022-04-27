@@ -33,7 +33,7 @@ class TiendaTest {
 //		tienda.setDescripcion("Amasando pan desde 1990");
 //		tienda.setId(200);
 //		tienda.setHorario("8:00-14:00");
-//		tienda.setImagen(".....");
+//		tienda.setImagen("https://s176.jpg");
 //		tienda.setNombre("Panaderia paco");
 //		tienda.setProductos(null);
 //		tienda.setProvincia("Sevilla");
@@ -53,7 +53,7 @@ class TiendaTest {
 //		assertThat(tienda1.getDescripcion()).isEqualTo("Amasando pan desde 1990");
 //		assertThat(tienda1.getProvincia()).isEqualTo("Sevilla");
 //		assertThat(tienda1.getCalle()).isEqualTo("Sevilla");
-//		assertThat(tienda1.getImagen()).isEqualTo(".....");
+//		assertThat(tienda1.getImagen()).isEqualTo("https://s176.jpg");
 //		assertThat(tienda1.getHorario()).isEqualTo("8:00-14:00");
 //		assertThat(tienda1.getCodigoPostal()).isEqualTo(90);
 //		assertThat(tienda1.getProductos()).isEqualTo(null);
@@ -70,7 +70,7 @@ class TiendaTest {
 		tienda.setDescripcion("Amasando pan desde 1990");
 		tienda.setId(200);
 		tienda.setHorario("8:00-14:00");
-		tienda.setImagen(".....");
+		tienda.setImagen("https://s176.jpg");
 		tienda.setNombre("Panaderia paco");
 		tienda.setProductos(null);
 		tienda.setProvincia("Sevilla");
@@ -91,7 +91,7 @@ class TiendaTest {
 		assertThat(tienda.getDescripcion()).isEqualTo("Amasando pan desde 1990");
 		assertThat(tienda.getProvincia()).isEqualTo("Sevilla");
 		assertThat(tienda.getCalle()).isEqualTo("Sevilla");
-		assertThat(tienda.getImagen()).isEqualTo(".....");
+		assertThat(tienda.getImagen()).isEqualTo("https://s176.jpg");
 		assertThat(tienda.getCodigoPostal()).isEqualTo("41000");
 		assertThat(tienda.getProductos()).isEqualTo(null);
 		assertThat(tienda.getHorario()).isEqualTo("8:00-14:00");
@@ -110,7 +110,7 @@ class TiendaTest {
 		tienda.setDescripcion("Amasando pan desde 1990");
 		tienda.setId(200);
 		tienda.setHorario("8:00-14:00");
-		tienda.setImagen(".....");
+		tienda.setImagen("https://s176.jpg");
 		tienda.setNombre("");
 		tienda.setProductos(null);
 		tienda.setProvincia("Sevilla");
@@ -144,7 +144,7 @@ class TiendaTest {
 		tienda.setDescripcion("");
 		tienda.setId(200);
 		tienda.setHorario("8:00-14:00");
-		tienda.setImagen(".....");
+		tienda.setImagen("https://s176.jpg");
 		tienda.setNombre("Panaderia paco");
 		tienda.setProductos(null);
 		tienda.setProvincia("Sevilla");
@@ -177,7 +177,7 @@ class TiendaTest {
 		tienda.setDescripcion("Amasando pan desde 1990");
 		tienda.setId(200);
 		tienda.setHorario("8:00-14:00");
-		tienda.setImagen(".....");
+		tienda.setImagen("https://s176.jpg");
 		tienda.setNombre("Panederia Paco");
 		tienda.setProductos(null);
 		tienda.setProvincia("Sevilla");
@@ -211,7 +211,7 @@ class TiendaTest {
 		tienda.setDescripcion("Amasando pan desde 1990");
 		tienda.setId(2);
 		tienda.setHorario("8:00-14:00");
-		tienda.setImagen(".....");
+		tienda.setImagen("https://s176.jpg");
 		tienda.setNombre("Panaderia Paco");
 		tienda.setProductos(null);
 		tienda.setProvincia("");
@@ -263,10 +263,9 @@ class TiendaTest {
 		Set<ConstraintViolation<Tienda>> constraintViolations = validator.validate(tienda);
 		
 		assertThat(tienda.getImagen()).isEqualTo("");
-		assertThat(constraintViolations.size()).isEqualTo(1);
+		assertThat(constraintViolations.size()).isEqualTo(2);
 		ConstraintViolation<Tienda> violation = constraintViolations.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("imagen");
-		assertThat(violation.getMessage()).isEqualTo("must not be blank");
 	}
 	@Test
 	void shouldNotValidateWhenCodigoPostalblank() {
@@ -278,7 +277,7 @@ class TiendaTest {
 		tienda.setDescripcion("Amasando pan desde 1990");
 		tienda.setId(200);
 		tienda.setHorario("8:00-14:00");
-		tienda.setImagen("....");
+		tienda.setImagen("https://s176.jpg");
 		tienda.setNombre("Panaderia Paco");
 		tienda.setProductos(null);
 		tienda.setProvincia("Sevilla");
@@ -312,7 +311,7 @@ class TiendaTest {
 		tienda.setDescripcion("Amasando pan desde 1990");
 		tienda.setId(200);
 		tienda.setHorario("8:00-14:00");
-		tienda.setImagen("....");
+		tienda.setImagen("https://s176.jpg");
 		tienda.setNombre("Panaderia Paco");
 		tienda.setProductos(null);
 		tienda.setProvincia("Sevilla");
@@ -345,7 +344,7 @@ class TiendaTest {
 		tienda.setDescripcion("Amasando pan desde 1990");
 		tienda.setId(200);
 		tienda.setHorario("");
-		tienda.setImagen(".....");
+		tienda.setImagen("https://s176.jpg");
 		tienda.setNombre("Panaderia Paco");
 		tienda.setProductos(null);
 		tienda.setProvincia("Sevilla");
