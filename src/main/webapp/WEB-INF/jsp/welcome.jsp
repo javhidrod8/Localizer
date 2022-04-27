@@ -53,7 +53,7 @@ typewriter2 = new Typewriter(servicios, {
     delay: 30
 });
 typewriter2.typeString(`<h2 id="titulo">Su lugar de confianza para encontrar negocios locales y los productos más adecuados para usted.</h2>`)
-  .typeString(`<h3>Nuestros servicios:</h3>`).typeString(`<li><h3>Posibilidad de reservar productos de una tieda</h3></li>`).typeString(`<ul id="servicios">`).typeString(`<li><h3>Filtro de productos según intolerancias y preferencias alimenticias</h3></li>`).typeString(`<li><h3>Busqueda de tiendas y sus catálogos de productos</h3></li>`)
+  .typeString(`<h3>Nuestros servicios:</h3>`).typeString(`<li><h3>Posibilidad de reservar productos de una tienda</h3></li>`).typeString(`<ul id="servicios">`).typeString(`<li><h3>Filtro de productos según intolerancias y preferencias alimenticias</h3></li>`).typeString(`<li><h3>Busqueda de tiendas y sus catálogos de productos</h3></li>`)
     .start();
 
 </script>
