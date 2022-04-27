@@ -95,12 +95,7 @@ class UserControllerTests {
 		this.user.setLastName("Franklin");
 		this.user.setTienda(this.tienda);
 		
-		
-	//	this.userService.saveUser(this.george);
-		//this.g = Optional.of(this.george);
-		
-	//	System.out.println(this.george.toString()+"sdasdasdaspiodjasdfujhasdfguihasdofiuhasdfouiasdhfoasdf");
-	//	System.out.println(this.userService.findUser("admin1").toString()+"----------jfnsdajkfhlasdoikfjasdfiojaspdofiajsd");
+
 		BDDMockito.given(this.userService.findUser("george1")).willReturn(this.george);
 		BDDMockito.given(this.userService.findUser("user")).willReturn(this.user);
 	}
@@ -171,12 +166,13 @@ class UserControllerTests {
     							.param("firstName", "Geo")
     							.param("lastName", "Fran")
     							.param("username", "george1")
+    							.param("tiendaId", "0")
     							.param("password", "pass123"))
     				.andExpect(status().is3xxRedirection())
     				.andExpect(view().name("redirect:/users/"+this.george.getUsername()));
     	}
 
-        @WithMockUser(value = "spring")
+        @WithMockUser(value = "george1")
 	@Test
 	void testProcessUpdateUserFormHasErrors() throws Exception {
 		mockMvc.perform(post("/users/{username}/edit", "george1")
@@ -190,7 +186,7 @@ class UserControllerTests {
 				.andExpect(view().name("users/createOrUpdateUserForm"));
 	}
 
-        @WithMockUser(value = "spring")
+        @WithMockUser(value = "george1")
 	@Test
 	void testShowUser() throws Exception {
 		mockMvc.perform(get("/users/{username}", "george1"))
@@ -200,5 +196,12 @@ class UserControllerTests {
 				.andExpect(model().attribute("user", hasProperty("password", is("pass123"))))
 				.andExpect(view().name("users/userDetails"));
 	}
+        @WithMockUser(value = "spring")
+    	@Test
+    	void testNotShowUser() throws Exception {
+    		mockMvc.perform(get("/users/{username}", "george1"))
+    				.andExpect(status().isOk())
+    				.andExpect(view().name("errores/errorAuth"));
+    	}
 
 }
