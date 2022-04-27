@@ -34,7 +34,8 @@
 					</div>
 					<div id="imagen-producto col-md-12">
 						<label id="imagen2" for="imagen" style="pointer-events: none">
-							<h3>Imagen (URL):</h3> <c:if test="${producto['new']||producto.imagen!=null}">
+							<h3>Imagen (URL):</h3> <c:if
+								test="${producto.imagen!=null}">
 								<img src="${producto.imagen }" class="img-responsive" />
 							</c:if>
 						</label> <input required type="text" id="imagen" name="imagen"
@@ -69,18 +70,18 @@
 							style="pointer-events: none" readonly>
 							<h3>Descripci&oacuten:</h3>
 						</label>
-						<textarea required class="form-control" id="descripcion" name="descripcion"
-							rows="3" style="pointer-events: none" readonly>${producto.descripcion}</textarea>
+						<textarea required class="form-control" id="descripcion"
+							name="descripcion" rows="3" style="pointer-events: none" readonly>${producto.descripcion}</textarea>
 						<br>
 					</div>
 					<c:if test="${producto.estado=='PENDIENTE'}">
-					<div id="intolerancias-producto">
-						<h3>Intolerancias</h3>
-					</div>
+						<div id="intolerancias-producto">
+							<h3>Intolerancias</h3>
+						</div>
 
-					<div id="preferencias-producto">
-						<h3>Preferencias</h3>
-					</div>
+						<div id="preferencias-producto">
+							<h3>Preferencias</h3>
+						</div>
 					</c:if>
 
 					<div id="estado-producto">
@@ -199,18 +200,25 @@
 				<div id="form-vendedor" class="form-group has-feedback">
 
 					<div id="nombre-producto col-md-12">
-						<label id="nombre2" for="nombre" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>
+						<label id="nombre2" for="nombre"
+							<c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>
 							<h3>Nombre:</h3>
 						</label> <input required type="text" id="nombre" name="nombre"
-							class="form-control" value="${producto.nombre}" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>><br>
+							class="form-control" value="${producto.nombre}"
+							<c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>><br>
 					</div>
 					<div id="imagen-producto col-md-12">
+					<c:if test="${patternImagen}">
+						<p class="red">La URL de la imagen no es válida.</p>
+						</c:if>
 						<label id="imagen2" for="imagen" style="pointer-events: none">
-							<h3>Imagen (URL):</h3> <c:if test="${producto.imagen!=null}">
-								<img src="${producto.imagen }" class="img-responsive" />
+							<h3>Imagen (URL):</h3> 
+							<c:if test="${!(producto['new']) && producto.imagen!=null}">
+								<img src="${producto.imagen}" class="img-responsive" />
 							</c:if>
 						</label> <input required type="text" id="imagen" name="imagen"
-							class="form-control" value="${producto.imagen}" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>><br>
+							class="form-control" value="${producto.imagen}"
+							<c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>><br>
 
 
 
@@ -227,17 +235,21 @@
 						</div>
 					</div>
 					<div id="marca-producto col-md-12">
-						<label id="marca2" for="marca"<c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>
+						<label id="marca2" for="marca"
+							<c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>
 							<h3>Marca:</h3>
 						</label> <input required type="text" id="marca" name="marca"
-							class="form-control" value="${producto.marca}" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>><br>
+							class="form-control" value="${producto.marca}"
+							<c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>><br>
 					</div>
 					<div id="descripcion-producto col-md-12">
-						<label id="descripcion2" for="descripcion" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>
+						<label id="descripcion2" for="descripcion"
+							<c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>
 							<h3>Descripci&oacuten:</h3>
 						</label>
 						<textarea class="form-control" id="descripcion" name="descripcion"
-							rows="3" <c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>${producto.descripcion}</textarea>
+							rows="3"
+							<c:if test="${!producto['new']}">readonly style="pointer-events:none"</c:if>>${producto.descripcion}</textarea>
 						<br>
 					</div>
 					<div id="estado-producto">
@@ -294,19 +306,19 @@
 
 				<div id="intolerancias-producto">
 					<c:if test="${producto.estado=='ACEPTADO'}">
-					<h3>Intolerancias</h3>
-					<c:forEach items="${producto.intolerancia}" var="intolerancia">
-					<p>${intolerancia.nombre}</p>
-					</c:forEach>
-					
+						<h3>Intolerancias</h3>
+						<c:forEach items="${producto.intolerancia}" var="intolerancia">
+							<p>${intolerancia.nombre}</p>
+						</c:forEach>
+
 					</c:if>
-					
+
 				</div>
-				
+
 				<div id="preferencias-producto">
 					<c:if test="${producto.estado=='ACEPTADO'}">
-					<h3>Preferencia</h3>
-					<p>${producto.preferencia}</p>
+						<h3>Preferencia</h3>
+						<p>${producto.preferencia}</p>
 					</c:if>
 				</div>
 
@@ -341,8 +353,8 @@
 									Producto</button>
 							</c:when>
 							<c:otherwise>
-									<button class="btn btn-default btn-sm" type="submit">Actualizar
-										Producto</button>
+								<button class="btn btn-default btn-sm" type="submit">Actualizar
+									Producto</button>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -359,9 +371,9 @@
 
 
 
-<c:if test="${auth == 'nutricionista'}">
+	<c:if test="${auth == 'nutricionista'}">
 
-	<script type="text/javascript">
+		<script type="text/javascript">
 var intolerancias = new Array();
 var intoleranciasSeleccionadas = new Array();
 var intoleranciasSeleccionadasNombres = new Array();
@@ -397,7 +409,7 @@ intolerancias.forEach((intolerancia) => {
    });
 </script>
 
-	<script type="text/javascript">
+		<script type="text/javascript">
 var preferencias = new Array();
 var preferenciaSeleccionada = "${producto.preferencia}";
 <c:forEach items="${preferencias}" var="preferencia">
@@ -426,7 +438,7 @@ preferencias.forEach((preferencia, i) => {
 
    });
 </script>
-</c:if>
+	</c:if>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -445,19 +457,5 @@ preferencias.forEach((preferencia, i) => {
 		    }
 		});
 	</script>
-	    
-    <script>
-    $('#imagen').attr("onchange", "validImagen()");
-
-    
-    function validImagen(){
-    var img = $("#imagen").val();
-    $.get(img)
-    .fail(function() { 
-    	$("#imagen").val('');
-    	alert("La imagen no es valida");
-
-    })}
-    </script>
 </petclinic:layout>
 

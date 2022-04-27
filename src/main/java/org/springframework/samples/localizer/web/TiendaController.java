@@ -173,9 +173,13 @@ public class TiendaController {
 		String username = userSession.getUsername();
 		org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
 		if (result.hasErrors()) {
+			Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+			String auth = currentPrincipalName.iterator().next().toString().trim();
+			model.put("auth", auth);
 			Boolean isNew = true;
 			model.put("isNew", isNew);
 			model.put("tienda", tienda);
+			model.put("patternImagen", true);
 			return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
 		} else {
 			tienda.setId(tienda.getId());
@@ -213,9 +217,15 @@ public class TiendaController {
 	@PostMapping(value = "/tienda/{tiendaId}/edit")
 	public String processUpdateTiendaForm(@Valid Tienda tienda, BindingResult result,
 			@PathVariable("tiendaId") int tiendaId, Map<String, Object> model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (result.hasErrors()) {
+			Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+			String auth = currentPrincipalName.iterator().next().toString().trim();
+			model.put("auth", auth);
 			Boolean isNew = false;
 			model.put("isNew", isNew);
+			model.put("tienda", tienda);
+			model.put("patternImagen", true);
 			return VIEWS_TIENDA_CREATE_OR_UPDATE_FORM;
 		} else {
 			tienda.setId(tiendaId);
