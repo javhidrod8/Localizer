@@ -108,7 +108,16 @@ public class ProductoController {
 					mav.addObject("miTienda", false);
 				}
 			}
-		} else {
+		}else if(authentication.getPrincipal() == "anonymousUser"){
+			if(producto.getEstado()!=Estado.ACEPTADO) {
+				ModelAndView mav2 = new ModelAndView("errores/errorAuth");
+				return mav2;
+			}
+			mav.addObject("miTienda", false);
+		}
+		
+		
+		else {
 			mav.addObject("miTienda", false);
 		}
 		return mav;

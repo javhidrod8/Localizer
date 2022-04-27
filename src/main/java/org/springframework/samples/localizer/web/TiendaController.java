@@ -157,6 +157,15 @@ public class TiendaController {
 
 	}
 
+	@GetMapping(value = "/tiendas/search")
+	public String tiendasByCP(ModelMap modelMap) {
+		String vista = "tiendas/tiendasList";
+		Iterable<Tienda> tiendas = this.tiendaService.findAll();
+		modelMap.addAttribute("tiendas", tiendas);
+		return vista;
+
+	}
+	
 	@PostMapping("/tiendas/new")
 	public String processCreationTiendaForm(@Valid Tienda tienda, BindingResult result, Map<String, Object> model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
