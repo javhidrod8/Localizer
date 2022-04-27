@@ -34,4 +34,19 @@
             </div>
         </div>
     </form:form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <script>
+    $('#imagen').attr("onchange", "validImagen()");
+
+    
+    function validImagen(){
+    var img = $("#imagen").val();
+    $.get(img)
+    .fail(function() { 
+    	$("#imagen").val('');
+    	alert("La imagen no es valida");
+
+    })}
+    </script>
 </petclinic:layout> 
