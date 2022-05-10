@@ -1,0 +1,208 @@
+.accordion-button {
+	font-size:inherit!important;
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	text-align: left;
+	border: 1px solid #905d4b!important;
+}
+
+.accordion-button:not(.collapsed) {
+	background-color: #905d4b!important;
+	border-color: #905d4b!important;
+    color: white!important;
+    box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+}
+
+.accordion-button:not(.collapsed)::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    transform: rotate(-180deg);
+}
+
+.card{
+	border: 1px solid #905d4b!important;
+    border-radius: 0.45rem!important;
+}
+
+.card div .card{
+	border: 1px solid #d8bdb6!important;
+    border-radius: 0.45rem!important;
+
+}
+
+.card li.list-group-item{
+	border: 1px solid #d8bdb6!important;
+    border-radius: 0.45rem!important;
+    background-color: #905d4b40! important;
+    font-weight: bold;
+}
+.btn{
+	color: #905d4b!important;
+    border-color: #905d4b!important;
+    background-color: white!important;
+	border-width:1px;
+	box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+
+.btn:hover, .btn-check:checked{
+	background-color: #905d4b!important;
+	border-color: #905d4b!important;
+    color: white!important;
+	border-width:1px;
+}
+.btn-check:active + .btn-primary, .btn-check:checked + .btn-primary, .btn-primary.active, .btn-primary:active, .show > .btn-primary.dropdown-toggle{
+		background-color: #905d4b!important;
+	border-color: #905d4b!important;
+    color: white!important;
+	border-width:1px;
+}
+p#terminos a{
+	color: #905d4b!important;
+}
+
+.b-example-divider {
+  height: 3rem;
+  background-color: #d8bdb6;
+  border: solid #905d4c;
+  border-width: 1px;
+  box-shadow: inset 0 .5em 1.5em rgba(144, 93, 76, .8), inset 0 .125em .5em rgb(144, 93, 76, .9);
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: var(--bs-dark);
+  border-color: var(--bs-gray);
+}
+.form-control-dark:focus {
+  color: #fff;
+  background-color: var(--bs-dark);
+  border-color: #fff;
+  box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .25);
+}
+
+.bi {
+  vertical-align: -.125em;
+  fill: currentColor;
+}
+
+.text-small {
+  font-size: 85%;
+}
+
+.dropdown-toggle {
+  outline: 0;
+}
+
+.menu-superior{
+  background-color: #d8bdb6;
+  border-bottom: solid #905d4c;
+  border-bottom-width: 1px;
+  box-shadow: inset 0 .5em .7em rgba(144, 93, 76, .8), inset 0 .125em .5em rgb(144, 93, 76, .9);
+}
+
+.botones-usuario a{
+	margin-left:0.5em;
+	margin-right:0.5em;
+}
+
+.menu-superior .btn-primary {
+  color: #fff!important;
+  background-color: #905d4b!important;
+  border-color: black!important;
+}
+
+.menu-superior .btn-primary:hover {
+	background-color: #fff!important;
+  	color: #905d4b!important;
+}
+
+.icon-menu i{
+	font-size: 30px;
+	color: black;
+}
+
+.option-menu div{
+	text-align: center;
+	color: black;
+	font-weight: bold;
+}
+
+.logo-menu{
+	height:75px;
+}
+
+header a:hover{
+	box-shadow: inset 0 .5em 1.5em rgba(144, 93, 76, .8), inset 0 .125em .5em rgb(144, 93, 76, .9);
+}
+
+.hidden{
+	display:none;
+	visibility:hidden;
+}
+
+.breadcrumb-item.active{
+	color: #c4b0a9 !important;
+}
+
+li.breadcrumb-item a{
+	color: #7e5549 !important;
+	text-decoration: none;
+}
+
+.producto-imagen {
+  max-width: 200px;}
+  
+.aceptada{
+	color: green!important;
+}
+
+.cancelada{
+	color: red!important;
+}
+
+.list-group{
+	border-top: none!important;
+	border-bottom: none!important;
+}
+
+
+.menu-pref-icon{
+	width:20px;
+}
+
+
+
+#cantidad{
+	width:85%;
+}
+
+#direccionTienda, #direccionTiendaPreview, #nombreTienda, #nombreTiendaCliente{
+	color: #7e5549 !important;
+}
+
+.nodisabled{
+	opacity:1!important;
+}
+
+.leyenda{
+	font-size: 1.25rem;
+	font-weight: 300;
+	opacity:0.5;
+}
+
+.page-item.disabled .page-link{
+	color: #c4b0a9 !important;
+	opacity: 0.5;
+}
+
+.page-item .page-link{
+	color: #7e5549 !important;
+}
+
+#paginacion .page-item .page-link:hover{
+	color: white!important;
+}
+#boton-filtrar{
+	margin-top: 1em;
+}

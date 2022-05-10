@@ -1,0 +1,19 @@
+.barra-busqueda{
+	margin-top:2em;
+	margin-bottom:2em;
+}
+
+.page-item.disabled .page-link{
+	color: #c4b0a9 !important;
+	opacity: 0.5;
+}
+
+.page-item .page-link{
+	color: #905d4b!important;
+}
+
+.leyenda{
+	font-size: 1.25rem;
+font-weight: 300;
+	opacity:0.5;
+}

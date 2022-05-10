@@ -49,4 +49,8 @@ public class WelcomeController {
 			String vista = "terminos";
 			return vista;
 		}
+		@GetMapping(value = "/intolerancias")
+		public String alergenosEIntolerancias(ModelMap modelMap) {
+			return "intolerancias";
+		}
 }
