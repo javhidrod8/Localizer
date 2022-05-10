@@ -141,6 +141,7 @@ public class ProductoController {
 		Iterable<Producto> productos = this.productoService.findByNombre(name);
 		Collection<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
 		Collection<Preferencias> preferencias = this.productoService.findAllPreferencias();
+		modelMap.addAttribute("name",name);
 		modelMap.addAttribute("productos", productos);
 		modelMap.addAttribute("intolerancias", intolerancias);
 		modelMap.addAttribute("preferencias", preferencias);
@@ -249,12 +250,8 @@ public class ProductoController {
 			String username = currentUser.getUsername();
 			org.springframework.samples.localizer.model.User user = this.userService.findUser(username);
 			Collection<Producto> productos = this.productoService.findAllProductos();
-			Set<Intolerancias> intolerancias = new LinkedHashSet<Intolerancias>();
-			Set<Preferencias> preferencias = new LinkedHashSet<Preferencias>();
-			for (Producto p : productos) {
-				intolerancias.addAll(p.getIntolerancia());
-				preferencias.add(p.getPreferencia());
-			}
+			Collection<Intolerancias> intolerancias = this.intoleranciasService.findAllIntolerancias();
+			Collection<Preferencias> preferencias = this.productoService.findAllPreferencias();
 			model.put("productos", productos);
 			model.put("intolerancias", intolerancias);
 			model.put("preferencias", preferencias);

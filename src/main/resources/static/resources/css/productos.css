@@ -1,0 +1,84 @@
+.page-link:hover{
+	color:white!important;
+}
+.barra-busqueda{
+	margin-top:2em;
+	margin-bottom:2em;
+}
+#productThumbnail{
+	max-height:230px;
+	max-width:230px;
+}
+
+.intolsProd{
+	min-height:1.5em;
+}
+
+.preferencia-icon, .menu-pref-icon, .prod-pref-icon, .prod-intol-icon{
+	border: 1px solid rgba(0,0,0,.125);
+	border-radius: .5rem;
+}
+
+.prod-pref-icon, .prod-intol-icon, .menu-pref-icon{
+	width:20px;
+	height:20px;
+}
+
+
+div .intolsProd img.prod-pref-icon, div .intolsProd img.prod-intol-icon{
+	width:30px;
+	height:30px;
+}
+
+ div .intolsProd img.prod-intol-icon{
+	border-radius: 1rem!important;
+}
+
+.prod-pref-icon{
+	margin-left:0em;
+	margin-right:1em;
+}
+
+.cortaTexto{
+	min-height:1.5em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;	
+}
+
+#productoInfo{
+	width:100%;
+}
+
+#botonesPaginacion{
+	margin-top:1.5em;
+}
+#botonesPaginacion button{
+	margin-left:0.5em;
+	margin-right:0.5em;
+}
+
+.card div.card-body{
+	width:100%;
+}
+
+.otros-productos{
+	max-height:300px;
+}
+
+#productoImg, .producto-img{
+	margin-top:1em;
+	max-height: 200px;
+	max-width:250px;
+}
+
+.card-body a{
+	text-decoration: none;
+}
+
+.img-prod-details{
+	max-height:500px;
+}
+
+
+

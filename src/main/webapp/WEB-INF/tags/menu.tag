@@ -3,164 +3,184 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 <%@ attribute name="name" required="true" rtexprvalue="true"
 	description="Name of the active menu: home, owners, vets or error"%>
-	<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
-	
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<spring:url value="/terminos" var="terminosUrl"></spring:url>
+<spring:url value="/" var="inicioUrl"></spring:url>
+<spring:url value="/productos" var="productosUrl"></spring:url>
+<spring:url value="/tiendas" var="tiendasUrl"></spring:url>
+<spring:url value="/productos/search/" var="searchUrl"></spring:url>
+<sec:authorize access="hasAuthority('vendedor')">
+	<spring:url value="/tiendas/miTienda" var="miTiendaUrl"></spring:url>
+</sec:authorize>
+<sec:authorize access="hasAuthority('cliente')">
+	<spring:url value="/users/{username}/reservas" var="reservasUrl">
+		<sec:authentication property="principal" var="user" />
+		<spring:param name="username" value="${user.username}" />
+	</spring:url>
+</sec:authorize>
 
-<nav class="navbar navbar-default" role="navigation">
-	<div class="container">
-		<div class="navbar-header">
-			<a class="navbar-brand"
-				href="<spring:url value="/" htmlEscape="true" />"><span></span></a>
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target="#main-navbar">
-				<span class="sr-only"><os-p>Toggle navigation</os-p></span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
+<sec:authorize access="hasAuthority('nutricionista')">
+	<spring:url value="/productos/verificar"
+		var="productosNutricionistaUrl"></spring:url>
+</sec:authorize>
+<sec:authorize access="!isAuthenticated()">
+	<spring:url value="/login" var="loginUrl"></spring:url>
+	<spring:url value="/users/new" var="registroUrl"></spring:url>
+</sec:authorize>
+<sec:authorize access="isAuthenticated()">
+	<spring:url value="/logout" var="logoutUrl"></spring:url>
+	<spring:url value="/users/{username}" var="miPerfil">
+		<spring:param name="username">
+			<sec:authentication property="name" />
+		</spring:param>
+	</spring:url>
+</sec:authorize>
+
+<script>
+	function Buscar() {
+		var text = $("#busqueda").val();
+		location.href = "${fn:escapeXml(searchUrl)}" + text;
+	}
+</script>
+
+
+
+
+<div class="menu-superior">
+	<header
+		class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-2">
+		<div
+			class="logo-box d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none justify-content-center ">
+			<a href="/" class="logo-menu"> <img
+				src="/resources/images/localizer-logo.png" class="logo-menu"
+				alt="Logo Localizer">
+			</a>
 		</div>
-		<div class="navbar-collapse collapse" id="main-navbar">
-			<ul class="nav navbar-nav">
-
-<%-- 				<petclinic:menuItem active="${name eq 'home'}" url="/"
-					title="home page">
-					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-					<span>Home</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'owners'}" url="/owners/find"
-					title="find owners">
-					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>Find owners</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
-					title="veterinarians">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Veterinarians</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
-					title="trigger a RuntimeException to see how it is handled">
-					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-					<span>Error</span>
-				</petclinic:menuItem>
-
-	 --%>		
-
-				<petclinic:menuItem active="${name eq 'home'}" url="/"
-					title="home page">
-					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-					<span>Inicio</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'productos'}" url="/productos"
-					title="productos">
-					<!-- <span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
-					<span>Productos</span>
-				</petclinic:menuItem>
-				
-				<petclinic:menuItem active="${name eq 'tiendas'}" url="/tiendas"
-					title="tiendas">
-					<span>Tiendas</span>
-				</petclinic:menuItem>
-
-				 <sec:authorize access="hasAuthority('vendedor')">  
-				 <petclinic:menuItem active="${name eq 'miTienda'}" url="/tiendas/miTienda"
-					title="tiendaVendedor">
-					<span>Mi tienda</span>
-				</petclinic:menuItem>
-				 </sec:authorize>
-				 
-				 <sec:authorize access="hasAuthority('nutricionista')">  
-				 <petclinic:menuItem active="${name eq 'productosPorVerificar'}" url="/productos/verificar"
-					title="productosPorVerificar">
-					<span>Productos Por Verificar</span>
-				</petclinic:menuItem>
-				 </sec:authorize>
-				 <sec:authorize access="hasAuthority('cliente')">
-                <spring:url value="/users/{username}/reservas" var="historialUrl">
-                	<sec:authentication property="principal" var= "user"/>
-                        <spring:param name="username" value="${user.username}" />
-                    </spring:url>    
-                 <petclinic:menuItem active="${name eq 'historialReservas'}" url="${fn:escapeXml(historialUrl)}"
-                    title="historialReservas">
-                    <span>Mis Reservas</span>
-                </petclinic:menuItem>
-                 </sec:authorize>
-                 <petclinic:menuItem active="${name eq 'terminos'}" url="/terminos"
-					title="terminos">
-					<span>Términos</span>
-				</petclinic:menuItem>
 
 
+		<ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+			<li><a href="${fn:escapeXml(inicioUrl)}"
+				class="nav-link text-white">
+					<div class="option-menu">
+						<div class="icon-menu">
+							<i class="fa-solid fa-house icon-menu"></i>
+						</div>
+						<div class="icon-leyenda">Inicio</div>
+					</div>
+			</a></li>
+			
+						<sec:authorize access="hasAuthority('vendedor')">
+			<li><a href="${fn:escapeXml(miTiendaUrl)}"
+				class="nav-link text-white">
+					<div class="option-menu">
+						<div class="icon-menu">
+							<i class="fa-solid fa-store icon-menu"></i>
+						</div>
+						<div class="icon-leyenda">Mi Tienda</div>
+					</div>
+			</a></li>
+			</sec:authorize>
+			
+			<sec:authorize access="hasAuthority('cliente')">
+	<li><a href="${fn:escapeXml(reservasUrl)}"
+				class="nav-link text-white">
+					<div class="option-menu">
+						<div class="icon-menu">
+							<i class="fa-solid fa-basket-shopping icon-menu"></i>
+						</div>
+						<div class="icon-leyenda">Reservas</div>
+					</div>
+			</a></li>
+</sec:authorize>
+			
+			<sec:authorize access="hasAuthority('nutricionista')">
+			<li><a href="${fn:escapeXml(productosNutricionistaUrl)}"
+				class="nav-link text-white">
+					<div class="option-menu">
+						<div class="icon-menu">
+							<i class="fa-solid fa-check icon-menu"></i>
+						</div>
+						<div class="icon-leyenda">Verificar</div>
+					</div>
+			</a></li>
+			</sec:authorize>
+			
+			
 
-
+			
+			<sec:authorize access="!hasAuthority('vendedor')">
+			<li><a href="${fn:escapeXml(productosUrl)}"
+				class="nav-link text-white">
+					<div class="option-menu">
+						<div class="icon-menu">
+							<i class="fa-solid fa-bowl-food icon-menu"></i>
+						</div>
+						<div class="icon-leyenda">Productos</div>
+					</div>
+			</a></li>
+			</sec:authorize>
+			<sec:authorize access="!hasAnyAuthority('vendedor')">
+			<li><a href="${fn:escapeXml(tiendasUrl)}"
+				class="nav-link text-white">
+					<div class="option-menu">
+						<div class="icon-menu">
+							<i class="fa-solid fa-store icon-menu"></i>
+						</div>
+						<div class="icon-leyenda">Tiendas</div>
+					</div>
+			</a></li>
+			</sec:authorize>
+			<sec:authorize access="isAuthenticated()">
+				<li><a href="${fn:escapeXml(miPerfil)}"
+					class="nav-link text-white">
+						<div class="option-menu">
+							<div class="icon-menu">
+								<i class="fa-solid fa-user icon-menu"></i>
+							</div>
+							<div class="icon-leyenda">
+								<sec:authentication property="name" />
+							</div>
+						</div>
+				</a></li>
+			</sec:authorize>
+			<sec:authorize access="!isAuthenticated()">
+				<li><a href="${fn:escapeXml(loginUrl)}"
+					class="nav-link text-white">
+						<div class="option-menu">
+							<div class="icon-menu">
+								<i class="fa-solid fa-user icon-menu"></i>
+							</div>
+							<div class="icon-leyenda">Usuario</div>
+						</div>
+				</a></li>
+			</sec:authorize>
+		
+		<li><a href="${fn:escapeXml(terminosUrl)}"
+			class="nav-link text-white">
+				<div class="option-menu">
+					<div class="icon-menu">
+						<i class="fa-solid fa-shield-halved"></i>
+					</div>
+					<div class="icon-leyenda">Términos</div>
+				</div>
+		</a></li>
 </ul>
-
-
-			<ul class="nav navbar-nav navbar-right">
-				<sec:authorize access="!isAuthenticated()">
-					<li><a href="<c:url value="/login" />">Acceder</a></li>
-					<li><a href="<c:url value="/users/new" />">Registro</a></li>
-				</sec:authorize>
-				<sec:authorize access="isAuthenticated()">
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span> 
-							<strong><sec:authentication property="name" /></strong> <span
-							class="glyphicon glyphicon-chevron-down"></span>
-					</a>
-						<ul class="dropdown-menu">
-							<li>
-								<div class="navbar-login">
-									<div class="row">
-										<div class="col-lg-4">
-											<p class="text-center">
-												<span class="glyphicon glyphicon-user icon-size"></span>
-											</p>
-										</div>
-										<div class="col-lg-8">
-											<p class="text-left">
-												<strong><sec:authentication property="name" /></strong>
-											</p>
-											<p class="text-left">
-											<spring:url value="/users/{username}" var="miPerfil">
-               	 							<spring:param name="username"> <sec:authentication property="name"/></spring:param>
-            								</spring:url>
-												<a href="${fn:escapeXml(miPerfil)}"
-													class="btn btn-primary btn-block btn-sm">Mi perfil</a>
-											</p>
-											<p class="text-left">
-												<a href="<c:url value="/logout" />"
-													class="btn btn-primary btn-block btn-sm">Cerrar sesión</a>
-											</p>
-											
-										</div>
-									</div>
-								</div>
-							</li>
-							<li class="divider"></li>
-<!-- 							
-                            <li> 
-								<div class="navbar-login navbar-login-session">
-									<div class="row">
-										<div class="col-lg-12">
-											<p>
-												<a href="#" class="btn btn-primary btn-block">My Profile</a>
-												<a href="#" class="btn btn-danger btn-block">Change
-													Password</a>
-											</p>
-										</div>
-									</div>
-								</div>
-							</li>
--->
-						</ul></li>
-				</sec:authorize>
-			</ul>
+		<div
+			class="botones-usuario d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none justify-content-center">
+			<sec:authorize access="!isAuthenticated()">
+				<a href="${fn:escapeXml(registroUrl)}" class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Registro</a>
+				<a href="${fn:escapeXml(loginUrl)}" class="btn btn-primary"><i class="fa-solid fa-arrow-right-to-bracket"></i> Entrar</a>
+			</sec:authorize>
+			<sec:authorize access="isAuthenticated()">
+				<a href="${fn:escapeXml(miPerfil)}" class="btn btn-primary"><i class="fa-solid fa-user"></i> Mi Perfil </a>
+				<a href="${fn:escapeXml(logoutUrl)}" class="btn btn-primary"><i class="fa-solid fa-arrow-right-from-bracket"></i> Salir</a>
+			</sec:authorize>
 		</div>
-	</div>
-</nav>
+	</header>
+</div>
+

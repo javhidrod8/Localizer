@@ -33,7 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/resources/**","/webjars/**","/h2-console/**",
+				.antMatchers("/resources/**","/resources/images/**","/webjars/**","/h2-console/**",
 						"/swagger-ui.html","/v3/**","/swagger-ui/**").permitAll()
 				.antMatchers("/bills","/bills/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
