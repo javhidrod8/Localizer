@@ -6,7 +6,7 @@ This is a fork of https://github.com/japarejo/spring-petclinic to be used for th
 Localizer is a [Spring Boot](https://spring.io/guides/gs/spring-boot) application built using [Maven](https://spring.io/guides/gs/maven/). You can build a jar file and run it from the command line:
 
 
-```
+```ssh
 git clone https://github.com/javhidrod8/Localizer.git
 cd Localizer
 ./mvnw package
@@ -19,7 +19,7 @@ You can then access localizer here: http://localhost:8080/
 
 Or you can run it from Maven directly using the Spring Boot Maven plugin. If you do this it will pick up changes that you make in the project immediately (changes to Java source files require a compile as well - most people use an IDE for this):
 
-```
+```ssh
 ./mvnw spring-boot:run
 ```
 
@@ -33,7 +33,7 @@ In its default configuration, Localizer uses an database (MySQL) which
 gets populated at startup with data.
 
 Database configuration file ([DBConfig.java](https://github.com/javhidrod8/Localizer/blob/master/src/main/java/org/springframework/samples/localizer/DBConfig.java))
-```
+```java
 @Configuration
 public class DBConfig {
 
@@ -70,11 +70,11 @@ The following items should be installed in your system:
 ### Steps:
 
 1) On the command line
-```
+```ssh
 git clone https://github.com/javhidrod8/Localizer.git
 ```
 2) Inside Eclipse or STS
-```
+```ssh
 File -> Import -> Maven -> Existing Maven project
 ```
 
