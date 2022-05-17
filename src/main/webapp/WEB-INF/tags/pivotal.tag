@@ -23,8 +23,8 @@
 </sec:authorize>
 
 <div class="container">
-  <footer class="py-3 my-4">
-    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+  <footer class="py-1 my-2">
+    <ul class="nav justify-content-center border-bottom pb-1 mb-1">
       <li class="nav-item"><a href="${fn:escapeXml(homeUrl)}" class="nav-link px-2 text-muted"><i class="fa-solid fa-house icon-menu"></i> Inicio</a></li>
       <li class="nav-item"><a href="${fn:escapeXml(productosUrl)}" class="nav-link px-2 text-muted"><i class="fa-solid fa-bowl-food icon-menu"></i> Productos</a></li>
       <li class="nav-item"><a href="${fn:escapeXml(tiendasUrl)}" class="nav-link px-2 text-muted"><i class="fa-solid fa-store icon-menu"></i>  Tiendas</a></li>
