@@ -11,6 +11,7 @@
 <spring:url value="/productos" var="productosUrl"></spring:url>
 <spring:url value="/tiendas" var="tiendasUrl"></spring:url>
 <spring:url value="/terminos" var="terminosUrl"></spring:url>
+<spring:url value="/intolerancias" var="intoUrl"></spring:url>
 <sec:authorize access="!isAuthenticated()">
 <spring:url value="/login" var="userUrl"></spring:url>
 </sec:authorize>
@@ -30,6 +31,7 @@
       <li class="nav-item"><a href="${fn:escapeXml(tiendasUrl)}" class="nav-link px-2 text-muted"><i class="fa-solid fa-store icon-menu"></i>  Tiendas</a></li>
       <li class="nav-item"><a href="${fn:escapeXml(userUrl)}" class="nav-link px-2 text-muted"><i class="fa-solid fa-user icon-menu"></i> Usuario</a></li>
       <li class="nav-item"><a href="${fn:escapeXml(terminosUrl)}" class="nav-link px-2 text-muted"><i class="fa-solid fa-shield-halved"></i> Términos y condiciones</a></li>
+       <li class="nav-item"><a href="${fn:escapeXml(intoUrl)}" class="nav-link px-2 text-muted"><i class="fa-solid fa-wheat-awn-circle-exclamation"></i> Intolerancias</a></li>
     </ul>
     <div class="d-flex justify-content-center align-content-center">
         <img src="<spring:url value="/resources/images/localizer-pivotal-logo.png" htmlEscape="true" />"
