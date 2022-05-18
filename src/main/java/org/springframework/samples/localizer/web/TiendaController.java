@@ -153,6 +153,7 @@ public class TiendaController {
 		String vista = "tiendas/tiendasList";
 		Iterable<Tienda> tiendas = this.tiendaService.findByCodigoPostal(codigoPostal);
 		modelMap.addAttribute("tiendas", tiendas);
+		modelMap.addAttribute("codigoPostal", codigoPostal);
 		return vista;
 
 	}
