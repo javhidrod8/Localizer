@@ -170,15 +170,15 @@
 					<div class="icon-leyenda">Términos</div>
 				</div>
 		</a></li>
-<%-- 		<li><a href="${fn:escapeXml(intoUrl)}" --%>
-<!-- 			class="nav-link text-white"> -->
-<!-- 				<div class="option-menu"> -->
-<!-- 					<div class="icon-menu"> -->
-<!-- 						<i class="fa-solid fa-wheat-awn-circle-exclamation"></i> -->
-<!-- 					</div> -->
-<!-- 					<div class="icon-leyenda">Intolerancias</div> -->
-<!-- 				</div> -->
-<!-- 		</a></li> -->
+		<li><a href="${fn:escapeXml(intoUrl)}" 
+			class="nav-link text-white">
+				<div class="option-menu">
+ 					<div class="icon-menu"> 
+ 						<i class="fa-solid fa-wheat-awn-circle-exclamation"></i>
+ 					</div> 
+ 					<div class="icon-leyenda">Intolerancias</div>
+ 				</div> 
+		</a></li> 
 </ul>
 		<div
 			class="botones-usuario d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none justify-content-center">
