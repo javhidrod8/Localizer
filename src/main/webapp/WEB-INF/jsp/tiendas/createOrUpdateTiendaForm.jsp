@@ -129,7 +129,7 @@
 					<label for="codigoPostal" class="form-label" style="pointer-events: none">
               			<h4>Código Postal</h4>
               		</label>
-              		<input type="text" class="form-control" id="codigoPostal" name="codigoPostal" pattern="^([1-9]{2}|[0-9][1-9]|[1-9][0-9])[0-9]{3}$" placeholder="" value="${tienda.codigoPostal}" required>
+              		<input type="text" class="form-control" id="codigoPostal" name="codigoPostal"  title="Debe contener 5 dígitos" pattern="^([1-9]{2}|[0-9][1-9]|[1-9][0-9])[0-9]{3}$" placeholder="" value="${tienda.codigoPostal}" required>
               		<div class="invalid-feedback">
                			CP necesario para el registro.
               		</div>
@@ -147,7 +147,7 @@
 			  		<label for="imagenPrueba" class="form-label" style="pointer-events: none">
               			<h4>Imagen</h4>
               		</label>
-              		<input type="text" class="form-control" id="imagenPrueba" pattern="(https:\/\/.+\.(?:png|jpg|jpeg|gif|png|svg))$"  placeholder="" value="${tienda.imagen}">
+              		<input type="text" class="form-control" id="imagenPrueba"  title="Debe empezar por https y terminar por formato gráfico (png,jpg,jpeg,gif,png,svg)" pattern="(https:\/\/.+\.(?:png|jpg|jpeg|gif|png|svg))$"  placeholder="" value="${tienda.imagen}">
               		<div class="invalid-feedback">
                			Imagen necesaria para el registro.
               		</div>
