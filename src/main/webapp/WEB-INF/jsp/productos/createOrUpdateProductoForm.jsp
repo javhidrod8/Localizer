@@ -134,7 +134,7 @@
 			  		<label for="imagenPrueba" class="form-label" style="pointer-events: none">
               			<h4>Imagen</h4>
               		</label>
-              		<input type="text" class="form-control" id="imagenPrueba" pattern="(https:\/\/.+\.(?:png|jpg|jpeg|gif|png|svg))$"  placeholder="" value="${producto.imagen}">
+              		<input required type="text" class="form-control" id="imagenPrueba" title="Debe empezar por https y terminar por formato gráfico (png,jpg,jpeg,gif,png,svg)" pattern="(https:\/\/.+\.(?:png|jpg|jpeg|gif|png|svg))$"  placeholder="" value="${producto.imagen}">
               		<div class="invalid-feedback">
                			Imagen necesaria para el registro.
               		</div>

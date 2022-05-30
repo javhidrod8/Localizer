@@ -84,9 +84,7 @@
 								<c:choose>
 									<c:when test="${isNew}">
 										<label for="authority" class="form-label">Rol</label>
-										<select name="authority" class="form-select" id="authority"
-											required>
-											<option>Elegir...</option>
+										<select required name="authority" class="form-select" id="authority">
 											<option id="cliente" value="cliente">CLIENTE</option>
 											<option id="vendedor" value="vendedor">VENDEDOR</option>
 										</select>
@@ -146,7 +144,7 @@
 							<div class="col-md-12">
 								<br>
 								<div class="form-check">
-									<input type="checkbox" class="form-check-input"
+									<input required type="checkbox" class="form-check-input"
 										id="same-address"> <label class="form-check-label"
 										for="same-address">Acepto los términos y condiciones
 										de uso*</label>
